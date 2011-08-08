@@ -29,38 +29,45 @@ import edu.nyu.cs.javagit.api.commands.GitLogResponse.Commit;
  */
 public interface IGitLog {
 
-	/**
-	 * 
-	 * @param repositoryPath	
-	 *			A <code>File</code> instance for the path to the repository root (the parent
-	 *          directory of the .git directory) or a sub-directory in the working tree of the
-	 *          repository to move/rename against. This argument must represent the absolute path to 
-	 *          the desired directory as returned by the <code>File.getPath()</code> method. If null 
-	 *          is passed, a <code>NullPointerException</code> will be thrown.
-	 *
-	 * @param options	Specify option used to collect logs, see <code>GitLogOptions</code>
-	 * @return A List of Commit objects
-	 * @throws JavaGitException
-	 * 			Thrown when there is an error executing git log.
-	 * @throws IOException
-	 * 			Thrown when there is an error executing git log.
-	 */
-	public List<Commit> log(File repositoryPath, GitLogOptions options) throws JavaGitException, IOException;
-	
-	/**
-	 * 
-	 * @param repositoryPath	
-	 *			A <code>File</code> instance for the path to the repository root (the parent
-	 *          directory of the .git directory) or a sub-directory in the working tree of the
-	 *          repository to move/rename against. This argument must represent the absolute path to 
-	 *          the desired directory as returned by the <code>File.getPath()</code> method. If null 
-	 *          is passed, a <code>NullPointerException</code> will be thrown.
-	 *
-	 * @return A List of Commit objects
-	 * @throws JavaGitException
-	 * 			Thrown when there is an error executing git log.
-	 * @throws IOException
-	 * 			Thrown when there is an error executing git log.
-	 */
-	public List<Commit> log(File repositoryPath) throws JavaGitException, IOException;
+    /**
+     * 
+     * @param repositoryPath A <code>File</code> instance for the path to the repository root (the parent directory of
+     *        the .git directory) or a sub-directory in the working tree of the repository to move/rename against. This
+     *        argument must represent the absolute path to the desired directory as returned by the
+     *        <code>File.getPath()</code> method. If null is passed, a <code>NullPointerException</code> will be thrown.
+     * 
+     * @param options Specify option used to collect logs, see <code>GitLogOptions</code>
+     * @return A List of Commit objects
+     * @throws JavaGitException Thrown when there is an error executing git log.
+     * @throws IOException Thrown when there is an error executing git log.
+     */
+    public List<Commit> log(File repositoryPath, GitLogOptions options) throws JavaGitException, IOException;
+
+    /**
+     * 
+     * @param repositoryPath A <code>File</code> instance for the path to the repository root (the parent directory of
+     *        the .git directory) or a sub-directory in the working tree of the repository to move/rename against. This
+     *        argument must represent the absolute path to the desired directory as returned by the
+     *        <code>File.getPath()</code> method. If null is passed, a <code>NullPointerException</code> will be thrown.
+     * 
+     * @return A List of Commit objects
+     * @throws JavaGitException Thrown when there is an error executing git log.
+     * @throws IOException Thrown when there is an error executing git log.
+     */
+    public List<Commit> log(File repositoryPath) throws JavaGitException, IOException;
+
+    /**
+     * 
+     * @param repositoryPath A <code>File</code> instance for the path to the repository root (the parent directory of
+     *        the .git directory) or a sub-directory in the working tree of the repository to move/rename against. This
+     *        argument must represent the absolute path to the desired directory as returned by the
+     *        <code>File.getPath()</code> method. If null is passed, a <code>NullPointerException</code> will be thrown.
+     * 
+     * @param options Specify option used to collect logs, see <code>GitLogOptions</code>
+     * @param file A <code>File</code> instance for the file we want the log.
+     * @return A List of Commit objects
+     * @throws JavaGitException Thrown when there is an error executing git log.
+     * @throws IOException Thrown when there is an error executing git log.
+     */
+    public List<Commit> log(File repositoryPath, GitLogOptions options, File file) throws JavaGitException, IOException;
 }
