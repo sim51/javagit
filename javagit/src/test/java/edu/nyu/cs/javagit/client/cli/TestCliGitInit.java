@@ -17,37 +17,37 @@ import edu.nyu.cs.javagit.api.commands.GitInitResponse;
 import edu.nyu.cs.javagit.test.utilities.FileUtilities;
 
 public class TestCliGitInit {
-	private File repoDirectory;
-	private GitCommit commit;
-	private GitAdd add;
 
-	@Before
-	public void setUp() throws IOException, JavaGitException {
-		repoDirectory = FileUtilities.createTempDirectory("GitLogTestRepo");
-	}
+    private File      repoDirectory;
+    private GitCommit commit;
+    private GitAdd    add;
 
-	@After
-	public void tearDown() throws JavaGitException {
-		FileUtilities.removeDirectoryRecursivelyAndForcefully(repoDirectory);
-	}
+    @Before
+    public void setUp() throws IOException, JavaGitException {
+        repoDirectory = FileUtilities.createTempDirectory("GitLogTestRepo");
+    }
 
-	/**
-	 * 
-	 * Test to verify if git logs is successfully parsing logs
-	 * 
-	 * @throws IOException
-	 * @throws JavaGitException
-	 */
-	@Test
-	public void testGitInitaliaze() throws IOException, JavaGitException {
+    @After
+    public void tearDown() throws JavaGitException {
+        FileUtilities.removeDirectoryRecursivelyAndForcefully(repoDirectory);
+    }
 
-		CliGitInit gitInit = new CliGitInit();
-		GitInitOptions options = new GitInitOptions();
-		GitInitResponse response = gitInit.init(repoDirectory, options);
-		if(!response.isInitialized()){
-			fail("Failed to initialize git repository");
-		}
-	}
+    /**
+     * 
+     * Test to verify if git logs is successfully parsing logs
+     * 
+     * @throws IOException
+     * @throws JavaGitException
+     */
+    @Test
+    public void testGitInitaliaze() throws IOException, JavaGitException {
 
+        CliGitInit gitInit = new CliGitInit();
+        GitInitOptions options = new GitInitOptions();
+        GitInitResponse response = gitInit.init(repoDirectory, options);
+        if (!response.isInitialized()) {
+            fail("Failed to initialize git repository");
+        }
+    }
 
 }

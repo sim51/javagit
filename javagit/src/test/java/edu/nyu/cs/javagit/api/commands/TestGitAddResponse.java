@@ -27,13 +27,13 @@ import edu.nyu.cs.javagit.api.JavaGitException;
 
 public class TestGitAddResponse extends TestCase {
 
-  @Before
-  protected void setUp() throws IOException, JavaGitException, Exception {
-    super.setUp();
-  }
-  
-  @Test
-  public void testVoidTest() {
-    assertTrue(true);
-  }
+    @Before
+    protected void setUp() throws IOException, JavaGitException, Exception {
+        super.setUp();
+    }
+
+    @Test
+    public void testVoidTest() {
+        assertTrue(true);
+    }
 }
