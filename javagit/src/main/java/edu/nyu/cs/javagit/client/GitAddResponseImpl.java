@@ -25,49 +25,43 @@ import edu.nyu.cs.javagit.api.commands.GitAddResponse;
  */
 public class GitAddResponseImpl extends GitAddResponse {
 
-  /**
-   * Sets the value of no output flag.
-   * 
-   * @param noOutput
-   *          true if there was no output generated. This is a helper flag that tells the consumer
-   *          of <code>GitAddResponse</code> that there was no resulting output for executed
-   *          &lt;git-add&gt; command.
-   */
-  public void setNoOutput(boolean noOutput) {
-    this.noOutput = noOutput;
-  }
+    /**
+     * Sets the value of no output flag.
+     * 
+     * @param noOutput true if there was no output generated. This is a helper flag that tells the consumer of
+     *        <code>GitAddResponse</code> that there was no resulting output for executed &lt;git-add&gt; command.
+     */
+    public void setNoOutput(boolean noOutput) {
+        this.noOutput = noOutput;
+    }
 
-  /**
-   * Sets the flag if dry run flag need to be used
-   * 
-   * @param dryRun
-   *          true if dry run should be used, otherwise false.
-   */
-  public void setDryRun(boolean dryRun) {
-    this.dryRun = dryRun;
-  }
+    /**
+     * Sets the flag if dry run flag need to be used
+     * 
+     * @param dryRun true if dry run should be used, otherwise false.
+     */
+    public void setDryRun(boolean dryRun) {
+        this.dryRun = dryRun;
+    }
 
-  /**
-   * Sets the non-error message generated in the output of the &lt;git-add&gt; command.
-   * 
-   * @param lineNumber
-   *          line number at which the message appeared in output.
-   * @param commentString
-   *          message itself.
-   */
-  public void setComment(int lineNumber, String commentString) {
-    ResponseString comment = new ResponseString(lineNumber, commentString);
-    comments.add(comment);
-  }
+    /**
+     * Sets the non-error message generated in the output of the &lt;git-add&gt; command.
+     * 
+     * @param lineNumber line number at which the message appeared in output.
+     * @param commentString message itself.
+     */
+    public void setComment(int lineNumber, String commentString) {
+        ResponseString comment = new ResponseString(lineNumber, commentString);
+        comments.add(comment);
+    }
 
-  /**
-   * Adds a file and action to the list.
-   * 
-   * @param file
-   *          File to be added to the <code>List</code>.
-   */
-  public void add(File file) {
-    filePathsList.add(file);
-  }
+    /**
+     * Adds a file and action to the list.
+     * 
+     * @param file File to be added to the <code>List</code>.
+     */
+    public void add(File file) {
+        filePathsList.add(file);
+    }
 
 }

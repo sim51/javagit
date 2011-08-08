@@ -21,98 +21,95 @@ import java.io.File;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
- * A response data object for the git-mv command. For information about the contents of 
- * GitMvResponse instances returned by a given method, please see the JavaDoc for the method
- * in question.
+ * A response data object for the git-mv command. For information about the contents of GitMvResponse instances returned
+ * by a given method, please see the JavaDoc for the method in question.
  */
 public class GitMvResponse implements CommandResponse {
 
-  // Variable to store the source file/folder/symlink of the response.
-  protected File source;
+    // Variable to store the source file/folder/symlink of the response.
+    protected File         source;
 
-  // Variable to store the destination file/folder/symlink of the response.
-  protected File destination;
+    // Variable to store the destination file/folder/symlink of the response.
+    protected File         destination;
 
-  // String Buffer to store the comment message after execution of git-mv.
-  protected StringBuffer message = new StringBuffer();
+    // String Buffer to store the comment message after execution of git-mv.
+    protected StringBuffer message = new StringBuffer();
 
-  /**
-   * Gets the comments, if received, upon successful execution of the git-mv command, from the 
-   * message buffer.
-   * 
-   * @return message
-   *           The comments, if received, upon successful execution of the git-mv command, from the
-   * message buffer.
-   */
-  public String getComment() {
-    return message.toString();
-  }
-
-  /**
-   * Gets the destination file/folder
-   * 
-   * @return the destination
-   */
-  public File getDestination() {
-    return destination;
-  }
-
-  /**
-   * Gets the source file/folder/symlink
-   * 
-   * @return the source
-   */
-  public File getSource() {
-    return source;
-  }
-  
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof GitMvResponse)) {
-      return false;
+    /**
+     * Gets the comments, if received, upon successful execution of the git-mv command, from the message buffer.
+     * 
+     * @return message The comments, if received, upon successful execution of the git-mv command, from the message
+     *         buffer.
+     */
+    public String getComment() {
+        return message.toString();
     }
 
-    GitMvResponse g = (GitMvResponse) o;
-
-    if (!CheckUtilities.checkObjectsEqual(getSource(), g.getSource())) {
-      return false;
+    /**
+     * Gets the destination file/folder
+     * 
+     * @return the destination
+     */
+    public File getDestination() {
+        return destination;
     }
 
-    if (!CheckUtilities.checkObjectsEqual(getDestination(), g.getDestination())) {
-      return false;
+    /**
+     * Gets the source file/folder/symlink
+     * 
+     * @return the source
+     */
+    public File getSource() {
+        return source;
     }
 
-    if (!CheckUtilities.checkObjectsEqual(getComment(), g.getComment())) {
-      return false;
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof GitMvResponse)) {
+            return false;
+        }
+
+        GitMvResponse g = (GitMvResponse) o;
+
+        if (!CheckUtilities.checkObjectsEqual(getSource(), g.getSource())) {
+            return false;
+        }
+
+        if (!CheckUtilities.checkObjectsEqual(getDestination(), g.getDestination())) {
+            return false;
+        }
+
+        if (!CheckUtilities.checkObjectsEqual(getComment(), g.getComment())) {
+            return false;
+        }
+
+        return true;
     }
-    
-    return true;
-  }
-  
-  @Override
-  public int hashCode() {
-    return source.hashCode() + destination.hashCode() + message.hashCode();
-  }
-  
-  @Override
-  public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    if (null != source) {
-      buffer.append("Source: ");
-      buffer.append(source.getName());
-      buffer.append(" ");
+
+    @Override
+    public int hashCode() {
+        return source.hashCode() + destination.hashCode() + message.hashCode();
     }
-    
-    if (null != destination) {
-      buffer.append("Destination: ");
-      buffer.append(destination.getName());
-      buffer.append(" ");
+
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        if (null != source) {
+            buffer.append("Source: ");
+            buffer.append(source.getName());
+            buffer.append(" ");
+        }
+
+        if (null != destination) {
+            buffer.append("Destination: ");
+            buffer.append(destination.getName());
+            buffer.append(" ");
+        }
+
+        if ((message.length() != 0)) {
+            buffer.append("Message: ");
+            buffer.append(message.toString());
+        }
+        return buffer.toString();
     }
-    
-    if ((message.length()!=0)) {
-      buffer.append("Message: ");
-      buffer.append(message.toString());
-    }
-    return buffer.toString();
-  }
 }

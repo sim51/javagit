@@ -16,9 +16,8 @@
  */
 package edu.nyu.cs.javagit.api.commands;
 
-
 /**
- *
+ * 
  */
 public class GitCloneResponse implements CommandResponse {
 

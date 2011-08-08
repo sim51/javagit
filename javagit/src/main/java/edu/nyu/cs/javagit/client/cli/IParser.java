@@ -20,38 +20,35 @@ import edu.nyu.cs.javagit.api.JavaGitException;
 import edu.nyu.cs.javagit.api.commands.CommandResponse;
 
 /**
- * <code>IParser</code> is an interface for parsing a git command line output stream. See how
- * implementations of <code>IParser</code> are used in <code>ProcessUtilities</code>.
+ * <code>IParser</code> is an interface for parsing a git command line output stream. See how implementations of
+ * <code>IParser</code> are used in <code>ProcessUtilities</code>.
  * 
  * @see ProcessUtilities
  */
 public interface IParser {
 
-  /**
-   * Parses a line of output from a git command line output stream.
-   * 
-   * @param line
-   *          The line to parse.
-   */
-  public void parseLine(String line);
+    /**
+     * Parses a line of output from a git command line output stream.
+     * 
+     * @param line The line to parse.
+     */
+    public void parseLine(String line);
 
-  /**
-   * Takes the process exit code so it can provide the most information possible to the user about
-   * how the process ends.
-   * 
-   * @param code
-   *          The exit code of the process that was run.
-   */
-  public void processExitCode(int code);
+    /**
+     * Takes the process exit code so it can provide the most information possible to the user about how the process
+     * ends.
+     * 
+     * @param code The exit code of the process that was run.
+     */
+    public void processExitCode(int code);
 
-  /**
-   * Gets the response for the command for which the parser is implemented.
-   * 
-   * @return The response for the command for which the parser is implemented.
-   * @throws JavaGitException
-   *           Thrown when there are problems creating the response, if there was an error running
-   *           the command, ....
-   */
-  public CommandResponse getResponse() throws JavaGitException;
+    /**
+     * Gets the response for the command for which the parser is implemented.
+     * 
+     * @return The response for the command for which the parser is implemented.
+     * @throws JavaGitException Thrown when there are problems creating the response, if there was an error running the
+     *         command, ....
+     */
+    public CommandResponse getResponse() throws JavaGitException;
 
 }

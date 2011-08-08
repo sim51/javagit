@@ -19,8 +19,8 @@ package edu.nyu.cs.javagit.client;
 import edu.nyu.cs.javagit.api.commands.GitCloneResponse;
 
 /**
- * Implementation of a <code>GitCloneResponse</code>. This class adds functionality to set
- * values in a <code>GitCloneResponse</code> object.
+ * Implementation of a <code>GitCloneResponse</code>. This class adds functionality to set values in a
+ * <code>GitCloneResponse</code> object.
  */
 public class GitCloneResponseImpl extends GitCloneResponse {
 

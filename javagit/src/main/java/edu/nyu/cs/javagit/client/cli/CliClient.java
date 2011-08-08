@@ -38,64 +38,64 @@ import edu.nyu.cs.javagit.client.IGitStatus;
  */
 public class CliClient implements IClient {
 
-  public IGitAdd getGitAddInstance() {
-    return new CliGitAdd();
-  }
+    public IGitAdd getGitAddInstance() {
+        return new CliGitAdd();
+    }
 
-  public IGitCommit getGitCommitInstance() {
-    return new CliGitCommit();
-  }
+    public IGitCommit getGitCommitInstance() {
+        return new CliGitCommit();
+    }
 
-  public IGitDiff getGitDiffInstance() {
-    return new CliGitDiff();
-  }
+    public IGitDiff getGitDiffInstance() {
+        return new CliGitDiff();
+    }
 
-  public IGitGrep getGitGrepInstance() {
-    return new CliGitGrep();
-  }
+    public IGitGrep getGitGrepInstance() {
+        return new CliGitGrep();
+    }
 
-  public IGitLog getGitLogInstance() {
-    return new CliGitLog();
-  }
+    public IGitLog getGitLogInstance() {
+        return new CliGitLog();
+    }
 
-  public IGitMv getGitMvInstance() {
-    return new CliGitMv();
-  }
+    public IGitMv getGitMvInstance() {
+        return new CliGitMv();
+    }
 
-  public IGitReset getGitResetInstance() {
-    return new CliGitReset();
-  }
+    public IGitReset getGitResetInstance() {
+        return new CliGitReset();
+    }
 
-  public IGitRevert getGitRevertInstance() {
-    return new CliGitRevert();
-  }
+    public IGitRevert getGitRevertInstance() {
+        return new CliGitRevert();
+    }
 
-  public IGitRm getGitRmInstance() {
-    return new CliGitRm();
-  }
+    public IGitRm getGitRmInstance() {
+        return new CliGitRm();
+    }
 
-  public IGitShow getGitShowInstance() {
-    return new CliGitShow();
-  }
+    public IGitShow getGitShowInstance() {
+        return new CliGitShow();
+    }
 
-  public IGitStatus getGitStatusInstance() {
-    return new CliGitStatus();
-  }
+    public IGitStatus getGitStatusInstance() {
+        return new CliGitStatus();
+    }
 
-  public IGitBranch getGitBranchInstance() {
-    return new CliGitBranch();
-  }
+    public IGitBranch getGitBranchInstance() {
+        return new CliGitBranch();
+    }
 
-  public IGitCheckout getGitCheckoutInstance() {
-    return new CliGitCheckout();
-  }
+    public IGitCheckout getGitCheckoutInstance() {
+        return new CliGitCheckout();
+    }
 
-  public IGitInit getGitInitInstance() {
-  	return new CliGitInit();
-  }
+    public IGitInit getGitInitInstance() {
+        return new CliGitInit();
+    }
 
-  public IGitClone getGitCloneInstance() {
-    return new CliGitClone();
-  }
+    public IGitClone getGitCloneInstance() {
+        return new CliGitClone();
+    }
 
 }

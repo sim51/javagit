@@ -24,43 +24,41 @@ import java.util.List;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
- * <code>GitRmResponse</code> holds the response information returned by the <code>GitRm</code>
- * class.
+ * <code>GitRmResponse</code> holds the response information returned by the <code>GitRm</code> class.
  */
 public abstract class GitRmResponse implements CommandResponse {
 
-  // The list of removed files.
-  protected List<File> removedFiles = new ArrayList<File>();
+    // The list of removed files.
+    protected List<File> removedFiles = new ArrayList<File>();
 
-  /**
-   * Gets the file at the specified index from the removed file list.
-   * 
-   * @param index
-   *          The index of the file to get. It must fall in the range:
-   *          <code>0 &lt;= index &lt; getRemovedFilesSize()</code>.
-   * @return The file at the specified index.
-   */
-  public File getRemovedFile(int index) {
-    CheckUtilities.checkIntIndexInListRange(removedFiles, index);
-    return removedFiles.get(index);
-  }
+    /**
+     * Gets the file at the specified index from the removed file list.
+     * 
+     * @param index The index of the file to get. It must fall in the range:
+     *        <code>0 &lt;= index &lt; getRemovedFilesSize()</code>.
+     * @return The file at the specified index.
+     */
+    public File getRemovedFile(int index) {
+        CheckUtilities.checkIntIndexInListRange(removedFiles, index);
+        return removedFiles.get(index);
+    }
 
-  /**
-   * Gets an <code>Iterator</code> over the list of removed files.
-   * 
-   * @return An <code>Iterator<code> over the list of removed files.
-   */
-  public Iterator<File> getRemovedFilesIterator() {
-    return (new ArrayList<File>(removedFiles)).iterator();
-  }
+    /**
+     * Gets an <code>Iterator</code> over the list of removed files.
+     * 
+     * @return An <code>Iterator<code> over the list of removed files.
+     */
+    public Iterator<File> getRemovedFilesIterator() {
+        return (new ArrayList<File>(removedFiles)).iterator();
+    }
 
-  /**
-   * Gets the number of removed files (provided that the quiet option was not used).
-   * 
-   * @return The number of removed files. If the quiet option was used, zero (0) will be returned.
-   */
-  public int getRemovedFilesSize() {
-    return removedFiles.size();
-  }
+    /**
+     * Gets the number of removed files (provided that the quiet option was not used).
+     * 
+     * @return The number of removed files. If the quiet option was used, zero (0) will be returned.
+     */
+    public int getRemovedFilesSize() {
+        return removedFiles.size();
+    }
 
 }

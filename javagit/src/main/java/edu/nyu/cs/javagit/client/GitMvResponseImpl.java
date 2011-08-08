@@ -21,41 +21,37 @@ import java.io.File;
 import edu.nyu.cs.javagit.api.commands.GitMvResponse;
 
 /**
- * Implementation of a <code>GitMvResponse</code>. This class adds functionality to set
- * values in a <code>GitMvResponse</code>.
+ * Implementation of a <code>GitMvResponse</code>. This class adds functionality to set values in a
+ * <code>GitMvResponse</code>.
  */
 public class GitMvResponseImpl extends GitMvResponse {
 
-  /**
-   * Adds comments from each line of the message, if received, upon successful execution of the 
-   * git-mv command, to the message buffer.
-   *  
-   * @param comment
-   *          The comment from each line of the message, if received, upon successful execution of 
-   *          the git-mv.
-   */
-  public void addComment(String comment) {
-    message.append(comment);
-  }
+    /**
+     * Adds comments from each line of the message, if received, upon successful execution of the git-mv command, to the
+     * message buffer.
+     * 
+     * @param comment The comment from each line of the message, if received, upon successful execution of the git-mv.
+     */
+    public void addComment(String comment) {
+        message.append(comment);
+    }
 
-  /**
-   * Sets the destination file/folder/symlink in response to the destination
-   * 
-   * @param destination
-   *          The destination to set
-   */
-  public void setDestination(File destination) {
-    this.destination = destination;
-  }
+    /**
+     * Sets the destination file/folder/symlink in response to the destination
+     * 
+     * @param destination The destination to set
+     */
+    public void setDestination(File destination) {
+        this.destination = destination;
+    }
 
-  /**
-   * Sets the source file/folder/symlink in response object to the source string.
-   * 
-   * @param source
-   *          The source to set
-   */
-  public void setSource(File source) {
-    this.source = source;
-  }
+    /**
+     * Sets the source file/folder/symlink in response object to the source string.
+     * 
+     * @param source The source to set
+     */
+    public void setSource(File source) {
+        this.source = source;
+    }
 
 }
