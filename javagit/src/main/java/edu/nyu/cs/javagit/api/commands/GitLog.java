@@ -61,20 +61,21 @@ public final class GitLog {
      *        <code>File.getPath()</code> method. If null is passed, a <code>NullPointerException</code> will be thrown.
      * 
      * @param options Specify option used to collect logs, see <code>GitLogOptions</code>
-     * @param file A <code>File</code> instance for a file into the repository root (the parent directory of the .git
-     *        directory) or a sub-directory in the working tree of the repository to move/rename against. This argument
-     *        must represent the absolute path to the desired file as returned by the <code>File.getPath()</code>
-     *        method.
+     * @param paths A list of folders and/or files to commit. The paths specified in this list must all be relative to
+     *        the path specified in the <code>repository</code> parameter as returned by <code>File.getPath()</code>. A
+     *        non-null and non-empty list is required for this parameter, otherwise a <code>NullPointerException</code>
+     *        or <code>IllegalArgumentException</code> will be thrown.
      * @return A List of Commit objects
      * @throws JavaGitException Thrown when there is an error executing git log.
      * @throws IOException Thrown when there is an error executing git log.
      */
-    public List<Commit> log(File repositoryPath, GitLogOptions options, File file) throws JavaGitException, IOException {
+    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException,
+            IOException {
         CheckUtilities.checkNullArgument(repositoryPath, "repository");
-        CheckUtilities.checkNullArgument(file, "file");
+        CheckUtilities.checkNullListArgument(paths, "paths");
         IClient client = ClientManager.getInstance().getPreferredClient();
         IGitLog gitLog = client.getGitLogInstance();
-        return gitLog.log(repositoryPath, options, file);
+        return gitLog.log(repositoryPath, options, paths);
 
     }
 

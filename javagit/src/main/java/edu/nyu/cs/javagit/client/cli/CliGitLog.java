@@ -66,10 +66,11 @@ public class CliGitLog implements IGitLog {
         return response.getLog();
     }
 
-    public List<Commit> log(File repositoryPath, GitLogOptions options, File file) throws JavaGitException, IOException {
+    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException,
+            IOException {
         CheckUtilities.checkFileValidity(repositoryPath);
         GitLogParser parser = new GitLogParser();
-        List<String> command = buildCommand(repositoryPath, options, file);
+        List<String> command = buildCommand(repositoryPath, options, paths);
         GitLogResponse response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
         if (response.containsError()) {
             int line = response.getError(0).getLineNumber();
@@ -86,12 +87,15 @@ public class CliGitLog implements IGitLog {
      * @param options Options supplied to the git log command using <code>GitLogOptions</code>.
      * @return Returns a List of command argument to be applied to git log.
      */
-    private List<String> buildCommand(File repositoryPath, GitLogOptions options, File file) {
+    private List<String> buildCommand(File repositoryPath, GitLogOptions options, List<File> paths) {
         List<String> command = new ArrayList<String>();
         command.add(JavaGitConfiguration.getGitCommand());
         command.add("log");
-        if (file != null) {
-            command.add(file.getPath());
+        if (null != paths) {
+            command.add("--");
+            for (File f : paths) {
+                command.add(f.getPath());
+            }
         }
         if (options != null) {
             // General Options

@@ -64,10 +64,14 @@ public interface IGitLog {
      *        <code>File.getPath()</code> method. If null is passed, a <code>NullPointerException</code> will be thrown.
      * 
      * @param options Specify option used to collect logs, see <code>GitLogOptions</code>
-     * @param file A <code>File</code> instance for the file we want the log.
+     * @param paths A list of folders and/or files to commit. The paths specified in this list must all be relative to
+     *        the path specified in the <code>repository</code> parameter as returned by <code>File.getPath()</code>. A
+     *        non-null and non-empty list is required for this parameter, otherwise a <code>NullPointerException</code>
+     *        or <code>IllegalArgumentException</code> will be thrown.
      * @return A List of Commit objects
      * @throws JavaGitException Thrown when there is an error executing git log.
      * @throws IOException Thrown when there is an error executing git log.
      */
-    public List<Commit> log(File repositoryPath, GitLogOptions options, File file) throws JavaGitException, IOException;
+    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException,
+            IOException;
 }
