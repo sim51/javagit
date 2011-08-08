@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import edu.nyu.cs.javagit.api.Ref;
+import edu.nyu.cs.javagit.api.object.Ref;
 
 /**
  * This class provides utilities methods that perform various checks for validity.
