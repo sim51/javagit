@@ -21,13 +21,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-branch command.
  */
-abstract public class GitBranchResponse implements CommandResponse {
+public class GitBranchResponse implements ICommandResponse {
 
     /**
      * An enumeration of the types of response. In normal case a list of branches, otherwise some message such as

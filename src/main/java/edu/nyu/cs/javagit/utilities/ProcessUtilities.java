@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.cli.IParser;
 
 /**
@@ -116,7 +116,7 @@ public class ProcessUtilities {
      * @throws IOException Thrown if there are problems with the subprocess.
      * @throws JavaGitException
      */
-    public static CommandResponse runCommand(File workingDirectory, List<String> commandLine, IParser parser)
+    public static ICommandResponse runCommand(File workingDirectory, List<String> commandLine, IParser parser)
             throws IOException, JavaGitException {
         ProcessBuilder pb = new ProcessBuilder(commandLine);
 

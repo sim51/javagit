@@ -26,7 +26,6 @@ import edu.nyu.cs.javagit.cli.ClientManager;
 import edu.nyu.cs.javagit.cli.IClient;
 import edu.nyu.cs.javagit.cli.branch.GitBranchOptions;
 import edu.nyu.cs.javagit.cli.branch.GitBranchResponse;
-import edu.nyu.cs.javagit.cli.branch.IGitBranch;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
@@ -51,7 +50,7 @@ public final class GitBranch {
         CheckUtilities.checkNullArgument(repositoryPath, "repository path");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.branch(repositoryPath);
     }
 
@@ -75,7 +74,7 @@ public final class GitBranch {
         CheckUtilities.checkNullArgument(options, "options");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.branch(repositoryPath, options);
     }
 
@@ -103,7 +102,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(branchName, Ref.RefType.BRANCH, "branch name");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.deleteBranch(repositoryPath, forceDelete, remote, branchName);
     }
 
@@ -131,7 +130,7 @@ public final class GitBranch {
         CheckUtilities.validateListRefType(branchList, Ref.RefType.BRANCH, "branch list");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.deleteBranches(repositoryPath, forceDelete, remote, branchList);
     }
 
@@ -158,7 +157,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(newName, Ref.RefType.BRANCH, "new name");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.renameBranch(repositoryPath, forceRename, newName);
     }
 
@@ -188,7 +187,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(newName, Ref.RefType.BRANCH, "new name");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.renameBranch(repositoryPath, forceRename, oldName, newName);
     }
 
@@ -213,7 +212,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(branchName, Ref.RefType.BRANCH, "branch name");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.createBranch(repositoryPath, branchName);
     }
 
@@ -242,7 +241,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(branchName, Ref.RefType.BRANCH, "branch name");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.createBranch(repositoryPath, options, branchName);
     }
 
@@ -272,7 +271,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(startPoint, Ref.RefType.HEAD, "start point");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.createBranch(repositoryPath, branchName, startPoint);
     }
 
@@ -305,7 +304,7 @@ public final class GitBranch {
         CheckUtilities.validateArgumentRefType(startPoint, Ref.RefType.HEAD, "start point");
 
         IClient client = ClientManager.getInstance().getPreferredClient();
-        IGitBranch gitBranch = client.getGitBranchInstance();
+        GitBranch gitBranch = client.getGitBranchInstance();
         return gitBranch.createBranch(repositoryPath, options, branchName, startPoint);
     }
 }

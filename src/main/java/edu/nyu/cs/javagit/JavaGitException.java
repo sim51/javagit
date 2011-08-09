@@ -21,6 +21,9 @@ package edu.nyu.cs.javagit;
  */
 public class JavaGitException extends Exception {
 
+    public final static int   REPOSITORY_ERROR = 500;
+    public final static int   PROCESS_ERROR    = 600;
+
     // as per the Java spec, this is a required field for <code>Serializable</code>
     private static final long serialVersionUID = 1402053559415331074L;
     // The code for an exception instance.

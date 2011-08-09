@@ -18,14 +18,14 @@ package edu.nyu.cs.javagit.cli.mv;
 
 import java.io.File;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-mv command. For information about the contents of GitMvResponse instances returned
  * by a given method, please see the JavaDoc for the method in question.
  */
-public class GitMvResponse implements CommandResponse {
+public class GitMvResponse implements ICommandResponse {
 
     // Variable to store the source file/folder/symlink of the response.
     protected File         source;

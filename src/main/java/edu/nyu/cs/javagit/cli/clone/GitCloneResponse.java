@@ -16,11 +16,11 @@
  */
 package edu.nyu.cs.javagit.cli.clone;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 
 /**
  * 
  */
-public class GitCloneResponse implements CommandResponse {
+public class GitCloneResponse implements ICommandResponse {
 
 }

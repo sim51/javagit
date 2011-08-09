@@ -24,14 +24,12 @@ import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitConfiguration;
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.cli.CommandResponse;
-import edu.nyu.cs.javagit.cli.IParser;
 import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 
 /**
  * Command-line implementation of the <code>IGitClone</code> interface.
  */
-public class GitClone implements IGitClone {
+public class GitClone {
 
     public GitCloneResponseImpl clone(File workingDirectoryPath, URL repository) throws IOException, JavaGitException {
         return cloneProcess(workingDirectoryPath, null, repository, null);
@@ -99,24 +97,4 @@ public class GitClone implements IGitClone {
         return cmd;
     }
 
-    /**
-     * Implementation of the <code>IParser</code> interface in GitCloneParser class.
-     */
-    public class GitCloneParser implements IParser {
-
-        public CommandResponse getResponse() throws JavaGitException {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public void parseLine(String line) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void processExitCode(int code) {
-            // TODO Auto-generated method stub
-
-        }
-    }
 }

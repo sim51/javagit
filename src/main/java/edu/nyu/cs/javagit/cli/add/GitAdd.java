@@ -23,99 +23,46 @@ import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitConfiguration;
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 
 /**
  * Command-line implementation of the <code>IGitAdd</code> interface.
  * 
- * TODO (gsd216) - to implement exception chaining.
  */
-public class GitAdd implements IGitAdd {
+public class GitAdd {
 
     /**
-     * Implementations of &lt;git-add&gt; with options and list of files provided.
+     * Adds a list of files with GitAddOptions.
      */
-    public GitAddResponse add(File repositoryPath, GitAddOptions options, List<File> paths) throws JavaGitException,
-            IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
+    public GitAddResponse add(File repositoryPath, List<File> paths, GitAddOptions options) throws JavaGitException {
         GitAddParser parser = new GitAddParser();
         List<String> command = buildCommand(repositoryPath, options, paths);
-        GitAddResponseImpl response = (GitAddResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
-
-        if (options != null) {
-            addDryRun(options, response);
+        GitAddResponseImpl response;
+        try {
+            response = (GitAddResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.REPOSITORY_ERROR, e.getMessage());
         }
         return (GitAddResponse) response;
     }
 
     /**
-     * Adds a list of files with no GitAddOptions.
+     * Adds one file to the index with GitAddOptions.
      */
-    public GitAddResponse add(File repositoryPath, List<File> files) throws JavaGitException, IOException {
-        GitAddOptions options = null;
-        return add(repositoryPath, options, files);
-    }
-
-    /**
-     * Adds one file to the index with no GitAddOptions.
-     */
-    public GitAddResponse add(File repositoryPath, File file) throws JavaGitException, IOException {
-        List<File> filePaths = new ArrayList<File>();
-        filePaths.add(file);
-        GitAddOptions options = null;
-        return add(repositoryPath, options, filePaths);
-    }
-
-    /**
-     * Implementations of &lt;git-add&gt; with options and one file to be added to index.
-     */
-    public GitAddResponse add(File repositoryPath, GitAddOptions options, File file) throws JavaGitException,
-            IOException {
+    public GitAddResponse add(File repositoryPath, File file, GitAddOptions options) throws JavaGitException {
         List<File> paths = new ArrayList<File>();
         paths.add(file);
-        return add(repositoryPath, options, paths);
+        return add(repositoryPath, paths, options);
     }
 
     /**
-     * Implementation of &lt;git-add&gt; dry run.
-     */
-    public GitAddResponse addDryRun(File repositoryPath, List<File> paths) throws JavaGitException, IOException {
-        GitAddOptions options = new GitAddOptions();
-        options.setDryRun(true);
-        return add(repositoryPath, options, paths);
-    }
-
-    /**
-     * Implementations of &lt;git-add&gt; in verbose mode.
-     */
-    public GitAddResponse addVerbose(File repositoryPath, List<File> paths) throws JavaGitException, IOException {
-        GitAddOptions options = new GitAddOptions();
-        options.setVerbose(true);
-        return add(repositoryPath, options, paths);
-    }
-
-    /**
-     * Implementations of &lt;git-add&gt; with force option set.
-     */
-    public GitAddResponse addWithForce(File repositoryPath, List<File> paths) throws JavaGitException, IOException {
-        GitAddOptions options = new GitAddOptions();
-        options.setForce(true);
-        return add(repositoryPath, options, paths);
-    }
-
-    /**
-     * if the dry run option was selected then set the flag in response.
+     * Constructor of the command line.
      * 
-     * @param options <code>GitAddOptions</code>
-     * @param response <code>gitAddResponse</code>
+     * @param repositoryPath
+     * @param options
+     * @param paths
+     * @return
      */
-    private void addDryRun(GitAddOptions options, GitAddResponseImpl response) {
-        if (options.dryRun()) {
-            response.setDryRun(true);
-        }
-    }
-
     private List<String> buildCommand(File repositoryPath, GitAddOptions options, List<File> paths) {
         List<String> command = new ArrayList<String>();
         command.add(JavaGitConfiguration.getGitCommand());

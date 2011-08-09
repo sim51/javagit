@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
@@ -34,7 +34,7 @@ import edu.nyu.cs.javagit.utilities.CheckUtilities;
  * empty-list.
  * 
  */
-public abstract class GitAddResponse implements CommandResponse {
+public abstract class GitAddResponse implements ICommandResponse {
 
     /**
      * List of files added to the index by &lt;git-add&gt; command.

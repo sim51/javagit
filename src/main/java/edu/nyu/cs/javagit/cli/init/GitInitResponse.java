@@ -1,8 +1,8 @@
 package edu.nyu.cs.javagit.cli.init;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 
-public class GitInitResponse implements CommandResponse {
+public class GitInitResponse implements ICommandResponse {
 
     public boolean initialized   = false;
     public boolean reinitialized = false;

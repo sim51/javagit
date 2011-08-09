@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the <code>git-reset</code> command.
  */
-public abstract class GitResetResponse implements CommandResponse {
+public abstract class GitResetResponse implements ICommandResponse {
 
     /*
      * The list of files left in a dirty state (different than what is in the new HEAD commit) in the working tree.

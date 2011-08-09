@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-commit command.
  */
-abstract public class GitCommitResponse implements CommandResponse {
+public class GitCommitResponse implements ICommandResponse {
 
     // The short hash name for the commit.
     protected Ref                      commitShortHashName;

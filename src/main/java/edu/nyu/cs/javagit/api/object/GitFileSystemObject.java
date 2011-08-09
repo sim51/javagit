@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitAdd;
 import edu.nyu.cs.javagit.api.GitCommit;
 import edu.nyu.cs.javagit.api.GitMv;
 import edu.nyu.cs.javagit.api.GitRm;
+import edu.nyu.cs.javagit.cli.add.GitAdd;
 import edu.nyu.cs.javagit.cli.add.GitAddResponse;
 import edu.nyu.cs.javagit.cli.commit.GitCommitResponse;
 import edu.nyu.cs.javagit.cli.mv.GitMvResponse;

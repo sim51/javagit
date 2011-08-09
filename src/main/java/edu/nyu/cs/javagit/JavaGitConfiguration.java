@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.cli.IParser;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ExceptionMessageMap;
@@ -250,7 +250,7 @@ public final class JavaGitConfiguration {
          * @return The response object containing the version number.
          * @throws JavaGitException
          */
-        public CommandResponse getResponse() throws JavaGitException {
+        public ICommandResponse getResponse() throws JavaGitException {
             if (!(parsedCorrectly)) {
                 throw new JavaGitException(100001, ExceptionMessageMap.getMessage("100001"));
             }
@@ -282,7 +282,7 @@ public final class JavaGitConfiguration {
      * 
      * TODO (rs2705): Write unit tests for this class.
      */
-    private static class GitVersionResponse implements CommandResponse {
+    private static class GitVersionResponse implements ICommandResponse {
 
         // The version of git that gets passed into our constructor.
         private String version;

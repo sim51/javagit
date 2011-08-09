@@ -50,6 +50,6 @@ public interface IParser {
      *         command, ....
      * @throws
      */
-    public CommandResponse getResponse() throws JavaGitException;
+    public ICommandResponse getResponse() throws JavaGitException;
 
 }

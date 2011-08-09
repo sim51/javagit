@@ -27,13 +27,13 @@ import edu.nyu.cs.javagit.JavaGitException;
 import edu.nyu.cs.javagit.api.object.GitFileSystemObject;
 import edu.nyu.cs.javagit.api.object.GitFileSystemObject.Status;
 import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for &lt;git-status&gt; command
  */
-public abstract class GitStatusResponse implements CommandResponse {
+public abstract class GitStatusResponse implements ICommandResponse {
 
     /**
      * List of new files that will be added next time &lt;git-commit&gt; is executed.

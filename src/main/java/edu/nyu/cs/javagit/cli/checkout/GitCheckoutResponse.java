@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * Response data object for &lt;git-checkout&gt; command.
  */
-public abstract class GitCheckoutResponse implements CommandResponse {
+public abstract class GitCheckoutResponse implements ICommandResponse {
 
     /**
      * List of files that have been modified but not committed.

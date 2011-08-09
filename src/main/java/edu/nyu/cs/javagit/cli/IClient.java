@@ -16,21 +16,18 @@
  */
 package edu.nyu.cs.javagit.cli;
 
-import edu.nyu.cs.javagit.cli.add.IGitAdd;
-import edu.nyu.cs.javagit.cli.branch.IGitBranch;
-import edu.nyu.cs.javagit.cli.checkout.IGitCheckout;
-import edu.nyu.cs.javagit.cli.clone.IGitClone;
-import edu.nyu.cs.javagit.cli.commit.IGitCommit;
-import edu.nyu.cs.javagit.cli.diff.IGitDiff;
-import edu.nyu.cs.javagit.cli.grep.IGitGrep;
-import edu.nyu.cs.javagit.cli.init.IGitInit;
-import edu.nyu.cs.javagit.cli.log.IGitLog;
-import edu.nyu.cs.javagit.cli.mv.IGitMv;
-import edu.nyu.cs.javagit.cli.reset.IGitReset;
-import edu.nyu.cs.javagit.cli.revert.IGitRevert;
-import edu.nyu.cs.javagit.cli.rm.IGitRm;
-import edu.nyu.cs.javagit.cli.show.IGitShow;
-import edu.nyu.cs.javagit.cli.status.IGitStatus;
+import edu.nyu.cs.javagit.cli.add.GitAdd;
+import edu.nyu.cs.javagit.cli.branch.GitBranch;
+import edu.nyu.cs.javagit.cli.checkout.GitCheckout;
+import edu.nyu.cs.javagit.cli.clone.GitClone;
+import edu.nyu.cs.javagit.cli.commit.GitCommit;
+import edu.nyu.cs.javagit.cli.init.GitInit;
+import edu.nyu.cs.javagit.cli.log.GitLog;
+import edu.nyu.cs.javagit.cli.mv.GitMv;
+import edu.nyu.cs.javagit.cli.reset.GitReset;
+import edu.nyu.cs.javagit.cli.rm.GitRm;
+import edu.nyu.cs.javagit.cli.show.GitShow;
+import edu.nyu.cs.javagit.cli.status.GitStatus;
 
 /**
  * An interface to represent a git client type, such as a command-line client.
@@ -42,104 +39,83 @@ public interface IClient {
      * 
      * @return An instance of <code>IGitAdd</code>.
      */
-    public IGitAdd getGitAddInstance();
+    public GitAdd getGitAddInstance();
 
     /**
      * Gets an instance of <code>IGitCommit</code>.
      * 
      * @return An instance of <code>IGitCommit</code>.
      */
-    public IGitCommit getGitCommitInstance();
-
-    /**
-     * Gets an instance of <code>IGitDiff</code>.
-     * 
-     * @return An instance of <code>IGitDiff</code>.
-     */
-    public IGitDiff getGitDiffInstance();
-
-    /**
-     * Gets an instance of <code>IGitGrep</code>.
-     * 
-     * @return An instance of <code>IGitGrep</code>.
-     */
-    public IGitGrep getGitGrepInstance();
+    public GitCommit getGitCommitInstance();
 
     /**
      * Gets an instance of <code>IGitLog</code>.
      * 
      * @return An instance of <code>IGitLog</code>.
      */
-    public IGitLog getGitLogInstance();
+    public GitLog getGitLogInstance();
 
     /**
      * Gets an instance of <code>IGitMv</code>.
      * 
      * @return An instance of <code>IGitMv</code>.
      */
-    public IGitMv getGitMvInstance();
+    public GitMv getGitMvInstance();
 
     /**
      * Gets an instance if <code>IGitReset</code>.
      * 
      * @return An instance of <code>IGitReset</code>
      */
-    public IGitReset getGitResetInstance();
-
-    /**
-     * Gets an instance of <code>IGitRevert</code>.
-     * 
-     * @return An instance of <code>IGitRevert</code>.
-     */
-    public IGitRevert getGitRevertInstance();
+    public GitReset getGitResetInstance();
 
     /**
      * Gets an instance of <code>IGitRm</code>.
      * 
      * @return An instance of <code>IGitRm</code>.
      */
-    public IGitRm getGitRmInstance();
+    public GitRm getGitRmInstance();
 
     /**
      * Gets an instance of <code>IGitShow</code>.
      * 
      * @return An instance of <code>IGitShow</code>.
      */
-    public IGitShow getGitShowInstance();
+    public GitShow getGitShowInstance();
 
     /**
      * Gets an instance of <code>IGitStatus</code>.
      * 
      * @return An instance of <code>IGitStatus</code>.
      */
-    public IGitStatus getGitStatusInstance();
+    public GitStatus getGitStatusInstance();
 
     /**
      * Gets an instance of <code>IGitBranch</code>
      * 
      * @return An instance of <code>IGitBranch</code>
      */
-    public IGitBranch getGitBranchInstance();
+    public GitBranch getGitBranchInstance();
 
     /**
      * Gets an instance of <code>IGitCheckout</code>
      * 
      * @return An instance of <code>IGitCheckout</code>
      */
-    public IGitCheckout getGitCheckoutInstance();
+    public GitCheckout getGitCheckoutInstance();
 
     /**
      * Gets an instance of <code>IGitInit</code>
      * 
      * @return An instance of <code>IGitInit</code>
      */
-    public IGitInit getGitInitInstance();
+    public GitInit getGitInitInstance();
 
     /**
      * Gets an instance of <code>IGitClone</code>
      * 
      * @return An instance of <code>IGitClone</code>
      */
-    public IGitClone getGitCloneInstance();
+    public GitClone getGitCloneInstance();
 
 }

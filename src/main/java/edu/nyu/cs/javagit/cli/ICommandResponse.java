@@ -14,13 +14,11 @@
  *   http://www.javagit.com
  * ====================================================================
  */
-package edu.nyu.cs.javagit.cli.diff;
+package edu.nyu.cs.javagit.cli;
 
 /**
- * An interface to represent the git-diff command.
+ * Marker interface for git command response objects.
  */
-public interface IGitDiff {
-
-    // TODO: Create method signatures for this interface.
+public interface ICommandResponse {
 
 }

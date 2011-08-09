@@ -19,13 +19,13 @@ package edu.nyu.cs.javagit.cli.log;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.cs.javagit.cli.CommandResponse;
+import edu.nyu.cs.javagit.cli.ICommandResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git log command.
  */
-public class GitLogResponse implements CommandResponse {
+public class GitLogResponse implements ICommandResponse {
 
     private List<Commit>           commitList   = new ArrayList<Commit>();
     protected List<ResponseString> errors       = new ArrayList<ResponseString>();

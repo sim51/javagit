@@ -30,7 +30,7 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 /**
  * Command-line implementation of the <code>IGitBranch</code> interface.
  */
-public class GitBranch implements IGitBranch {
+public class GitBranch {
 
     public GitBranchResponse branch(File repoPath) throws IOException, JavaGitException {
         return branchProcess(repoPath, null, null, null, null);
