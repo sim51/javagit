@@ -34,40 +34,7 @@ import edu.nyu.cs.javagit.utilities.CheckUtilities;
 public final class GitBranch {
 
     /**
-     * Does a basic git-branch without any options.
-     * 
-     * @param repositoryPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @return The result of the git branch.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
-     */
-    public GitBranchResponse branch(File repositoryPath) throws IOException, JavaGitException {
-        CheckUtilities.checkNullArgument(repositoryPath, "repository path");
-
-        IClient client = ClientManager.getInstance().getPreferredClient();
-        GitBranch gitBranch = client.getGitBranchInstance();
-        return gitBranch.branch(repositoryPath);
-    }
-
-    /**
      * Perform git-branch with the specified options against the repository.
-     * 
-     * @param repositoryPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param options The options for a git-branch command. If the value is null, a <code>NullPointerException</code>
-     *        will be thrown.
-     * @return The result of the git branch.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse branch(File repositoryPath, GitBranchOptions options) throws IOException, JavaGitException {
         CheckUtilities.checkNullArgument(repositoryPath, "repository path");
@@ -80,20 +47,6 @@ public final class GitBranch {
 
     /**
      * This method deletes the specified branch using the -d command line option.
-     * 
-     * @param repositoryPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param forceDelete True if force delete option -D should be used, false if -d should be used.
-     * @param remote True if delete branch should be acted upon a remote branch.
-     * @param branchName A branch to be deleted.
-     * @return The result of the git-branch with delete option.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>access to a file is denied</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse deleteBranch(File repositoryPath, boolean forceDelete, boolean remote, Ref branchName)
             throws IOException, JavaGitException {
@@ -108,20 +61,6 @@ public final class GitBranch {
 
     /**
      * Deletes the specified branches using the -d command line option.
-     * 
-     * @param repositoryPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param forceDelete True if force delete option -D should be used, false if -d should be used.
-     * @param remote True if delete branch should be acted upon a remote branch list.
-     * @param branchList The list of branches to be deleted.
-     * @return The result of the git-branch with -d option.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>access to a file is denied</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse deleteBranch(File repositoryPath, boolean forceDelete, boolean remote, List<Ref> branchList)
             throws IOException, JavaGitException {
@@ -136,19 +75,6 @@ public final class GitBranch {
 
     /**
      * Renames the current branch to new branch.
-     * 
-     * @param repositoryPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param forceRename True if force rename option -M should be used. False if -m should be used.
-     * @param newName When renaming the current branch to a new branch name, this is the new branch name.
-     * @return The result of the git branch with -m option.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>access to a file is denied</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse renameBranch(File repositoryPath, boolean forceRename, Ref newName) throws IOException,
             JavaGitException {
@@ -179,7 +105,7 @@ public final class GitBranch {
      * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse renameBranch(File repositoryPath, boolean forceRename, Ref oldName, Ref newName)
-            throws IOException, JavaGitException {
+            throwsJavaGitException {
         CheckUtilities.checkNullArgument(repositoryPath, "repository path");
         CheckUtilities.checkNullArgument(oldName, "old name");
         CheckUtilities.checkNullArgument(newName, "new name");

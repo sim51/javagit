@@ -25,7 +25,6 @@ import edu.nyu.cs.javagit.cli.ClientManager;
 import edu.nyu.cs.javagit.cli.IClient;
 import edu.nyu.cs.javagit.cli.clone.GitCloneOptions;
 import edu.nyu.cs.javagit.cli.clone.GitCloneResponse;
-import edu.nyu.cs.javagit.cli.clone.IGitClone;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**
@@ -49,7 +48,7 @@ public final class GitClone {
      *         </ul>
      * @throws JavaGitException Thrown when there is an error executing git-clone.
      */
-    public GitCloneResponse clone(File workingDirectoryPath, URL repository) throws IOException, JavaGitException {
+    public GitCloneResponse clone(File workingDirectoryPath, URL reposwitory) throws IOException, JavaGitException {
         CheckUtilities.checkNullArgument(workingDirectoryPath, "working directory path");
         CheckUtilities.checkNullArgument(repository, "repository");
 

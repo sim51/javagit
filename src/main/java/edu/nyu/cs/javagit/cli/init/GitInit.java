@@ -12,22 +12,16 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 
 public class GitInit {
 
-    public GitInitResponse init(File repoDirectory, GitInitOptions options) throws JavaGitException, IOException {
+    public GitInitResponse init(File repoDirectory, GitInitOptions options) throws JavaGitException {
         CheckUtilities.checkFileValidity(repoDirectory);
         GitInitParser parser = new GitInitParser();
         List<String> command = buildCommand(repoDirectory, options);
-        GitInitResponse response = (GitInitResponse) ProcessUtilities.runCommand(repoDirectory, command, parser);
-        if (response.containsError()) {
-            throw new JavaGitException(418001, "Git Init error");
+        GitInitResponse response;
+        try {
+            response = (GitInitResponse) ProcessUtilities.runCommand(repoDirectory, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        return response;
-    }
-
-    public GitInitResponse init(File repoDirectory) throws JavaGitException, IOException {
-        CheckUtilities.checkFileValidity(repoDirectory);
-        GitInitParser parser = new GitInitParser();
-        List<String> command = buildCommand(repoDirectory, null);
-        GitInitResponse response = (GitInitResponse) ProcessUtilities.runCommand(repoDirectory, command, parser);
         if (response.containsError()) {
             throw new JavaGitException(418001, "Git Init error");
         }

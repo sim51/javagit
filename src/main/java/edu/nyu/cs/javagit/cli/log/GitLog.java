@@ -24,7 +24,6 @@ import java.util.List;
 import edu.nyu.cs.javagit.JavaGitConfiguration;
 import edu.nyu.cs.javagit.JavaGitException;
 import edu.nyu.cs.javagit.cli.log.GitLogResponse.Commit;
-import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 
 /**
@@ -33,13 +32,17 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 public class GitLog {
 
     /**
-     * Implementations of &lt;git log&gt; with options and one file to be added to index.
+     * Implementations of git log.
      */
-    public List<Commit> log(File repositoryPath, GitLogOptions options) throws JavaGitException, IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
+    public List<Commit> log(File repositoryPath, GitLogOptions options) throws JavaGitException {
         GitLogParser parser = new GitLogParser();
         List<String> command = buildCommand(repositoryPath, options, null);
-        GitLogResponse response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        GitLogResponse response;
+        try {
+            response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
         if (response.containsError()) {
             int line = response.getError(0).getLineNumber();
             String error = response.getError(0).error();
@@ -48,25 +51,18 @@ public class GitLog {
         return response.getLog();
     }
 
-    public List<Commit> log(File repositoryPath) throws JavaGitException, IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
-        GitLogParser parser = new GitLogParser();
-        List<String> command = buildCommand(repositoryPath, null, null);
-        GitLogResponse response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
-        if (response.containsError()) {
-            int line = response.getError(0).getLineNumber();
-            String error = response.getError(0).error();
-            throw new JavaGitException(420001, "Line " + line + ", " + error);
-        }
-        return response.getLog();
-    }
-
-    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException,
-            IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
+    /**
+     * Implementations of git log onf files.
+     */
+    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException {
         GitLogParser parser = new GitLogParser();
         List<String> command = buildCommand(repositoryPath, options, paths);
-        GitLogResponse response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        GitLogResponse response;
+        try {
+            response = (GitLogResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
         if (response.containsError()) {
             int line = response.getError(0).getLineNumber();
             String error = response.getError(0).error();
@@ -77,10 +73,6 @@ public class GitLog {
 
     /**
      * This function builds the git log commands with necessary options as specified by the user.
-     * 
-     * @param repositoryPath Root of the repository
-     * @param options Options supplied to the git log command using <code>GitLogOptions</code>.
-     * @return Returns a List of command argument to be applied to git log.
      */
     private List<String> buildCommand(File repositoryPath, GitLogOptions options, List<File> paths) {
         List<String> command = new ArrayList<String>();

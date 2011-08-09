@@ -30,71 +30,31 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
  */
 public class GitRm {
 
-    // TODO (jhl388): Add test cases for this class.
-
-    public GitRmResponse rm(File repository, File path) throws IOException, JavaGitException {
-        return processRm(repository, null, path, null);
-    }
-
-    public GitRmResponse rm(java.io.File repository, GitRmOptions options, File path) throws IOException,
-            JavaGitException {
+    public GitRmResponse rm(File repository, GitRmOptions options, File path) throws JavaGitException {
         return processRm(repository, options, path, null);
     }
 
-    public GitRmResponse rm(File repository, List<File> paths) throws IOException, JavaGitException {
-        return processRm(repository, null, null, paths);
-    }
-
-    public GitRmResponse rm(File repository, GitRmOptions options, List<File> paths) throws IOException,
-            JavaGitException {
-        return processRm(repository, options, null, paths);
-    }
-
-    public GitRmResponse rmCached(File repository, List<File> paths) throws IOException, JavaGitException {
-        GitRmOptions options = new GitRmOptions();
-        options.setOptCached(true);
-        return processRm(repository, options, null, paths);
-    }
-
-    public GitRmResponse rmRecursive(File repository, List<File> paths) throws IOException, JavaGitException {
-        GitRmOptions options = new GitRmOptions();
-        options.setOptR(true);
+    public GitRmResponse rm(File repository, GitRmOptions options, List<File> paths) throws JavaGitException {
         return processRm(repository, options, null, paths);
     }
 
     /**
      * Processes an incoming <code>GitRm</code> request.
-     * 
-     * @param repository The path to the repository.
-     * @param options The options to use in constructing the command line.
-     * @param path A single file/directory to delete. This should be null if there is a list of paths to delete.
-     * @param paths A list of files/paths to delete. This should be null if there is a single path to delete.
-     * @return The response from running the command.
-     * @exception IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples
-     *            include:
-     *            <ul>
-     *            <li>a directory doesn't exist</li>
-     *            <li>access to a file is denied</li>
-     *            <li>a command is not found on the PATH</li>
-     *            </ul>
-     * @exception JavaGitException Thrown when there is an error making the commit.
      */
     private GitRmResponse processRm(File repository, GitRmOptions options, File path, List<File> paths)
-            throws IOException, JavaGitException {
+            throws JavaGitException {
         List<String> cmdline = buildCommandLine(options, path, paths);
 
         GitRmParser parser = new GitRmParser();
-        return (GitRmResponse) ProcessUtilities.runCommand(repository, cmdline, parser);
+        try {
+            return (GitRmResponse) ProcessUtilities.runCommand(repository, cmdline, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
     }
 
     /**
      * Builds the command line.
-     * 
-     * @param options The options to build with.
-     * @param path If just a single path, this is it.
-     * @param paths If there are multiple paths, these are they. <code>path</code> must be null for these paths to be
-     *        used.
-     * @return The list of arguments for the command line.
      */
     private List<String> buildCommandLine(GitRmOptions options, File path, List<File> paths) {
         List<String> cmdline = new ArrayList<String>();
