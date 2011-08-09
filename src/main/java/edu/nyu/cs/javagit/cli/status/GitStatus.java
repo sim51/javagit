@@ -23,63 +23,35 @@ import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitConfiguration;
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 
 /**
  * Command-line implementation of the <code>IGitStatus</code> interface.
  * 
- * TODO - Need to parse -v option in a better way. Currently <code>GitStatusResponse</code> does not save any output
- * related to -v options such as lines containing diffs, or +++ etc.
  */
 public class GitStatus {
-
-    /**
-     * Patterns for matching lines for deleted files, modified files, new files and empty lines.
-     */
-    public static enum Patterns {
-        DELETED("^#\\s+deleted:\\s+.*"), MODIFIED("^#\\s+modified:\\s+.*"), NEW_FILE("^#\\s+new file:\\s+.*"), EMPTY_HASH_LINE(
-                "^#\\s*$"), RENAMED("^#\\s+renamed:\\s+.*");
-
-        String pattern;
-
-        Patterns(String pattern) {
-            this.pattern = pattern;
-        }
-
-        public boolean matches(String line) {
-            return line.matches(this.pattern);
-        }
-    }
-
-    private File inputFile = null;
 
     /**
      * Implementation of <code>IGitStatus</code> method for getting the status of a list of files
      * 
      */
     public GitStatusResponse status(File repositoryPath, GitStatusOptions options, List<File> paths)
-            throws JavaGitException, IOException {
-        CheckUtilities.checkNullArgument(repositoryPath, "RepositoryPath");
-        CheckUtilities.checkFileValidity(repositoryPath);
+            throws JavaGitException {
         List<String> command = buildCommandLine(options, paths);
-        GitStatusParser parser;
-        if (inputFile != null) {
-            parser = new GitStatusParser(repositoryPath.getPath() + File.separator, inputFile);
+        GitStatusParser parser = new GitStatusParser(repositoryPath.getPath() + File.separator);
+        GitStatusResponse response;
+        try {
+            response = (GitStatusResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        else {
-            parser = new GitStatusParser(repositoryPath.getPath() + File.separator);
-        }
-        GitStatusResponse response = (GitStatusResponseImpl) ProcessUtilities.runCommand(repositoryPath, command,
-                parser);
         return response;
     }
 
     /**
      * Implementation of <code>IGitStatus</code> method for getting the status of a file.
      */
-    public GitStatusResponse status(File repositoryPath, GitStatusOptions options, File file) throws JavaGitException,
-            IOException {
+    public GitStatusResponse status(File repositoryPath, GitStatusOptions options, File file) throws JavaGitException {
         List<File> paths = new ArrayList<File>();
         paths.add(file);
         return status(repositoryPath, options, paths);
@@ -88,55 +60,9 @@ public class GitStatus {
     /**
      * Implementation of <code>IGitStatus</code> method with only options passed to &lt;git-status&gt; command.
      */
-    public GitStatusResponse status(File repositoryPath, GitStatusOptions options) throws JavaGitException, IOException {
+    public GitStatusResponse status(File repositoryPath, GitStatusOptions options) throws JavaGitException {
         List<File> paths = null;
         return status(repositoryPath, options, paths);
-    }
-
-    /**
-     * Implementation of <code>IGitStatus</code> method with file-paths passed to &lt;git-status&gt; command.
-     */
-    public GitStatusResponse status(File repositoryPath, List<File> paths) throws JavaGitException, IOException {
-        return status(repositoryPath, null, paths);
-    }
-
-    /**
-     * Implementation of <code>IGitStatus</code> method for getting the status of repository with no options or files
-     * provided.
-     */
-    public GitStatusResponse status(File repositoryPath) throws JavaGitException, IOException {
-        GitStatusOptions options = null;
-        List<File> paths = null;
-        return status(repositoryPath, options, paths);
-    }
-
-    /**
-     * Implementation of <code>IGitStatus</code> method with options set to all(-a)
-     */
-    public GitStatusResponse statusAll(File repositoryPath) throws JavaGitException, IOException {
-        GitStatusOptions options = new GitStatusOptions();
-        options.setOptAll(true);
-        return status(repositoryPath, options);
-    }
-
-    /**
-     * Return status for a single <code>File</code>
-     * 
-     * @param repositoryPath Directory path to the root of the repository.
-     * @param options Options that are passed to &lt;git-status&gt; command.
-     * @param file <code>File</code> instance
-     * @return <code>GitStatusResponse</code> object
-     * @throws JavaGitException Exception thrown if the repositoryPath is null
-     * @throws IOException Exception is thrown if any of the IO operations fail.
-     */
-    public GitStatusResponse getSingleFileStatus(File repositoryPath, GitStatusOptions options, File file)
-            throws JavaGitException, IOException {
-        CheckUtilities.checkNullArgument(repositoryPath, "RepositoryPath");
-        CheckUtilities.checkFileValidity(repositoryPath);
-        List<String> command = buildCommandLine(options, null);
-        GitStatusParser parser = new GitStatusParser(repositoryPath.getPath() + File.separator, file);
-
-        return (GitStatusResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
     }
 
     /**
@@ -153,7 +79,44 @@ public class GitStatus {
         command.add("status");
 
         if (options != null) {
-            setOptions(command, options);
+            if (options.isOptAll()) {
+                command.add("-a");
+            }
+            if (options.isOptQuiet()) {
+                command.add("-q");
+            }
+            if (options.isOptVerbose()) {
+                command.add("-v");
+            }
+            if (options.isOptSignOff()) {
+                command.add("-s");
+            }
+            if (options.isOptEdit()) {
+                command.add("-e");
+            }
+            if (options.isOptInclude()) {
+                command.add("-i");
+            }
+            if (options.isOptOnly()) {
+                command.add("-o");
+            }
+            if (options.isOptNoVerify()) {
+                command.add("-n");
+            }
+            if (options.isOptUntrackedFiles()) {
+                command.add("--untracked-files");
+            }
+            if (options.isOptAllowEmpty()) {
+                command.add("--allow-empty");
+            }
+            if (!options.isOptReadFromLogFileNull()) {
+                command.add("-F");
+                command.add(options.getOptReadFromLogFile().getPath());
+            }
+            if (!options.isAuthorNull()) {
+                command.add("--author");
+                command.add(options.getAuthor());
+            }
         }
 
         if (paths != null) {
@@ -162,47 +125,6 @@ public class GitStatus {
             }
         }
         return command;
-    }
-
-    private void setOptions(List<String> argsList, GitStatusOptions options) {
-        if (options.isOptAll()) {
-            argsList.add("-a");
-        }
-        if (options.isOptQuiet()) {
-            argsList.add("-q");
-        }
-        if (options.isOptVerbose()) {
-            argsList.add("-v");
-        }
-        if (options.isOptSignOff()) {
-            argsList.add("-s");
-        }
-        if (options.isOptEdit()) {
-            argsList.add("-e");
-        }
-        if (options.isOptInclude()) {
-            argsList.add("-i");
-        }
-        if (options.isOptOnly()) {
-            argsList.add("-o");
-        }
-        if (options.isOptNoVerify()) {
-            argsList.add("-n");
-        }
-        if (options.isOptUntrackedFiles()) {
-            argsList.add("--untracked-files");
-        }
-        if (options.isOptAllowEmpty()) {
-            argsList.add("--allow-empty");
-        }
-        if (!options.isOptReadFromLogFileNull()) {
-            argsList.add("-F");
-            argsList.add(options.getOptReadFromLogFile().getPath());
-        }
-        if (!options.isAuthorNull()) {
-            argsList.add("--author");
-            argsList.add(options.getAuthor());
-        }
     }
 
 }

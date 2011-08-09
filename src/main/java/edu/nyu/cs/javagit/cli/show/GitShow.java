@@ -32,44 +32,47 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
  */
 public class GitShow {
 
-    public GitShowResponse show(File repositoryPath, Ref revision) throws JavaGitException, IOException {
-        GitShowOptions options = new GitShowOptions();
-        return show(repositoryPath, options, null, revision);
+    public GitShowResponse show(File repositoryPath, GitShowOptions options) throws JavaGitException {
+        return show(repositoryPath, options, null, null);
     }
 
-    public GitShowResponse show(File repositoryPath, GitShowOptions options, Ref revision) throws JavaGitException,
-            IOException {
+    public GitShowResponse show(File repositoryPath, GitShowOptions options, Ref revision) throws JavaGitException {
         return show(repositoryPath, options, null, revision);
-    }
-
-    public GitShowResponse show(File repositoryPath, File path, Ref revision) throws JavaGitException, IOException {
-        CheckUtilities.checkFileValidity(path);
-        GitShowOptions options = new GitShowOptions();
-        return show(repositoryPath, options, path, revision);
     }
 
     public GitShowResponse show(File repositoryPath, GitShowOptions options, File path, Ref revision)
-            throws JavaGitException, IOException {
+            throws JavaGitException {
         CheckUtilities.checkNullArgument(repositoryPath, "repository");
         CheckUtilities.validateArgumentRefType(revision, Ref.RefType.SHA1, "revision");
 
         GitShowParser parser = new GitShowParser();
         List<String> command = buildCommand(repositoryPath, options, path, revision);
-        GitShowResponse response = (GitShowResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
-        // if (response.containsError()) {
-        // int line = response.getError(0).getLineNumber();
-        // String error = response.getError(0).error();
-        // throw new JavaGitException(420001, "Line " + line + ", " + error);
-        // }
+        try {
+            GitShowResponse response = (GitShowResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
+        // TODO besim
         return null;
     }
 
-    protected List<String> buildCommand(File repositoryPath, GitShowOptions options, File path, Ref revision) {
+    /**
+     * Constructor of the command line.
+     */
+    protected List<String> buildCommand(File repositoryPath, GitShowOptions options, File file, Ref revision) {
 
         List<String> cmd = new ArrayList<String>();
         cmd.add(JavaGitConfiguration.getGitCommand());
         cmd.add("show");
-        cmd.add(revision.getName() + ":" + path.getPath());
+
+        if (file != null && revision != null) {
+            cmd.add(revision.getName() + ":" + file.getPath());
+        }
+        else {
+            if (revision != null) {
+                cmd.add(revision.getName());
+            }
+        }
 
         if (null != options) {
             // TODO there is no options
@@ -77,5 +80,4 @@ public class GitShow {
 
         return cmd;
     }
-
 }

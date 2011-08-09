@@ -41,7 +41,7 @@ public class GitAdd {
         try {
             response = (GitAddResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
         } catch (IOException e) {
-            throw new JavaGitException(JavaGitException.REPOSITORY_ERROR, e.getMessage());
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
         return (GitAddResponse) response;
     }
@@ -57,11 +57,6 @@ public class GitAdd {
 
     /**
      * Constructor of the command line.
-     * 
-     * @param repositoryPath
-     * @param options
-     * @param paths
-     * @return
      */
     private List<String> buildCommand(File repositoryPath, GitAddOptions options, List<File> paths) {
         List<String> command = new ArrayList<String>();

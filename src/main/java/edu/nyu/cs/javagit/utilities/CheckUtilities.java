@@ -17,9 +17,9 @@
 package edu.nyu.cs.javagit.utilities;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
+import edu.nyu.cs.javagit.JavaGitException;
 import edu.nyu.cs.javagit.api.object.Ref;
 
 /**
@@ -33,10 +33,11 @@ public class CheckUtilities {
      * 
      * @param filename File or directory path
      */
-    public static void checkFileValidity(String filename) throws IOException {
+    public static void checkFileValidity(String filename) throws JavaGitException {
         File file = new File(filename);
         if (!file.exists()) {
-            throw new IOException(ExceptionMessageMap.getMessage("020001") + "  { filename=[" + filename + "] }");
+            throw new JavaGitException(JavaGitException.FILE_ERROR, ExceptionMessageMap.getMessage("020001")
+                    + "  { filename=[" + filename + "] }");
         }
     }
 
@@ -44,10 +45,12 @@ public class CheckUtilities {
      * Checks that the specified file exists.
      * 
      * @param file File or directory path
+     * @throws JavaGitException
      */
-    public static void checkFileValidity(File file) throws IOException {
+    public static void checkFileValidity(File file) throws JavaGitException {
         if (!file.exists()) {
-            throw new IOException(ExceptionMessageMap.getMessage("020001") + "  { filename=[" + file.getName() + "] }");
+            throw new JavaGitException(JavaGitException.FILE_ERROR, ExceptionMessageMap.getMessage("020001")
+                    + "  { filename=[" + file.getName() + "] }");
         }
     }
 

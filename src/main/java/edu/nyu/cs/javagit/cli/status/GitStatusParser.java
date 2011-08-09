@@ -7,13 +7,30 @@ import java.util.StringTokenizer;
 import edu.nyu.cs.javagit.JavaGitException;
 import edu.nyu.cs.javagit.api.object.Ref;
 import edu.nyu.cs.javagit.cli.IParser;
-import edu.nyu.cs.javagit.cli.status.GitStatus.Patterns;
 import edu.nyu.cs.javagit.utilities.ExceptionMessageMap;
 
 public class GitStatusParser implements IParser {
 
     private enum State {
         FILES_TO_COMMIT, NOT_UPDATED, UNTRACKED_FILES
+    }
+
+    /**
+     * Patterns for matching lines for deleted files, modified files, new files and empty lines.
+     */
+    public static enum Patterns {
+        DELETED("^#\\s+deleted:\\s+.*"), MODIFIED("^#\\s+modified:\\s+.*"), NEW_FILE("^#\\s+new file:\\s+.*"), EMPTY_HASH_LINE(
+                "^#\\s*$"), RENAMED("^#\\s+renamed:\\s+.*");
+
+        String pattern;
+
+        Patterns(String pattern) {
+            this.pattern = pattern;
+        }
+
+        public boolean matches(String line) {
+            return line.matches(this.pattern);
+        }
     }
 
     private State                 outputState;
