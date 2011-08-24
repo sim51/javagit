@@ -16,8 +16,8 @@
  */
 package edu.nyu.cs.javagit.cli.checkout;
 
-import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.api.object.Ref.RefType;
+import edu.nyu.cs.javagit.object.Ref;
+import edu.nyu.cs.javagit.object.Ref.RefType;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ExceptionMessageMap;
 

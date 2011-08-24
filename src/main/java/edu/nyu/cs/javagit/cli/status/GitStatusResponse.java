@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.object.GitFileSystemObject;
-import edu.nyu.cs.javagit.api.object.GitFileSystemObject.Status;
-import edu.nyu.cs.javagit.api.object.Ref;
 import edu.nyu.cs.javagit.cli.ICommandResponse;
+import edu.nyu.cs.javagit.object.GitFileSystemObject;
+import edu.nyu.cs.javagit.object.Ref;
+import edu.nyu.cs.javagit.object.GitFileSystemObject.Status;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**

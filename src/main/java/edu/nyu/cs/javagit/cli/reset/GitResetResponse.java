@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.nyu.cs.javagit.api.object.Ref;
 import edu.nyu.cs.javagit.cli.ICommandResponse;
+import edu.nyu.cs.javagit.object.Ref;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**

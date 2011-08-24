@@ -16,7 +16,7 @@
  */
 package edu.nyu.cs.javagit.cli.branch;
 
-import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.object.Ref;
 
 /**
  * Implementation of a <code>GitBranchResponse</code>. This class adds functionality to set values in a

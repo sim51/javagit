@@ -18,8 +18,8 @@ package edu.nyu.cs.javagit.cli.status;
 
 import java.io.File;
 
-import edu.nyu.cs.javagit.api.object.GitFileSystemObject.Status;
-import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.object.Ref;
+import edu.nyu.cs.javagit.object.GitFileSystemObject.Status;
 
 /**
  * Implementation of a <code>GitStatusResponse</code>. This class adds functionality to set values in a

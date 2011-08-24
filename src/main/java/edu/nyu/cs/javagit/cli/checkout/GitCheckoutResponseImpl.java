@@ -18,7 +18,7 @@ package edu.nyu.cs.javagit.cli.checkout;
 
 import java.io.File;
 
-import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.object.Ref;
 
 /**
  * This class implements <code>GitCheckoutResponse</code> by setting values in <code>GitCheckoutResponse</code>.

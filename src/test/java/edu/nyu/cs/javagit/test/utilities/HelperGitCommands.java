@@ -21,11 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.cs.javagit.api.JavaGitConfiguration;
-import edu.nyu.cs.javagit.api.JavaGitException;
-import edu.nyu.cs.javagit.api.commands.CommandResponse;
-import edu.nyu.cs.javagit.client.cli.IParser;
-import edu.nyu.cs.javagit.client.cli.ProcessUtilities;
+import edu.nyu.cs.javagit.JavaGitConfiguration;
+import edu.nyu.cs.javagit.JavaGitException;
 
 /**
  * This class contains methods that implement some git commands that aren't coded into javagit yet but which are
@@ -46,18 +43,6 @@ public class HelperGitCommands {
         cmdLine.add(JavaGitConfiguration.getGitCommand());
         cmdLine.add("init");
 
-        ProcessUtilities.runCommand(repoDirectory, cmdLine, new IParser() {
-
-            public CommandResponse getResponse() {
-                return null;
-            }
-
-            public void processExitCode(int code) {
-            }
-
-            public void parseLine(String line) {
-            }
-        });
     }
 
 }

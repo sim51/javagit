@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.api.object.Ref.RefType;
 import edu.nyu.cs.javagit.cli.ClientManager;
 import edu.nyu.cs.javagit.cli.IClient;
 import edu.nyu.cs.javagit.cli.add.GitAdd;
@@ -43,6 +41,8 @@ import edu.nyu.cs.javagit.cli.show.GitShowResponse;
 import edu.nyu.cs.javagit.cli.status.GitStatus;
 import edu.nyu.cs.javagit.cli.status.GitStatusOptions;
 import edu.nyu.cs.javagit.cli.status.GitStatusResponse;
+import edu.nyu.cs.javagit.object.Ref;
+import edu.nyu.cs.javagit.object.Ref.RefType;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 public class JavaGit {

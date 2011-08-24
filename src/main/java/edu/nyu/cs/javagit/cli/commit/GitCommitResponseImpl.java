@@ -18,7 +18,7 @@ package edu.nyu.cs.javagit.cli.commit;
 
 import java.io.File;
 
-import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.object.Ref;
 
 /**
  * Implementation of a <code>GitCommitResponse</code>. This class adds functionality to set values in a

@@ -16,7 +16,7 @@
  */
 package edu.nyu.cs.javagit.cli.reset;
 
-import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.object.Ref;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
 /**

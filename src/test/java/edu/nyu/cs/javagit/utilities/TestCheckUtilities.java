@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.nyu.cs.javagit.utilities.CheckUtilities;
+import edu.nyu.cs.javagit.JavaGitException;
 
 /**
  * Test cases for testing the edu.nyu.cs.javagit.utilities.CheckUtilities class.
@@ -88,7 +88,7 @@ public class TestCheckUtilities extends TestCase {
     private void assertCheckFileValidityIsValid(String filename) {
         try {
             CheckUtilities.checkFileValidity(filename);
-        } catch (IOException e) {
+        } catch (JavaGitException e) {
             assertTrue("IOException thrown when one was not expected!", false);
         }
     }
@@ -97,7 +97,7 @@ public class TestCheckUtilities extends TestCase {
         try {
             CheckUtilities.checkFileValidity(filename);
             assertTrue("IOException not thrown when one was expected!", false);
-        } catch (IOException e) {
+        } catch (JavaGitException e) {
             assertEquals("IllegalArgumentException message not what was expected.", message, e.getMessage());
         }
     }

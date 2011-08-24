@@ -3,8 +3,8 @@ package edu.nyu.cs.javagit.cli.reset;
 import java.io.File;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.object.Ref;
 import edu.nyu.cs.javagit.cli.IParser;
+import edu.nyu.cs.javagit.object.Ref;
 import edu.nyu.cs.javagit.utilities.ExceptionMessageMap;
 
 public class GitResetParser implements IParser {

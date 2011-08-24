@@ -23,8 +23,8 @@ import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitConfiguration;
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.object.Ref;
-import edu.nyu.cs.javagit.api.object.Ref.RefType;
+import edu.nyu.cs.javagit.object.Ref;
+import edu.nyu.cs.javagit.object.Ref.RefType;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 import edu.nyu.cs.javagit.utilities.ProcessUtilities;
 

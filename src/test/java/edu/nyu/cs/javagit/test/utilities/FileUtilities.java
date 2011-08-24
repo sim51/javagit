@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import edu.nyu.cs.javagit.api.JavaGitException;
+import edu.nyu.cs.javagit.JavaGitException;
 
 /**
  * Some simple file utility methods for helping with testing java git functionality.
