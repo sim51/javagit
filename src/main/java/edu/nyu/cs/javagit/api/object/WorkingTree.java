@@ -23,14 +23,16 @@ import java.util.List;
 import java.util.Map;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitBranch;
-import edu.nyu.cs.javagit.api.GitCheckout;
-import edu.nyu.cs.javagit.api.GitCommit;
-import edu.nyu.cs.javagit.api.GitStatus;
 import edu.nyu.cs.javagit.cli.add.GitAddResponse;
+import edu.nyu.cs.javagit.cli.branch.GitBranch;
 import edu.nyu.cs.javagit.cli.branch.GitBranchOptions;
 import edu.nyu.cs.javagit.cli.branch.GitBranchResponse;
+import edu.nyu.cs.javagit.cli.checkout.GitCheckout;
+import edu.nyu.cs.javagit.cli.commit.GitCommit;
+import edu.nyu.cs.javagit.cli.commit.GitCommitOptions;
 import edu.nyu.cs.javagit.cli.commit.GitCommitResponse;
+import edu.nyu.cs.javagit.cli.status.GitStatus;
+import edu.nyu.cs.javagit.cli.status.GitStatusOptions;
 import edu.nyu.cs.javagit.cli.status.GitStatusResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
@@ -163,7 +165,8 @@ public final class WorkingTree {
      */
     public GitCommitResponse commit(String comment) throws IOException, JavaGitException {
         GitCommit gitCommit = new GitCommit();
-        return gitCommit.commit(path, comment);
+        GitCommitOptions options = new GitCommitOptions();
+        return gitCommit.commit(path, options, comment);
     }
 
     /**
@@ -176,7 +179,9 @@ public final class WorkingTree {
      */
     public GitCommitResponse commitAll(String comment) throws IOException, JavaGitException {
         GitCommit gitCommit = new GitCommit();
-        return gitCommit.commitAll(path, comment);
+        GitCommitOptions options = new GitCommitOptions();
+        options.setOptAll(true);
+        return gitCommit.commit(path, options, comment);
     }
 
     /**
@@ -314,7 +319,8 @@ public final class WorkingTree {
      */
     public GitStatusResponse getStatus() throws IOException, JavaGitException {
         GitStatus gitStatus = new GitStatus();
-        return gitStatus.status(path);
+        GitStatusOptions options = new GitStatusOptions();
+        return gitStatus.status(path, options);
     }
 
 }

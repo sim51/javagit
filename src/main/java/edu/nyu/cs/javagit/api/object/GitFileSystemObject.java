@@ -22,13 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitCommit;
-import edu.nyu.cs.javagit.api.GitMv;
-import edu.nyu.cs.javagit.api.GitRm;
 import edu.nyu.cs.javagit.cli.add.GitAdd;
+import edu.nyu.cs.javagit.cli.add.GitAddOptions;
 import edu.nyu.cs.javagit.cli.add.GitAddResponse;
+import edu.nyu.cs.javagit.cli.commit.GitCommit;
+import edu.nyu.cs.javagit.cli.commit.GitCommitOptions;
 import edu.nyu.cs.javagit.cli.commit.GitCommitResponse;
+import edu.nyu.cs.javagit.cli.mv.GitMv;
+import edu.nyu.cs.javagit.cli.mv.GitMvOptions;
 import edu.nyu.cs.javagit.cli.mv.GitMvResponse;
+import edu.nyu.cs.javagit.cli.rm.GitRm;
+import edu.nyu.cs.javagit.cli.rm.GitRmOptions;
 import edu.nyu.cs.javagit.cli.rm.GitRmResponse;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
@@ -164,7 +168,7 @@ public abstract class GitFileSystemObject {
      */
     public GitAddResponse add() throws IOException, JavaGitException {
         GitAdd gitAdd = new GitAdd();
-
+        GitAddOptions options = new GitAddOptions();
         // create a list of filenames and add yourself to it
         List<File> list = new ArrayList<File>();
         File relativeFilePath;
@@ -181,7 +185,7 @@ public abstract class GitFileSystemObject {
             list.add(relativePath);
         }
         // run git-add command
-        return gitAdd.add(workingTree.getPath(), null, list);
+        return gitAdd.add(workingTree.getPath(), list, options);
     }
 
     /**
@@ -194,13 +198,13 @@ public abstract class GitFileSystemObject {
     public GitCommitResponse commit(String comment) throws IOException, JavaGitException {
         // first add the file
         add();
-
+        GitCommitOptions options = new GitCommitOptions();
         // create a list of filenames and add yourself to it
         List<File> list = new ArrayList<File>();
         list.add(relativePath);
 
         GitCommit gitCommit = new GitCommit();
-        return gitCommit.commitOnly(workingTree.getPath(), comment, list);
+        return gitCommit.commit(workingTree.getPath(), options, comment, list);
     }
 
     /**
@@ -218,7 +222,8 @@ public abstract class GitFileSystemObject {
 
         // perform git-mv
         GitMv gitMv = new GitMv();
-        GitMvResponse response = gitMv.mv(workingTree.getPath(), source, relativeDest);
+        GitMvOptions options = new GitMvOptions();
+        GitMvResponse response = gitMv.mv(workingTree.getPath(), options, source, relativeDest);
 
         // file has changed; update
         file = dest;
@@ -234,9 +239,10 @@ public abstract class GitFileSystemObject {
      */
     public GitRmResponse rm() throws IOException, JavaGitException {
         GitRm gitRm = new GitRm();
+        GitRmOptions options = new GitRmOptions();
 
         // run git rm command
-        return gitRm.rm(workingTree.getPath(), relativePath);
+        return gitRm.rm(workingTree.getPath(), options, relativePath);
     }
 
     /**

@@ -37,29 +37,18 @@ public class GitCheckout {
      * Git checkout with options and base branch information provided to &lt;git-checkout&gt; command.
      */
     public GitCheckoutResponse checkout(File repositoryPath, GitCheckoutOptions options, Ref ref)
-            throws JavaGitException, IOException {
+            throws JavaGitException {
         CheckUtilities.checkFileValidity(repositoryPath);
         checkRefAgainstRefType(ref, RefType.HEAD);
         List<String> command = buildCommand(options, ref);
         GitCheckoutParser parser = new GitCheckoutParser();
-        GitCheckoutResponse response = (GitCheckoutResponse) ProcessUtilities.runCommand(repositoryPath, command,
-                parser);
+        GitCheckoutResponse response;
+        try {
+            response = (GitCheckoutResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
         return response;
-    }
-
-    /**
-     * Git checkout without any options and branch information provided. Just a basic checkout command.
-     */
-    public GitCheckoutResponse checkout(File repositoryPath) throws JavaGitException, IOException {
-        GitCheckoutOptions options = null;
-        return checkout(repositoryPath, options, null);
-    }
-
-    /**
-     * Checks out a branch from the git repository with a given branch name.
-     */
-    public GitCheckoutResponse checkout(File repositoryPath, Ref branch) throws JavaGitException, IOException {
-        return checkout(repositoryPath, null, branch);
     }
 
     /**
@@ -87,34 +76,6 @@ public class GitCheckout {
         GitCheckoutParser parser = new GitCheckoutParser();
         List<String> command = buildCommand(options, ref, paths);
         return (GitCheckoutResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
-    }
-
-    /**
-     * Checks out a file from repository from a particular branch
-     */
-    public GitCheckoutResponse checkout(File repositoryPath, GitCheckoutOptions options, Ref branch, File path)
-            throws JavaGitException, IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
-        GitCheckoutParser parser = new GitCheckoutParser();
-        List<File> paths = new ArrayList<File>();
-        paths.add(path);
-        List<String> command = buildCommand(options, branch, paths);
-        GitCheckoutResponse response = (GitCheckoutResponse) ProcessUtilities.runCommand(repositoryPath, command,
-                parser);
-        return response;
-    }
-
-    /**
-     * Checks out a list of files from a given branch
-     */
-    public GitCheckoutResponse checkout(File repositoryPath, Ref branch, List<File> paths) throws JavaGitException,
-            IOException {
-        CheckUtilities.checkFileValidity(repositoryPath);
-        GitCheckoutParser parser = new GitCheckoutParser();
-        List<String> command = buildCommand(null, branch, paths);
-        GitCheckoutResponse response = (GitCheckoutResponse) ProcessUtilities.runCommand(repositoryPath, command,
-                parser);
-        return response;
     }
 
     /**

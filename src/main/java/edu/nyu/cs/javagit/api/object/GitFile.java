@@ -18,12 +18,15 @@ package edu.nyu.cs.javagit.api.object;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitLog;
-import edu.nyu.cs.javagit.api.GitStatus;
+import edu.nyu.cs.javagit.cli.log.GitLog;
 import edu.nyu.cs.javagit.cli.log.GitLogOptions;
+import edu.nyu.cs.javagit.cli.status.GitStatus;
+import edu.nyu.cs.javagit.cli.status.GitStatusOptions;
+import edu.nyu.cs.javagit.cli.status.GitStatusResponse;
 
 /**
  * <code>GitFile</code> a file object in a git working tree.
@@ -58,8 +61,9 @@ public class GitFile extends GitFileSystemObject {
      */
     public Status getStatus() throws IOException, JavaGitException {
         GitStatus gitStatus = new GitStatus();
-        // run git-status command
-        return gitStatus.getFileStatus(workingTree.getPath(), relativePath);
+        GitStatusOptions options = new GitStatusOptions();
+        GitStatusResponse response = gitStatus.status(workingTree.getPath(), options, relativePath);
+        return response.getFileStatus(relativePath);
     }
 
     /**
@@ -73,7 +77,9 @@ public class GitFile extends GitFileSystemObject {
         GitLog gitLog = new GitLog();
         GitLogOptions options = new GitLogOptions();
         options.setOptRelative(true, this.relativePath.toString());
-        return gitLog.log(this.file);
+        List<File> files = new ArrayList<File>();
+        files.add(this.file);
+        return gitLog.log(workingTree.getPath(), options, files);
     }
 
     /**

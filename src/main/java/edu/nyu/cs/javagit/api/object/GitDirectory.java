@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitLog;
+import edu.nyu.cs.javagit.cli.log.GitLog;
 import edu.nyu.cs.javagit.cli.log.GitLogOptions;
 
 /**
@@ -89,7 +89,8 @@ public class GitDirectory extends GitFileSystemObject {
      */
     public List<edu.nyu.cs.javagit.cli.log.GitLogResponse.Commit> getLog() throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
-        return gitLog.log(this.file);
+        GitLogOptions options = new GitLogOptions();
+        return gitLog.log(this.file, options);
     }
 
     /**

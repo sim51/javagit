@@ -32,38 +32,27 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
  */
 public class GitBranch {
 
-    public GitBranchResponse branch(File repoPath) throws IOException, JavaGitException {
-        return branchProcess(repoPath, null, null, null, null);
-    }
-
-    public GitBranchResponseImpl branch(File repoPath, GitBranchOptions options) throws IOException, JavaGitException {
-        return branchProcess(repoPath, options, null, null, null);
+    public GitBranchResponseImpl branch(File repoPath, GitBranchOptions options) throws JavaGitException {
+        GitBranchResponseImpl response;
+        try {
+            response = branchProcess(repoPath, options, null, null, null);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
+        return response;
     }
 
     public GitBranchResponseImpl deleteBranch(File repoPath, boolean forceDelete, boolean remote, Ref branchName)
-            throws IOException, JavaGitException {
+            throws JavaGitException {
+        GitBranchResponseImpl response;
         GitBranchOptions options = new GitBranchOptions();
         setDeleteOptions(options, forceDelete, remote);
-        return branchProcess(repoPath, options, branchName, null, null);
-    }
-
-    public GitBranchResponseImpl deleteBranches(File repoPath, boolean forceDelete, boolean remote, List<Ref> branchList)
-            throws IOException, JavaGitException {
-        GitBranchOptions options = new GitBranchOptions();
-        setDeleteOptions(options, forceDelete, remote);
-        return branchProcess(repoPath, options, null, null, branchList);
-    }
-
-    public GitBranchResponseImpl renameBranch(File repoPath, boolean forceRename, Ref newName) throws IOException,
-            JavaGitException {
-        GitBranchOptions options = new GitBranchOptions();
-        if (forceRename) {
-            options.setOptMUpper(true);
+        try {
+            response = branchProcess(repoPath, options, branchName, null, null);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        else {
-            options.setOptMLower(true);
-        }
-        return branchProcess(repoPath, options, newName, null, null);
+        return response;
     }
 
     public GitBranchResponseImpl renameBranch(File repoPath, boolean forceRename, Ref oldName, Ref newName)
@@ -78,43 +67,19 @@ public class GitBranch {
         return branchProcess(repoPath, options, oldName, newName, null);
     }
 
-    public GitBranchResponseImpl createBranch(File repoPath, Ref branchName) throws IOException, JavaGitException {
-        return branchProcess(repoPath, null, branchName, null, null);
-    }
-
     public GitBranchResponseImpl createBranch(File repoPath, GitBranchOptions options, Ref branchName)
-            throws IOException, JavaGitException {
-        return branchProcess(repoPath, options, branchName, null, null);
-    }
-
-    public GitBranchResponseImpl createBranch(File repoPath, Ref branchName, Ref startPoint) throws IOException,
-            JavaGitException {
-        return branchProcess(repoPath, null, branchName, startPoint, null);
-    }
-
-    public GitBranchResponseImpl createBranch(File repoPath, GitBranchOptions options, Ref branchName, Ref startPoint)
-            throws IOException, JavaGitException {
-        return branchProcess(repoPath, options, branchName, startPoint, null);
+            throws JavaGitException {
+        GitBranchResponseImpl response;
+        try {
+            response = branchProcess(repoPath, options, branchName, null, null);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
+        return response;
     }
 
     /**
      * Process the git-branch command, to show/delete/create/rename branches.
-     * 
-     * @param repoPath A <code>File</code> instance for the path to the repository. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param options The options to include on the command line.
-     * @param arg1 When renaming a branch to a different name, this is the old branch. When creating a branch this the
-     *        branch name.
-     * @param arg2 When renaming a branch to a new branch name, this is the new branch name. When creating a branch,
-     *        this is the head to start from.
-     * @param branchList List of branches need to be deleted.
-     * @return The result of the git branch.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponseImpl branchProcess(File repoPath, GitBranchOptions options, Ref arg1, Ref arg2,
             List<Ref> branchList) throws IOException, JavaGitException {
@@ -127,14 +92,6 @@ public class GitBranch {
 
     /**
      * Builds a list of command arguments to pass to <code>ProcessBuilder</code>.
-     * 
-     * @param options The options to include on the command line.
-     * @param arg1 When renaming a branch to a different name, this is the old branch. When creating a branch this the
-     *        branch name.
-     * @param arg2 When renaming a branch to a new branch name, this is the new branch name. When creating a branch,
-     *        this is the head to start from.
-     * @param branchList List of branches need to be deleted.
-     * @return A list of the individual arguments to pass to <code>ProcessBuilder</code>.
      */
     protected List<String> buildCommand(GitBranchOptions options, Ref arg1, Ref arg2, List<Ref> branchList) {
         List<String> cmd = new ArrayList<String>();

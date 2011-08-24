@@ -31,69 +31,38 @@ import edu.nyu.cs.javagit.utilities.ProcessUtilities;
  */
 public class GitClone {
 
-    public GitCloneResponseImpl clone(File workingDirectoryPath, URL repository) throws IOException, JavaGitException {
-        return cloneProcess(workingDirectoryPath, null, repository, null);
-    }
-
-    public GitCloneResponseImpl clone(File workingDirectoryPath, GitCloneOptions options, URL repository)
-            throws IOException, JavaGitException {
-        return cloneProcess(workingDirectoryPath, options, repository, null);
-    }
-
-    public GitCloneResponseImpl clone(File workingDirectoryPath, URL repository, File directory) throws IOException,
-            JavaGitException {
-        return cloneProcess(workingDirectoryPath, null, repository, directory);
-    }
-
-    public GitCloneResponseImpl clone(File workingDirectoryPath, GitCloneOptions options, URL repository, File directory)
-            throws IOException, JavaGitException {
-        return cloneProcess(workingDirectoryPath, options, repository, directory);
+    public GitCloneResponseImpl clone(File repositoryPath, GitCloneOptions options, URL repository)
+            throws JavaGitException {
+        GitCloneResponseImpl response;
+        try {
+            response = cloneProcess(repositoryPath, options, repository);
+        } catch (IOException e) {
+            throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
+        }
+        return response;
     }
 
     /**
      * Process the git-clone command, to make a clone of the git repository.
-     * 
-     * @param workingDirectoryPath A <code>File</code> instance for the path to the working directory. This argument
-     *        must represent the absolute path to the desired directory as returned by the <code>File.getPath()</code>
-     *        method. If null is passed, a <code>NullPointerException</code> will be thrown.
-     * @param options The options for the git-clone command. If the value is null, a <code>NullPointerException</code>
-     *        will be thrown.
-     * @param repository A <code>URL</code> instance for the repository to be cloned. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param directory A <code>File</code> instance for the directory where the repository is to be cloned. If null is
-     *        passed, a <code>NullPointerException</code> will be thrown.
-     * @return The result of the git clone.
-     * @throws IOException There are many reasons for which an <code>IOException</code> may be thrown. Examples include:
-     *         <ul>
-     *         <li>a directory doesn't exist</li>
-     *         <li>a command is not found on the PATH</li>
-     *         </ul>
-     * @throws JavaGitException Thrown when there is an error executing git-clone.
      */
-    public GitCloneResponseImpl cloneProcess(File workingDirectoryPath, GitCloneOptions options, URL repository,
-            File directory) throws IOException, JavaGitException {
-        List<String> commandLine = buildCommand(options, repository, directory);
+    public GitCloneResponseImpl cloneProcess(File repositoryPath, GitCloneOptions options, URL repository)
+            throws IOException, JavaGitException {
+        List<String> commandLine = buildCommand(options, repository, repositoryPath);
         GitCloneParser parser = new GitCloneParser();
 
-        return (GitCloneResponseImpl) ProcessUtilities.runCommand(workingDirectoryPath, commandLine, parser);
+        return (GitCloneResponseImpl) ProcessUtilities.runCommand(repositoryPath, commandLine, parser);
     }
 
     /**
      * Builds a list of command arguments to pass to <code>ProcessBuilder</code>.
-     * 
-     * @param options The options for the git-clone command. If the value is null, a <code>NullPointerException</code>
-     *        will be thrown.
-     * @param repository A <code>URL</code> instance for the repository to be cloned. If null is passed, a
-     *        <code>NullPointerException</code> will be thrown.
-     * @param directory A <code>File</code> instance for the directory where the repository is to be cloned. If null is
-     *        passed, a <code>NullPointerException</code> will be thrown.
-     * @return The result of the git clone.
      */
-    protected List<String> buildCommand(GitCloneOptions options, URL repository, File directory) {
+    protected List<String> buildCommand(GitCloneOptions options, URL repositoryUrl, File repositoryPath) {
         List<String> cmd = new ArrayList<String>();
 
         cmd.add(JavaGitConfiguration.getGitCommand());
         cmd.add("clone");
+        cmd.add(repositoryUrl.toString());
+        cmd.add(repositoryPath.getPath());
         return cmd;
     }
 

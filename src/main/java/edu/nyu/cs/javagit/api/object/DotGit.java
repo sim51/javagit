@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import edu.nyu.cs.javagit.JavaGitException;
-import edu.nyu.cs.javagit.api.GitBranch;
-import edu.nyu.cs.javagit.api.GitLog;
+import edu.nyu.cs.javagit.cli.branch.GitBranch;
 import edu.nyu.cs.javagit.cli.branch.GitBranchOptions;
 import edu.nyu.cs.javagit.cli.branch.GitBranchResponse;
+import edu.nyu.cs.javagit.cli.log.GitLog;
 import edu.nyu.cs.javagit.cli.log.GitLogOptions;
 import edu.nyu.cs.javagit.utilities.CheckUtilities;
 
@@ -159,7 +159,8 @@ public final class DotGit {
     public Ref createBranch(String name) throws IOException, JavaGitException {
         Ref newBranch = Ref.createBranchRef(name);
         GitBranch gitBranch = new GitBranch();
-        gitBranch.createBranch(path, newBranch);
+        GitBranchOptions options = new GitBranchOptions();
+        gitBranch.createBranch(path, options, newBranch);
         return newBranch;
     }
 
@@ -290,7 +291,8 @@ public final class DotGit {
      */
     public List<edu.nyu.cs.javagit.cli.log.GitLogResponse.Commit> getLog() throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
-        return gitLog.log(this.getPath());
+        GitLogOptions options = new GitLogOptions();
+        return gitLog.log(this.getPath(), options);
     }
 
     /**

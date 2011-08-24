@@ -2,14 +2,25 @@ package edu.nyu.cs.javagit;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import edu.nyu.cs.javagit.api.object.Ref;
+import edu.nyu.cs.javagit.api.object.Ref.RefType;
 import edu.nyu.cs.javagit.cli.ClientManager;
 import edu.nyu.cs.javagit.cli.IClient;
 import edu.nyu.cs.javagit.cli.add.GitAdd;
 import edu.nyu.cs.javagit.cli.add.GitAddOptions;
 import edu.nyu.cs.javagit.cli.add.GitAddResponse;
+import edu.nyu.cs.javagit.cli.branch.GitBranch;
+import edu.nyu.cs.javagit.cli.branch.GitBranchOptions;
+import edu.nyu.cs.javagit.cli.branch.GitBranchResponse;
+import edu.nyu.cs.javagit.cli.checkout.GitCheckout;
+import edu.nyu.cs.javagit.cli.checkout.GitCheckoutOptions;
+import edu.nyu.cs.javagit.cli.checkout.GitCheckoutResponse;
+import edu.nyu.cs.javagit.cli.clone.GitClone;
+import edu.nyu.cs.javagit.cli.clone.GitCloneOptions;
+import edu.nyu.cs.javagit.cli.clone.GitCloneResponse;
 import edu.nyu.cs.javagit.cli.commit.GitCommit;
 import edu.nyu.cs.javagit.cli.commit.GitCommitOptions;
 import edu.nyu.cs.javagit.cli.commit.GitCommitResponse;
@@ -78,6 +89,45 @@ public class JavaGit {
         return gitAdd.add(repositoryPath, file, options);
     }
 
+    // ~~~~ BEGIN GIT BRANCH
+
+    /**
+     * Perform git-branch with the specified options against the repository.
+     */
+    public GitBranchResponse branch(GitBranchOptions options) throws JavaGitException {
+        CheckUtilities.checkNullArgument(options, "options");
+
+        IClient client = ClientManager.getInstance().getPreferredClient();
+        GitBranch gitBranch = client.getGitBranchInstance();
+        return gitBranch.branch(repositoryPath, options);
+    }
+
+    /**
+     * This method deletes the specified branch using the -d command line option.
+     */
+    public GitBranchResponse deleteBranch(Ref branchName, boolean forceDelete, boolean remote) throws JavaGitException {
+        CheckUtilities.checkNullArgument(branchName, "branch name");
+        CheckUtilities.validateArgumentRefType(branchName, Ref.RefType.BRANCH, "branch name");
+
+        IClient client = ClientManager.getInstance().getPreferredClient();
+        GitBranch gitBranch = client.getGitBranchInstance();
+        return gitBranch.deleteBranch(repositoryPath, forceDelete, remote, branchName);
+    }
+
+    /**
+     * Creates a branch according to given option. Indicate to use the current working branch as the branch start point.
+     */
+    public GitBranchResponse createBranch(Ref branchName, GitBranchOptions options) throws JavaGitException {
+        CheckUtilities.checkNullArgument(repositoryPath, "repository path");
+        CheckUtilities.checkNullArgument(options, "options");
+        CheckUtilities.checkNullArgument(branchName, "branch name");
+        CheckUtilities.validateArgumentRefType(branchName, Ref.RefType.BRANCH, "branch name");
+
+        IClient client = ClientManager.getInstance().getPreferredClient();
+        GitBranch gitBranch = client.getGitBranchInstance();
+        return gitBranch.createBranch(repositoryPath, options, branchName);
+    }
+
     // ~~~~ BEGIN GIT COMMIT
 
     /**
@@ -106,6 +156,34 @@ public class JavaGit {
         IClient client = ClientManager.getInstance().getPreferredClient();
         GitCommit gitCommit = client.getGitCommitInstance();
         return gitCommit.commit(repositoryPath, options, message, paths);
+    }
+
+    // ~~~~ BEGIN GIT CHECKOUT
+
+    /**
+     * For checking out a branch or creating a new branch. The <new-branch> is the value of the option '-b' passed in
+     * <code>GitCheckoutOptions</code> starting at <branch-name> provided as the last argument to the checkout method.
+     **/
+    public GitCheckoutResponse checkout(Ref branch, GitCheckoutOptions options) throws IOException, JavaGitException {
+        CheckUtilities.validateArgumentRefType(branch, RefType.BRANCH, "Branch name");
+        IClient client = ClientManager.getInstance().getPreferredClient();
+        GitCheckout gitCheckout = client.getGitCheckoutInstance();
+        return gitCheckout.checkout(repositoryPath, options, branch);
+    }
+
+    // ~~~~ BEGIN GIT CLONE
+
+    /**
+     * Clones a git repository with specified options in default directory i.e. the directory name which the URL
+     * contains.
+     */
+    public GitCloneResponse clone(URL repositoryUrl, GitCloneOptions options) throws JavaGitException {
+        CheckUtilities.checkNullArgument(options, "options");
+        CheckUtilities.checkNullArgument(repositoryUrl, "repository");
+
+        IClient client = ClientManager.getInstance().getPreferredClient();
+        GitClone gitClone = client.getGitCloneInstance();
+        return gitClone.clone(repositoryPath, options, repositoryUrl);
     }
 
     // ~~~~ BEGIN GIT INIT
