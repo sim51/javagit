@@ -23,6 +23,7 @@ import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 public class GitCommitParser implements IParser {
@@ -64,16 +65,24 @@ public class GitCommitParser implements IParser {
      * @param line The line of text to process.
      */
     private void parseLineOne(String line) {
-        if (line.startsWith("Created initial commit ") || line.startsWith("Created commit ")) {
-            int locColon = line.indexOf(':');
-            int locShortHash = line.lastIndexOf(' ', locColon);
-            String shortHash = line.substring(locShortHash + 1, locColon);
-            String shortComment = line.substring(locColon + 2);
+        String shortHash;
+        String shortComment;
+        if (line.startsWith("[")) {
+            String[] split = line.split(" ");
+            // is it a root-commit
+            if (split[1].startsWith("(") && split[1].endsWith(")")) {
+                shortHash = split[2].substring(0, split[2].length() - 1);
+            }
+            else {
+                shortHash = split[1].substring(0, split[1].length() - 1);
+            }
+            int locEndBrace = line.indexOf(']');
+            shortComment = line.substring(locEndBrace + 2);
             response = new GitCommitResponseImpl(Ref.createSha1Ref(shortHash), shortComment);
         }
         else {
             errorMsg = new StringBuffer();
-            errorMsg.append("line1=[" + line + "]");
+            errorMsg.append("[" + line + "]");
         }
     }
 
@@ -83,16 +92,22 @@ public class GitCommitParser implements IParser {
      * @param line The line of text to process.
      */
     private void parseLineTwo(String line) {
-        int spaceOffset = line.indexOf(' ', 1);
-        response.setFilesChanged(line.substring(1, spaceOffset));
+        int nbChanged = 0;
+        int nbInsertion = 0;
+        int nbDeletion = 0;
 
-        int commaOffset = line.indexOf(',', spaceOffset);
-        spaceOffset = line.indexOf(' ', commaOffset + 2);
-        response.setLinesInserted(line.substring(commaOffset + 2, spaceOffset));
-
-        commaOffset = line.indexOf(',', spaceOffset);
-        spaceOffset = line.indexOf(' ', commaOffset + 2);
-        response.setLinesDeleted(line.substring(commaOffset + 2, spaceOffset));
+        if (!line.startsWith("#")) {
+            String[] split = line.split(",");
+            nbChanged = Integer.valueOf(split[0].split(" ")[1]);
+            nbInsertion = Integer.valueOf(split[1].split(" ")[1]);
+            nbDeletion = Integer.valueOf(split[2].split(" ")[1]);
+            response.setFilesChanged(nbChanged);
+            response.setLinesInserted(nbInsertion);
+            response.setLinesDeleted(nbDeletion);
+        }
+        else {
+            errorMsg.append("[" + line + "]");
+        }
     }
 
     /**
@@ -112,6 +127,9 @@ public class GitCommitParser implements IParser {
         }
         else if (line.startsWith(" rename")) {
             parseCopyRenameLine(line, false);
+        }
+        else if (line.startsWith("#")) {
+            errorMsg.append("[" + line + "]");
         }
     }
 

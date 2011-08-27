@@ -103,9 +103,9 @@ public class GitCheckoutParser implements IParser {
     }
 
     private String extractBranchName(String line) {
-        int startIndex = line.indexOf('"');
-        int endIndex = line.indexOf('"', startIndex + 1);
-        return line.substring(startIndex, endIndex + 1);
+        int startIndex = line.indexOf("'");
+        int endIndex = line.indexOf("'", startIndex + 1);
+        return line.substring(startIndex + 1, endIndex);
     }
 
     private void parseFilesInfo(String line) {
