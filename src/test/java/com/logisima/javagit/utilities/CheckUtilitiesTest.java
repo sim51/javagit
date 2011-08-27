@@ -34,7 +34,7 @@ import com.logisima.javagit.JavaGitException;
 /**
  * Test cases for testing the edu.nyu.cs.javagit.utilities.CheckUtilities class.
  */
-public class TestCheckUtilities extends TestCase {
+public class CheckUtilitiesTest extends TestCase {
 
     @Before
     protected void setUp() {

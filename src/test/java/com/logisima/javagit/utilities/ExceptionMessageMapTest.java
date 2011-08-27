@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Test class for edu.nyu.cs.javagit.utiltites.ExceptionMessageMap.
  */
-public class TestExceptionMessageMap extends TestCase {
+public class ExceptionMessageMapTest extends TestCase {
 
     @Before
     protected void setUp() {

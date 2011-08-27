@@ -1,0 +1,32 @@
+Java client for GIT.
+
+This project is a fork of JavaGit (http://javagit.sourceforge.net/).
+
+Q- Why a fork ?
+A- Because the project is dead (no commit since 2008 ...), and the original project does't respond to my criteria's quality
+
+
+
+[bsimard@thales javagit (mine)]$ git status
+# On branch mine
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       new file:   README
+#
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   pom.xml
+#       modified:   src/main/java/com/logisima/javagit/cli/commit/GitCommitParser.java
+#       modified:   src/main/java/com/logisima/javagit/object/GitFile.java
+#       deleted:    src/test/java/com/logisima/javagit/utilities/TestCheckUtilities.java
+#       deleted:    src/test/java/com/logisima/javagit/utilities/TestExceptionMessageMap.java
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       src/test/java/com/logisima/javagit/object/
+#       src/test/java/com/logisima/javagit/utilities/CheckUtilitiesTest.java
+#       src/test/java/com/logisima/javagit/utilities/ExceptionMessageMapTest.java

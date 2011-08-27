@@ -64,17 +64,17 @@ public class GitCommitParser implements IParser {
      * @param line The line of text to process.
      */
     private void parseLineOne(String line) {
-        // if (line.startsWith("Created initial commit ") || line.startsWith("Created commit ")) {
-        // int locColon = line.indexOf(':');
-        // int locShortHash = line.lastIndexOf(' ', locColon);
-        // String shortHash = line.substring(locShortHash + 1, locColon);
-        // String shortComment = line.substring(locColon + 2);
-        // response = new GitCommitResponseImpl(Ref.createSha1Ref(shortHash), shortComment);
-        // }
-        // else {
-        // errorMsg = new StringBuffer();
-        // errorMsg.append("line1=[" + line + "]");
-        // }
+        if (line.startsWith("Created initial commit ") || line.startsWith("Created commit ")) {
+            int locColon = line.indexOf(':');
+            int locShortHash = line.lastIndexOf(' ', locColon);
+            String shortHash = line.substring(locShortHash + 1, locColon);
+            String shortComment = line.substring(locColon + 2);
+            response = new GitCommitResponseImpl(Ref.createSha1Ref(shortHash), shortComment);
+        }
+        else {
+            errorMsg = new StringBuffer();
+            errorMsg.append("line1=[" + line + "]");
+        }
     }
 
     /**

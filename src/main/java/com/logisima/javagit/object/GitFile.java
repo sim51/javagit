@@ -60,10 +60,11 @@ public class GitFile extends GitFileSystemObject {
      * 
      * @return Object's status in the working directory (untracked, changed but not updated, etc).
      */
-    public GitStatusResponse getStatus() throws IOException, JavaGitException {
+    public Status getStatus() throws IOException, JavaGitException {
         GitStatus gitStatus = new GitStatus();
         // run git-status command
-        return gitStatus.status(workingTree.getPath(), null, relativePath);
+        GitStatusResponse response = gitStatus.status(workingTree.getPath(), null, relativePath);
+        return response.getFileStatus(file);
     }
 
     /**
