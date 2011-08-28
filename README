@@ -1,6 +1,7 @@
-Java client for GIT.
+Java client for GIT (http://sim51.github.com/javagit)
 
 This project is a fork of JavaGit (http://javagit.sourceforge.net/).
 
-Q- Why a fork ?
-A- Because the project is dead (no commit since 2008 ...), and the original project doesn't respond to my criteria of quality
+* Why a fork ?
+Because the project is dead (no commit since 2008 ...), and the original project doesn't respond to my criteria of quality. 
+However, I need some features that original project doesn't have.
