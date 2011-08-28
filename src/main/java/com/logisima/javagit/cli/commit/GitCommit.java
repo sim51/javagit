@@ -93,8 +93,10 @@ public class GitCommit {
             }
         }
 
-        cmd.add("-m");
-        cmd.add(message);
+        if (message != null) {
+            cmd.add("-m");
+            cmd.add(message);
+        }
 
         if (null != paths) {
             cmd.add("--");

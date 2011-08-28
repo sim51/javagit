@@ -57,7 +57,9 @@ public class GitTestCase extends TestCase {
             String shortHashName, int nbFilesChanged, int nbLinesDeleted, int nbLinesInserted, int nbAddedFiles,
             int nbCopiedFiles, int nbDeletedFiles, int nbRenamedFiles) {
         assertEquals(shortComment, response.getCommitShortComment());
-        assertEquals(shortHashName, response.getCommitShortHashName().getName());
+        if (shortHashName != null) {
+            assertEquals(shortHashName, response.getCommitShortHashName().getName());
+        }
         assertEquals(nbFilesChanged, response.getFilesChanged());
         assertEquals(nbLinesDeleted, response.getLinesDeleted());
         assertEquals(nbLinesInserted, response.getLinesInserted());
@@ -81,7 +83,7 @@ public class GitTestCase extends TestCase {
      */
     protected static void gitStatusTestEquals(GitStatusResponseImpl response, String branch, int nbNewFilesToCommit,
             int nbModifiedFilesNotUpdated, int nbDeletedFilesNotUpdated, int nbModifiedFilesToCommit,
-            int nbDeletedFilesToCommit, int nbUntrackedFiles) {
+            int nbDeletedFilesToCommit, int nbUntrackedFiles, String message) {
         assertEquals(branch, response.getBranch().getName());
         assertEquals(nbNewFilesToCommit, response.getNewFilesToCommit().size());
         assertEquals(nbModifiedFilesNotUpdated, response.getModifiedFilesNotUpdated().size());
@@ -89,5 +91,6 @@ public class GitTestCase extends TestCase {
         assertEquals(nbModifiedFilesToCommit, response.getModifiedFilesToCommit().size());
         assertEquals(nbDeletedFilesToCommit, response.getDeletedFilesToCommit().size());
         assertEquals(nbUntrackedFiles, response.getUntrackedFiles().size());
+        assertEquals(message, response.getMessage());
     }
 }

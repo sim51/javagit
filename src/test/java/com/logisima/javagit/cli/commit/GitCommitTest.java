@@ -24,56 +24,46 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.logisima.javagit.JavaGit;
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.add.GitAdd;
-import com.logisima.javagit.cli.init.GitInit;
+import com.logisima.javagit.cli.GitTestCase;
 import com.logisima.javagit.test.utilities.FileUtilities;
 
-/**
- * Implements test cases for for GitCommit.
- */
-public class TestGitCommit extends TestCase {
+public class GitCommitTest extends GitTestCase {
 
-    private File repoDirectory;
+    File repositoryPath;
 
     @Before
     protected void setUp() throws IOException, JavaGitException {
-        repoDirectory = FileUtilities.createTempDirectory("GitCommitTestRepo");
-        GitInit gitInit = new GitInit();
-        gitInit.init(repoDirectory, null);
-    }
-
-    @After
-    protected void tearDown() throws JavaGitException {
-        // delete repo dir
-        FileUtilities.removeDirectoryRecursivelyAndForcefully(repoDirectory);
+        repositoryPath = FileUtilities.createTempDirectory("GitCommitTestRepo");
+        JavaGit git = new JavaGit(repositoryPath);
+        git.init(null);
     }
 
     @Test
     public void testCommit() throws IOException, JavaGitException {
-        File testFile = FileUtilities.createFile(repoDirectory, "fileA.txt", "Sameple Contents");
+        File testFile = FileUtilities.createFile(repositoryPath, "fileA.txt", "Sameple Contents");
+        JavaGit git = new JavaGit(repositoryPath);
 
         // Add a file to the repo
         List<File> filesToAdd = new ArrayList<File>();
         // filesToAdd.add(new File("fileA.txt"));
         filesToAdd.add(testFile);
-        GitAdd gitAdd = new GitAdd();
-        gitAdd.add(repoDirectory, filesToAdd, null);
+        git.add(filesToAdd, null);
 
         // Call commit
-        GitCommit gitCommit = new GitCommit();
-        GitCommitResponse resp = gitCommit.commit(repoDirectory, "Making a first test commit", null);
-        resp.getFilesChanged();
-        assertEquals("Short comment not as expected", resp.getCommitShortComment(), "Making a first test commit");
-        assertEquals("", resp.getFilesChanged(), 1);
-        assertEquals("", resp.getLinesDeleted(), 0);
-        assertEquals("", resp.getLinesInserted(), 1);
+        GitCommitResponseImpl response = (GitCommitResponseImpl) git.commit("Making a first test commit", null);
+
+        gitCommitTestEquals(response, "Making a first test commit", null, 1, 0, 1, 1, 0, 0, 0);
     }
 
+    @After
+    protected void tearDown() throws JavaGitException {
+        // delete repo dir
+        FileUtilities.removeDirectoryRecursivelyAndForcefully(repositoryPath);
+    }
 }

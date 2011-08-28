@@ -11,7 +11,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>javagit</name>
 	<description>Java client for GIT</description>
-	<url>https://github.com/sim51/javagit/</url>
+	<url>http://sim51.github.com/javagit/</url>
 
 
 	<!-- =========== -->

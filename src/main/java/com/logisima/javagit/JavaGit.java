@@ -155,9 +155,6 @@ public class JavaGit {
      */
     public GitCommitResponse commit(String message, GitCommitOptions options) throws IOException, JavaGitException {
 
-        CheckUtilities.checkStringArgument(message, "message");
-        CheckUtilities.checkNullArgument(options, "options");
-
         IClient client = ClientManager.getInstance().getPreferredClient();
         com.logisima.javagit.cli.commit.GitCommit gitCommit = client.getGitCommitInstance();
         return gitCommit.commit(repositoryPath, message, options);

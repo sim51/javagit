@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * <code>Commit</code> represents information about a commit to a git repository.
  * 
- * TODO: Build out the class
  */
 public final class Commit {
 

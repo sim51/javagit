@@ -103,7 +103,7 @@ public class GitAddTest extends GitTestCase {
 
         // check with "git status"
         GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
-        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0);
+        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0, null);
     }
 
     /**
@@ -133,7 +133,7 @@ public class GitAddTest extends GitTestCase {
 
         // check with "git status"
         GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
-        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0);
+        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0, null);
     }
 
     @After
