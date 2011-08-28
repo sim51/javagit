@@ -21,7 +21,6 @@ package com.logisima.javagit.cli.commit;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.logisima.javagit.cli.ICommandResponse;
@@ -88,141 +87,42 @@ public class GitCommitResponse implements ICommandResponse {
         renamedFiles = new ArrayList<CopiedOrMovedFile>();
     }
 
-    public boolean equals(Object o) {
-        if (!(o instanceof GitCommitResponse)) {
-            return false;
-        }
+    // ~~~ GETTER
 
-        GitCommitResponse g = (GitCommitResponse) o;
-
-        if (!CheckUtilities.checkObjectsEqual(getCommitShortHashName(), g.getCommitShortHashName())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(getCommitShortComment(), g.getCommitShortComment())) {
-            return false;
-        }
-
-        if (getFilesChanged() != g.getFilesChanged()) {
-            return false;
-        }
-
-        if (getLinesInserted() != g.getLinesInserted()) {
-            return false;
-        }
-
-        if (getLinesDeleted() != g.getLinesDeleted()) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(addedFiles, g.addedFiles)) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(copiedFiles, g.copiedFiles)) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(deletedFiles, g.deletedFiles)) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(renamedFiles, g.renamedFiles)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Get an <code>Iterator</code> with which to iterate over the added files.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the added files.
-     */
-    public Iterator<AddedOrDeletedFile> getAddedFilesIterator() {
-        return (new ArrayList<AddedOrDeletedFile>(addedFiles)).iterator();
-    }
-
-    /**
-     * Gets the short comment (description) for the commit. It is the first line of the commit message.
-     * 
-     * @return The short comment for the commit.
-     */
-    public String getCommitShortComment() {
-        return commitShortComment;
-    }
-
-    /**
-     * Gets the short hash name for the commit. This is the first seven characters of the SHA1 hash that represents the
-     * commit.
-     * 
-     * @return The short hash name for the commit.
-     */
     public Ref getCommitShortHashName() {
         return commitShortHashName;
     }
 
-    /**
-     * Get an <code>Iterator</code> with which to iterate over the copied files.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the copied files.
-     */
-    public Iterator<CopiedOrMovedFile> getCopiedFilesIterator() {
-        return copiedFiles.iterator();
+    public String getCommitShortComment() {
+        return commitShortComment;
     }
 
-    /**
-     * Get an <code>Iterator</code> with which to iterate over the deleted files.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the deleted files.
-     */
-    public Iterator<AddedOrDeletedFile> getDeletedFilesIterator() {
-        return deletedFiles.iterator();
-    }
-
-    /**
-     * Gets the number of files changed in the commit.
-     * 
-     * @return The number of files changed in the commit.
-     */
     public int getFilesChanged() {
         return filesChanged;
     }
 
-    /**
-     * Gets the number of lines inserted in the commit.
-     * 
-     * @return The number of lines inserted in the commit.
-     */
     public int getLinesInserted() {
         return linesInserted;
     }
 
-    /**
-     * Gets the number of lines deleted in the commit.
-     * 
-     * @return The number of lines deleted in the commit.
-     */
     public int getLinesDeleted() {
         return linesDeleted;
     }
 
-    /**
-     * Get an <code>Iterator</code> with which to iterate over the renamed files.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the renamed files.
-     */
-    public Iterator<CopiedOrMovedFile> getRenamedFilesIterator() {
-        return renamedFiles.iterator();
+    public List<AddedOrDeletedFile> getAddedFiles() {
+        return addedFiles;
     }
 
-    public int hashCode() {
-        /*
-         * Only using the short hash name because it is already reasonably unique and if any two GitCommitResponse
-         * objects have the same short hash code, there is high probability that they will be equal. -- jhl388
-         * 2008.06.22
-         */
-        return commitShortHashName.hashCode();
+    public List<CopiedOrMovedFile> getCopiedFiles() {
+        return copiedFiles;
+    }
+
+    public List<AddedOrDeletedFile> getDeletedFiles() {
+        return deletedFiles;
+    }
+
+    public List<CopiedOrMovedFile> getRenamedFiles() {
+        return renamedFiles;
     }
 
     /**

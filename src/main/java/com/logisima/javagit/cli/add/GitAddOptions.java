@@ -20,11 +20,10 @@
 package com.logisima.javagit.cli.add;
 
 /**
- * A class to manage passing add options to the <code>GitAdd</code> command.
+ * A class to manage passing add options to the <code>GitAdd</code> command. We are intentionally ignoring
+ * interactive(-i) and patching(-p) options currently.
  */
 public class GitAddOptions {
-
-    // We are intentionally ignoring interactive(-i) and patching(-p) options currently.
 
     /**
      * Don't actually add the file(s), just show if they exist.

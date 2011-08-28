@@ -203,7 +203,7 @@ public abstract class GitFileSystemObject {
         list.add(relativePath);
 
         GitCommit gitCommit = new GitCommit();
-        return gitCommit.commit(workingTree.getPath(), null, comment, list);
+        return gitCommit.commit(workingTree.getPath(), list, comment, null);
     }
 
     /**

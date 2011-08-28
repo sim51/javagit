@@ -54,7 +54,13 @@ public class GitStatusResponseImpl extends GitStatusResponse {
      * @param errorMsg <code>String</code> Error Message
      */
     public void setError(int lineNumber, String errorMsg) {
-        errors.add(new ErrorDetails(lineNumber, errorMsg));
+        if (lineNumber == 1) {
+            errorMessage = errorMsg;
+        }
+        else {
+            errorMessage += "\n";
+            errorMessage += errorMsg;
+        }
     }
 
     /**
@@ -114,7 +120,7 @@ public class GitStatusResponseImpl extends GitStatusResponse {
      * @param file <code>File</code> to be added to the list.
      */
     public void addToNewFilesToCommit(File file) {
-        newFilesToCommit.add(file);
+        getNewFilesToCommit().add(file);
         fileToStatus.put(file, Status.NEW_TO_COMMIT);
     }
 

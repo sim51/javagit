@@ -249,7 +249,7 @@ public class GitStatusParser implements IParser {
     public GitStatusResponse getResponse() throws JavaGitException {
         if (response.errorState()) {
             throw new JavaGitException(438000, ExceptionMessageMap.getMessage("438000")
-                    + " - git status error message: { " + response.getError() + " }");
+                    + " - git status error message: { " + response.getErrorMessage() + " }");
         }
         return response;
     }

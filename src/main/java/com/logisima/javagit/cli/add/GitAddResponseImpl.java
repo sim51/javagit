@@ -53,7 +53,7 @@ public class GitAddResponseImpl extends GitAddResponse {
      */
     public void setComment(int lineNumber, String commentString) {
         ResponseString comment = new ResponseString(lineNumber, commentString);
-        comments.add(comment);
+        getComments().add(comment);
     }
 
     /**
@@ -62,7 +62,7 @@ public class GitAddResponseImpl extends GitAddResponse {
      * @param file File to be added to the <code>List</code>.
      */
     public void add(File file) {
-        filePathsList.add(file);
+        getFilePathsList().add(file);
     }
 
 }

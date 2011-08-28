@@ -160,7 +160,7 @@ public class JavaGit {
 
         IClient client = ClientManager.getInstance().getPreferredClient();
         com.logisima.javagit.cli.commit.GitCommit gitCommit = client.getGitCommitInstance();
-        return gitCommit.commit(repositoryPath, options, message);
+        return gitCommit.commit(repositoryPath, message, options);
     }
 
     /**
@@ -174,7 +174,7 @@ public class JavaGit {
 
         IClient client = ClientManager.getInstance().getPreferredClient();
         GitCommit gitCommit = client.getGitCommitInstance();
-        return gitCommit.commit(repositoryPath, options, message, paths);
+        return gitCommit.commit(repositoryPath, paths, message, options);
     }
 
     // ~~~~ BEGIN GIT CHECKOUT

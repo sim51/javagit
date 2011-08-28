@@ -34,25 +34,25 @@ import com.logisima.javagit.utilities.ProcessUtilities;
  */
 public class GitCommit {
 
-    public GitCommitResponseImpl commit(File repository, GitCommitOptions options, String message)
+    public GitCommitResponseImpl commit(File repository, String message, GitCommitOptions options)
             throws JavaGitException {
-        return commitProcessor(repository, options, message, null);
+        return commitProcessor(repository, null, message, options);
     }
 
-    public GitCommitResponseImpl commit(File repository, GitCommitOptions options, String message, List<File> paths)
+    public GitCommitResponseImpl commit(File repository, List<File> files, String message, GitCommitOptions options)
             throws JavaGitException {
-        return commitProcessor(repository, options, message, paths);
+        return commitProcessor(repository, files, message, options);
     }
 
     /**
      * Processes the commit.
      */
-    protected GitCommitResponseImpl commitProcessor(File repository, GitCommitOptions options, String message,
-            List<File> paths) throws JavaGitException {
+    protected GitCommitResponseImpl commitProcessor(File repository, List<File> files, String message,
+            GitCommitOptions options) throws JavaGitException {
         CheckUtilities.checkNullArgument(repository, "repository");
         CheckUtilities.checkStringArgument(message, "message");
 
-        List<String> commandLine = buildCommand(options, message, paths);
+        List<String> commandLine = buildCommand(options, message, files);
         GitCommitParser parser = new GitCommitParser(repository.getAbsolutePath());
 
         try {

@@ -1,1 +1,3 @@
-add 'src/test/resources/com/logisima/javagit/cli/add/GitAddOutputTest1
+add 'src/test/resources/com/logisima/javagit/cli/add/GitAddOutputTest1'
+add 'src/main/java/com/logisima/javagit/JavaGit.java'
+add 'src/main/java/com/logisima/javagit/cli/add/GitAdd.java'

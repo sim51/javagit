@@ -19,8 +19,58 @@
  */
 package com.logisima.javagit.cli.add;
 
-import junit.framework.TestCase;
+import java.io.IOException;
 
-public class GitAddParserTest extends TestCase {
+import org.junit.Test;
 
+import com.logisima.javagit.JavaGitException;
+import com.logisima.javagit.cli.GitTestCase;
+import com.logisima.javagit.test.utilities.ParserTestUtilities;
+
+public class GitAddParserTest extends GitTestCase {
+
+    /**
+     * Testing GitAddParser with the follow output file : com/logisima/javagit/cli/add/GitAddOutputTest1.
+     * 
+     * @throws IOException
+     * @throws JavaGitException
+     */
+    @Test
+    public void testGitAddOuput1() throws IOException, JavaGitException {
+        GitAddParser parser = new GitAddParser();
+
+        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+                "com/logisima/javagit/cli/add/GitAddOutputTest1");
+
+        // testing
+        gitAddTestEquals(response, 3, 0);
+    }
+
+    /**
+     * Testing GitAddParser with the follow output file : com/logisima/javagit/cli/add/GitAddOutputTest2.
+     * 
+     * @throws IOException
+     * @throws JavaGitException
+     */
+    @Test
+    public void testGitAddOuput2() throws IOException, JavaGitException {
+        GitAddParser parser = new GitAddParser();
+
+        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+                "com/logisima/javagit/cli/add/GitAddOutputTest2");
+
+        // testing
+        gitAddTestEquals(response, 0, 0);
+    }
+
+    @Test
+    public void testGitAddOuput3() throws IOException, JavaGitException {
+        GitAddParser parser = new GitAddParser();
+
+        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+                "com/logisima/javagit/cli/add/GitAddOutputTest3");
+
+        // testing
+        gitAddTestEquals(response, 0, 2);
+    }
 }

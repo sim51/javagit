@@ -21,28 +21,13 @@ package com.logisima.javagit.cli.commit;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 import com.logisima.javagit.JavaGitException;
+import com.logisima.javagit.cli.GitTestCase;
 import com.logisima.javagit.test.utilities.ParserTestUtilities;
 
-public class GitCommitParserTest extends TestCase {
-
-    private static void testEquals(GitCommitResponseImpl response, String shortComment, String shortHashName,
-            int nbFilesChanged, int nbLinesDeleted, int nbLinesInserted, int nbAddedFiles, int nbCopiedFiles,
-            int nbDeletedFiles, int nbRenamedFiles) {
-        assertEquals(shortComment, response.getCommitShortComment());
-        assertEquals(shortHashName, response.getCommitShortHashName().getName());
-        assertEquals(nbFilesChanged, response.getFilesChanged());
-        assertEquals(nbLinesDeleted, response.getLinesDeleted());
-        assertEquals(nbLinesInserted, response.getLinesInserted());
-        assertEquals(nbAddedFiles, response.addedFiles.size());
-        assertEquals(nbCopiedFiles, response.copiedFiles.size());
-        assertEquals(nbDeletedFiles, response.deletedFiles.size());
-        assertEquals(nbRenamedFiles, response.renamedFiles.size());
-    }
+public class GitCommitParserTest extends GitTestCase {
 
     @Test
     public void testGitCommitOuput1() throws IOException, JavaGitException {
@@ -53,7 +38,7 @@ public class GitCommitParserTest extends TestCase {
                 "com/logisima/javagit/cli/commit/GitCommitOutputTest1");
 
         // testing
-        testEquals(response, "begin TU", "09c2765", 12, 16, 1011, 7, 0, 0, 2);
+        gitCommitTestEquals(response, "begin TU", "09c2765", 12, 16, 1011, 7, 0, 0, 2);
     }
 
     @Test
@@ -65,6 +50,6 @@ public class GitCommitParserTest extends TestCase {
                 "com/logisima/javagit/cli/commit/GitCommitOutputTest2");
 
         // testing
-        testEquals(response, "my comment", "b8181b8", 0, 0, 0, 1, 0, 0, 0);
+        gitCommitTestEquals(response, "my comment", "b8181b8", 0, 0, 0, 1, 0, 0, 0);
     }
 }

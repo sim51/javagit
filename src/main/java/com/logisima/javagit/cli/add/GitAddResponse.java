@@ -42,7 +42,7 @@ public abstract class GitAddResponse implements ICommandResponse {
     /**
      * List of files added to the index by &lt;git-add&gt; command.
      */
-    protected List<File>           filePathsList;
+    private List<File>           filePathsList;
 
     /**
      * Initially set to true as git-add many times does not generate any output at all. If output is generated then it
@@ -50,7 +50,7 @@ public abstract class GitAddResponse implements ICommandResponse {
      */
     protected boolean              noOutput;
 
-    protected List<ResponseString> comments;
+    private List<ResponseString> comments;
 
     protected boolean              dryRun;
 
@@ -58,8 +58,8 @@ public abstract class GitAddResponse implements ICommandResponse {
      * Constructor
      */
     public GitAddResponse() {
-        filePathsList = new ArrayList<File>();
-        comments = new ArrayList<ResponseString>();
+        setFilePathsList(new ArrayList<File>());
+        setComments(new ArrayList<ResponseString>());
         noOutput = true;
         dryRun = false;
     }
@@ -70,12 +70,12 @@ public abstract class GitAddResponse implements ICommandResponse {
      * @return size of list.
      */
     public int getFileListSize() {
-        return filePathsList.size();
+        return getFilePathsList().size();
     }
 
     public File get(int index) throws IndexOutOfBoundsException {
-        if (index < filePathsList.size() && index >= 0) {
-            return filePathsList.get(index);
+        if (index < getFilePathsList().size() && index >= 0) {
+            return getFilePathsList().get(index);
         }
         throw new IndexOutOfBoundsException(index + " is out of range");
     }
@@ -89,16 +89,44 @@ public abstract class GitAddResponse implements ICommandResponse {
     }
 
     public boolean comment() {
-        return (comments.size() > 0);
+        return (getComments().size() > 0);
     }
 
     public int nubmerOfComments() {
-        return comments.size();
+        return getComments().size();
     }
 
     public ResponseString getComment(int index) {
-        CheckUtilities.checkIntInRange(index, 0, comments.size());
-        return (comments.get(index));
+        CheckUtilities.checkIntInRange(index, 0, getComments().size());
+        return (getComments().get(index));
+    }
+
+    /**
+     * @param filePathsList the filePathsList to set
+     */
+    public void setFilePathsList(List<File> filePathsList) {
+        this.filePathsList = filePathsList;
+    }
+
+    /**
+     * @return the filePathsList
+     */
+    public List<File> getFilePathsList() {
+        return filePathsList;
+    }
+
+    /**
+     * @param comments the comments to set
+     */
+    public void setComments(List<ResponseString> comments) {
+        this.comments = comments;
+    }
+
+    /**
+     * @return the comments
+     */
+    public List<ResponseString> getComments() {
+        return comments;
     }
 
     /**

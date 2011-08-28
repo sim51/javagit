@@ -167,7 +167,7 @@ public final class WorkingTree {
      */
     public GitCommitResponse commit(String comment) throws IOException, JavaGitException {
         GitCommit gitCommit = new GitCommit();
-        return gitCommit.commit(path, new GitCommitOptions(), comment);
+        return gitCommit.commit(path, comment, null);
     }
 
     /**
@@ -182,7 +182,7 @@ public final class WorkingTree {
         GitCommit gitCommit = new GitCommit();
         GitCommitOptions options = new GitCommitOptions();
         options.setOptAll(true);
-        return gitCommit.commit(path, options, comment);
+        return gitCommit.commit(path, comment, options);
     }
 
     /**

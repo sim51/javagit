@@ -21,26 +21,13 @@ package com.logisima.javagit.cli.status;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 import com.logisima.javagit.JavaGitException;
+import com.logisima.javagit.cli.GitTestCase;
 import com.logisima.javagit.test.utilities.ParserTestUtilities;
 
-public class GitStatusParserTest extends TestCase {
-
-    private static void testEquals(GitStatusResponseImpl response, String branch, int nbNewFilesToCommit,
-            int nbModifiedFilesNotUpdated, int nbDeletedFilesNotUpdated, int nbModifiedFilesToCommit,
-            int nbDeletedFilesToCommit, int nbUntrackedFiles) {
-        assertEquals(branch, response.branch.getName());
-        assertEquals(nbNewFilesToCommit, response.newFilesToCommit.size());
-        assertEquals(nbModifiedFilesNotUpdated, response.modifiedFilesNotUpdated.size());
-        assertEquals(nbDeletedFilesNotUpdated, response.deletedFilesNotUpdated.size());
-        assertEquals(nbModifiedFilesToCommit, response.modifiedFilesToCommit.size());
-        assertEquals(nbDeletedFilesToCommit, response.deletedFilesToCommit.size());
-        assertEquals(nbUntrackedFiles, response.untrackedFiles.size());
-    }
+public class GitStatusParserTest extends GitTestCase {
 
     @Test
     public void testGitStatusOuput1() throws IOException, JavaGitException {
@@ -51,6 +38,6 @@ public class GitStatusParserTest extends TestCase {
                 "com/logisima/javagit/cli/status/GitStatusOutputTest1");
 
         // testing
-        testEquals(response, "mine", 1, 3, 2, 0, 0, 3);
+        gitStatusTestEquals(response, "mine", 1, 3, 2, 0, 0, 3);
     }
 }
