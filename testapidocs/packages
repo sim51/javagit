@@ -1,3 +1,6 @@
+com.logisima.javagit.cli
+com.logisima.javagit.cli.commit
+com.logisima.javagit.cli.status
 com.logisima.javagit.cli.add
 com.logisima.javagit.utilities
 com.logisima.javagit.object
