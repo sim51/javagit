@@ -11,6 +11,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>javagit</name>
 	<description>Java client for GIT</description>
+	<url>https://github.com/sim51/javagit/</url>
 
 
 	<!-- =========== -->
@@ -27,9 +28,9 @@
 	<!-- = SCM = -->
 	<!-- ======= -->
 	<scm>
-		<connection>https://github.com/sim51/javagit</connection>
-		<url>scm:git:git://github.com/sim51/javagit.git</url>
-		<developerConnection>scm:git:git@github.com:sim51/javagit.git</developerConnection>
+		<url>https://github.com/sim51/javagit/</url>
+		<connection>scm:git:git://github.com/sim51/javagit.git</connection>
+		<developerConnection>scm:git:git+ssh://git@github.com:sim51/javagit.git</developerConnection>
 	</scm>
 
 	<!-- ============== -->
@@ -87,9 +88,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-scm-plugin</artifactId>
 				<version>1.5</version>
-				<configuration>
-					<connectionType>connection</connectionType>
-				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.5</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -109,6 +114,8 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
+					<locales>en</locales>
+					<outputEncoding>UTF-8</outputEncoding>
 					<reportPlugins>
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -142,12 +149,12 @@
 			<extension>
 				<groupId>org.apache.maven.scm</groupId>
 				<artifactId>maven-scm-provider-gitexe</artifactId>
-				<version>1.3</version>
+				<version>1.5</version>
 			</extension>
 			<extension>
 				<groupId>org.apache.maven.scm</groupId>
 				<artifactId>maven-scm-manager-plexus</artifactId>
-				<version>1.3</version>
+				<version>1.5</version>
 			</extension>
 			<extension>
 				<groupId>org.kathrynhuxtable.maven.wagon</groupId>
@@ -162,8 +169,8 @@
 	<!-- =========================== -->
 	<distributionManagement>
 		<site>
-			<id>javagit-website</id>
-			<url>gitsite:git@github.com/sim51/javagit</url>
+			<id>github-site</id>
+			<url>gitsite:git@github.com/sim51/javagit.git</url>
 		</site>
 		<repository>
 			<id>logisima-releases</id>

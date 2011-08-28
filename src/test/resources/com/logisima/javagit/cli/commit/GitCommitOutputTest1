@@ -1,0 +1,11 @@
+[mine 09c2765] begin TU
+ 12 files changed, 1011 insertions(+), 16 deletions(-)
+ create mode 100644 README
+ create mode 100644 src/test/java/com/logisima/javagit/object/BranchingTest.java
+ create mode 100644 src/test/java/com/logisima/javagit/object/DotGitTest.java
+ create mode 100644 src/test/java/com/logisima/javagit/object/GitFileSystemTest.java
+ create mode 100644 src/test/java/com/logisima/javagit/object/JavaGitConfigurationTest.java
+ create mode 100644 src/test/java/com/logisima/javagit/object/RefTest.java
+ create mode 100644 src/test/java/com/logisima/javagit/object/WorkingTreeTest.java
+ rename src/test/java/com/logisima/javagit/utilities/{TestCheckUtilities.java => CheckUtilitiesTest.java} (99%)
+ rename src/test/java/com/logisima/javagit/utilities/{TestExceptionMessageMap.java => ExceptionMessageMapTest.java} (96%)

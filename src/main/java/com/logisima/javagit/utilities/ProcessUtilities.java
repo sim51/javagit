@@ -70,9 +70,6 @@ public class ProcessUtilities {
                 }
                 parser.parseLine(str);
             } catch (IOException e) {
-                /*
-                 * TODO: add logging of any information already read from the InputStream. -- jhl388 06.14.2008
-                 */
                 IOException toThrow = new IOException(ExceptionMessageMap.getMessage("020101"));
                 toThrow.initCause(e);
                 throw toThrow;
