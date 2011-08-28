@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>About</title>
+    <title>Project Dependencies</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -48,8 +48,8 @@
                           <a href="project-info.html" title="Project Information">Project Information</a>
                     <ul>
                       <li class="none">
-            <strong>About</strong>
-          </li>
+                          <a href="index.html" title="About">About</a>
+            </li>
                       <li class="none">
                           <a href="source-repository.html" title="Source Repository">Source Repository</a>
             </li>
@@ -69,8 +69,8 @@
                           <a href="project-summary.html" title="Project Summary">Project Summary</a>
             </li>
                       <li class="none">
-                          <a href="dependencies.html" title="Dependencies">Dependencies</a>
-            </li>
+            <strong>Dependencies</strong>
+          </li>
                       <li class="none">
                           <a href="license.html" title="Project License">Project License</a>
             </li>
@@ -95,7 +95,24 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>About javagit<a name="About_javagit"></a></h2><a name="About_javagit"></a><p>Java client for GIT</p></div>
+        <a name="Project_Dependencies"></a><div class="section"><h2>Project Dependencies<a name="Project_Dependencies"></a></h2><a name="Project_Dependencies_test"></a><div class="section"><h3>test<a name="test"></a></h3><p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p><table border="0" class="bodyTable"><tr class="a"><th>GroupId</th><th>ArtifactId</th><th>Version</th><th>Type</th></tr><tr class="b"><td>junit</td><td><a class="externalLink" href="http://junit.org">junit</a></td><td>4.4</td><td>jar</td></tr></table></div></div><a name="Project_Transitive_Dependencies"></a><div class="section"><h2>Project Transitive Dependencies<a name="Project_Transitive_Dependencies"></a></h2><p>No transitive dependencies are required for this project.</p></div><a name="Project_Dependency_Graph"></a><div class="section"><h2>Project Dependency Graph<a name="Project_Dependency_Graph"></a></h2><script language="javascript" type="text/javascript">
+      function toggleDependencyDetail( divId, imgId )
+      {
+        var div = document.getElementById( divId );
+        var img = document.getElementById( imgId );
+        if( div.style.display == '' )
+        {
+          div.style.display = 'none';
+          img.src='./images/icon_info_sml.gif';
+        }
+        else
+        {
+          div.style.display = '';
+          img.src='./images/close.gif';
+        }
+      }
+</script>
+<a name="Dependency_Tree"></a><div class="section"><h3>Dependency Tree<a name="Dependency_Tree"></a></h3><ul><li>logisima:javagit:jar:1.0-SNAPSHOT <img id="_1111840553" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1461227697', '_1111840553' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1461227697" style="display:none"><table border="0" class="bodyTable"><tr class="a"><th>javagit</th></tr><tr class="b"><td><p><b>Description: </b>Java client for GIT</p><p><b>Project License: </b><a class="externalLink" href="http://www.gnu.org/licenses/gpl.txt">GNU General Public License</a></p></td></tr></table></div><ul><li>junit:junit:jar:4.4 (test) <img id="_1089515347" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_639484621', '_1089515347' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_639484621" style="display:none"><table border="0" class="bodyTable"><tr class="a"><th>JUnit</th></tr><tr class="b"><td><p><b>Description: </b>JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.</p><p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p><p><b>Project License: </b><a class="externalLink" href="http://www.opensource.org/licenses/cpl1.0.txt">Common Public License Version 1.0</a></p></td></tr></table></div></li></ul></li></ul></div></div><a name="Licenses"></a><div class="section"><h2>Licenses<a name="Licenses"></a></h2><p><b>Common Public License Version 1.0: </b>JUnit</p><p><b>GNU General Public License: </b>javagit</p></div>
       </div>
     </div>
     <div class="clear">

@@ -1,0 +1,26 @@
+-classpath
+'/home/bsimard/workspace_logisima/javagit/target/classes:/home/bsimard/workspace_logisima/javagit/target/test-classes:/home/bsimard/.m2/repository/junit/junit/4.4/junit-4.4.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/home/bsimard/workspace_logisima/javagit/src/test/java'
+-author
+-bottom
+'Copyright &#169; 2011 <a href="http://www.logisima.com">LogiSima</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/home/bsimard/workspace_logisima/javagit/target/site/testapidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'javagit 1.0-SNAPSHOT Test API'
+-link
+'../apidocs'
+-link
+'http://java.sun.com/javase/6/docs/api'
+-use
+-version
+-windowtitle
+'javagit 1.0-SNAPSHOT Test API'

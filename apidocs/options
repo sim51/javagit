@@ -1,0 +1,24 @@
+-classpath
+'/home/bsimard/workspace_logisima/javagit/target/classes'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/home/bsimard/workspace_logisima/javagit/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2011 <a href="http://www.logisima.com">LogiSima</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/home/bsimard/workspace_logisima/javagit/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'javagit 1.0-SNAPSHOT API'
+-link
+'http://java.sun.com/javase/6/docs/api'
+-use
+-version
+-windowtitle
+'javagit 1.0-SNAPSHOT API'
