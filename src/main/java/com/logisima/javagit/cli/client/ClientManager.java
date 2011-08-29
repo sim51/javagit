@@ -17,7 +17,7 @@
  *  @author Benoît Simard
  *  @See https://github.com/sim51/javagit
  */
-package com.logisima.javagit.cli;
+package com.logisima.javagit.cli.client;
 
 import java.util.HashMap;
 import java.util.Map;

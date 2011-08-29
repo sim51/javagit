@@ -12,16 +12,15 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with LogiSima-Common.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with JavGit. If not, see <http://www.gnu.org/licenses/>.
  *  
  *  @author Benoît Simard
  *  @See https://github.com/sim51/javagit
  */
-package com.logisima.javagit.cli;
+package com.logisima.javagit.cli.mv;
 
-/**
- * Marker interface for git command response objects.
- */
-public interface ICommandResponse {
+import com.logisima.javagit.cli.GitTestCase;
+
+public class GitMvParserTest extends GitTestCase {
 
 }

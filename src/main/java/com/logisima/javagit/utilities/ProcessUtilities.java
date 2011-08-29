@@ -26,8 +26,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.ICommandResponse;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.cli.Response;
 
 /**
  * <code>ProcessUtilities</code> contains methods to help managing processes.
@@ -60,7 +60,7 @@ public class ProcessUtilities {
      * @exception IOException An <code>IOException</code> is thrown if there is trouble reading input from the
      *            sub-process.
      */
-    public static void getProcessOutput(Process p, IParser parser) throws IOException {
+    public static void getProcessOutput(Process p, Parser parser) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
         while (true) {
             try {
@@ -83,7 +83,7 @@ public class ProcessUtilities {
      * @param p The process to wait for and destroy.
      * @return The exit value of the process. By convention, 0 indicates normal termination.
      */
-    public static int waitForAndDestroyProcess(Process p, IParser parser) {
+    public static int waitForAndDestroyProcess(Process p, Parser parser) {
         /*
          * I'm not sure this is the best way to handle waiting for a process to complete. -- jhl388 06.14.2008
          */
@@ -96,15 +96,12 @@ public class ProcessUtilities {
             } catch (InterruptedException e) {
                 // TODO: deal with this interrupted exception in a better manner. -- jhl388 06.14.2008
                 continue;
+            } catch (JavaGitException e) {
+                continue;
             }
         }
     }
 
-    // TODO (jhl388): Add a unit test for this method.
-    /*
-     * TODO (jhl388): The workingDirectory argument needs to be modified to take a File argument instead of a String
-     * argument.
-     */
     /**
      * Runs the command specified in the command line with the specified working directory. The IParser is used to parse
      * the response given by the command line.
@@ -116,7 +113,7 @@ public class ProcessUtilities {
      * @throws IOException Thrown if there are problems with the subprocess.
      * @throws JavaGitException
      */
-    public static ICommandResponse runCommand(File workingDirectory, List<String> commandLine, IParser parser)
+    public static Response runCommand(File workingDirectory, List<String> commandLine, Parser parser)
             throws IOException, JavaGitException {
         ProcessBuilder pb = new ProcessBuilder(commandLine);
 

@@ -22,25 +22,26 @@ package com.logisima.javagit.cli.branch;
 import java.util.StringTokenizer;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.IParser;
-import com.logisima.javagit.cli.branch.GitBranchResponse.BranchRecord;
+import com.logisima.javagit.cli.Parser;
 import com.logisima.javagit.cli.branch.GitBranchResponse.responseType;
+import com.logisima.javagit.object.BranchRecord;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 /**
  * Implementation of the <code>IParser</code> interface in GitBranchParser class.
  */
-public class GitBranchParser implements IParser {
+public class GitBranchParser extends Parser {
 
-    // The response object for a branch operation.
-    private GitBranchResponseImpl response;
+    /**
+     * The response object for a branch operation.
+     */
+    private GitBranchResponse response;
 
-    // While handling the error cases this buffer will have the error messages.
-    private StringBuffer          errorMessage   = null;
-
-    // Track the number of lines parsed.
-    private int                   numLinesParsed = 0;
+    public GitBranchParser() {
+        response = new GitBranchResponse();
+    }
 
     /**
      * Parses the line from the git-branch response text.
@@ -49,32 +50,18 @@ public class GitBranchParser implements IParser {
      */
     public void parseLine(String line) {
         ++numLinesParsed;
-        if (null != errorMessage) {
-            errorMessage.append(", line" + numLinesParsed + "=[" + line + "]");
-            return;
-        }
-        if (line.contains("fatal:") || line.contains("error:")) {
-            if (null == errorMessage) {
-                errorMessage = new StringBuffer();
-            }
-            errorMessage.append("line1=[" + line + "]");
+        if (this.errors.size() != 0 | line.contains("fatal:") || line.contains("error:")) {
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
         else {
-            if (null == response) {
-                response = new GitBranchResponseImpl();
-            }
-
             if (line.startsWith("Deleted branch")) {
                 int indexOfBranch = line.indexOf("branch");
                 String branchName = line.substring(indexOfBranch + 7, line.length() - 1);
                 response.setResponseType(responseType.MESSAGE);
                 if (1 == numLinesParsed) {
-                    response.addMessages(line.substring(0, indexOfBranch + 6));
+                    response.getMessages().append(line.substring(0, indexOfBranch + 6));
                 }
-                response.addIntoBranchList(Ref.createBranchRef(branchName));
-            }
-            else if (null == line) {
-                response.setResponseType(responseType.EMPTY);
+                response.getBranchList().add(Ref.createBranchRef(branchName));
             }
             else {
                 handleBranchDisplay(line);
@@ -100,7 +87,7 @@ public class GitBranchParser implements IParser {
             nextWord = st.nextToken();
             response.setCurrentBranch(Ref.createBranchRef(nextWord));
         }
-        response.addIntoBranchList(Ref.createBranchRef(nextWord));
+        response.getBranchList().add(Ref.createBranchRef(nextWord));
 
         if (st.hasMoreTokens()) {
             Ref branch = Ref.createBranchRef(nextWord);
@@ -109,7 +96,7 @@ public class GitBranchParser implements IParser {
             int indexOfSha = line.indexOf(nextWord);
             String comment = line.substring(indexOfSha + nextWord.length() + 1);
             BranchRecord record = new BranchRecord(branch, sha1, comment, isCurrentBranch);
-            response.addIntoListOfBranchRecord(record);
+            response.getListOfBranchRecord().add(record);
         }
     }
 
@@ -124,9 +111,9 @@ public class GitBranchParser implements IParser {
      * @throws JavaGitException Thrown when there is an error executing git-branch.
      */
     public GitBranchResponse getResponse() throws JavaGitException {
-        if (null != errorMessage) {
+        if (this.errors.size() != 0) {
             throw new JavaGitException(404000, ExceptionMessageMap.getMessage("404000")
-                    + "  The git-branch error message:  { " + errorMessage.toString() + " }");
+                    + "  The git-branch error message:  { " + this.getError() + " }");
         }
         return response;
     }

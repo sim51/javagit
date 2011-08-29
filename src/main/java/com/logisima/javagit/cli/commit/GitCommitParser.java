@@ -22,11 +22,11 @@ package com.logisima.javagit.cli.commit;
 import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
-public class GitCommitParser implements IParser {
+public class GitCommitParser extends Parser {
 
     // Holding onto the error message to make part of an exception
     private StringBuffer          errorMsg       = null;

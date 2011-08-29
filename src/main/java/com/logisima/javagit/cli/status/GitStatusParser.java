@@ -24,11 +24,11 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
-public class GitStatusParser implements IParser {
+public class GitStatusParser extends Parser {
 
     private enum State {
         FILES_TO_COMMIT, NOT_UPDATED, UNTRACKED_FILES

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import com.logisima.javagit.cli.ClientManager;
-import com.logisima.javagit.cli.IClient;
 import com.logisima.javagit.cli.add.GitAdd;
 import com.logisima.javagit.cli.add.GitAddOptions;
 import com.logisima.javagit.cli.add.GitAddResponse;
@@ -35,6 +33,8 @@ import com.logisima.javagit.cli.branch.GitBranchResponse;
 import com.logisima.javagit.cli.checkout.GitCheckout;
 import com.logisima.javagit.cli.checkout.GitCheckoutOptions;
 import com.logisima.javagit.cli.checkout.GitCheckoutResponse;
+import com.logisima.javagit.cli.client.ClientManager;
+import com.logisima.javagit.cli.client.IClient;
 import com.logisima.javagit.cli.clone.GitClone;
 import com.logisima.javagit.cli.clone.GitCloneOptions;
 import com.logisima.javagit.cli.clone.GitCloneResponse;

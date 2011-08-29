@@ -19,9 +19,9 @@
  */
 package com.logisima.javagit.cli.init;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 
-public class GitInitResponse implements ICommandResponse {
+public class GitInitResponse extends Response {
 
     public boolean initialized   = false;
     public boolean reinitialized = false;
@@ -43,7 +43,6 @@ public class GitInitResponse implements ICommandResponse {
     }
 
     public boolean containsError() {
-        // TODO Auto-generated method stub
         return false;
     }
 }

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.GitFileSystemObject;
 import com.logisima.javagit.object.GitFileSystemObject.Status;
 import com.logisima.javagit.object.Ref;
@@ -34,7 +34,7 @@ import com.logisima.javagit.object.Ref;
 /**
  * A response data object for &lt;git-status&gt; command
  */
-public abstract class GitStatusResponse implements ICommandResponse {
+public abstract class GitStatusResponse extends Response {
 
     /**
      * List of new files that will be added next time &lt;git-commit&gt; is executed.

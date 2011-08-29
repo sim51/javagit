@@ -35,8 +35,8 @@ import com.logisima.javagit.utilities.ProcessUtilities;
  */
 public class GitBranch {
 
-    public GitBranchResponseImpl branch(File repoPath, GitBranchOptions options) throws JavaGitException {
-        GitBranchResponseImpl response;
+    public GitBranchResponse branch(File repoPath, GitBranchOptions options) throws JavaGitException {
+        GitBranchResponse response;
         try {
             response = branchProcess(repoPath, options, null, null, null);
         } catch (IOException e) {
@@ -45,9 +45,9 @@ public class GitBranch {
         return response;
     }
 
-    public GitBranchResponseImpl deleteBranch(File repoPath, boolean forceDelete, boolean remote, Ref branchName)
+    public GitBranchResponse deleteBranch(File repoPath, boolean forceDelete, boolean remote, Ref branchName)
             throws JavaGitException {
-        GitBranchResponseImpl response;
+        GitBranchResponse response;
         GitBranchOptions options = new GitBranchOptions();
         setDeleteOptions(options, forceDelete, remote);
         try {
@@ -58,7 +58,7 @@ public class GitBranch {
         return response;
     }
 
-    public GitBranchResponseImpl renameBranch(File repoPath, boolean forceRename, Ref oldName, Ref newName)
+    public GitBranchResponse renameBranch(File repoPath, boolean forceRename, Ref oldName, Ref newName)
             throws IOException, JavaGitException {
         GitBranchOptions options = new GitBranchOptions();
         if (forceRename) {
@@ -70,9 +70,9 @@ public class GitBranch {
         return branchProcess(repoPath, options, oldName, newName, null);
     }
 
-    public GitBranchResponseImpl createBranch(File repoPath, GitBranchOptions options, Ref branchName)
+    public GitBranchResponse createBranch(File repoPath, GitBranchOptions options, Ref branchName)
             throws JavaGitException {
-        GitBranchResponseImpl response;
+        GitBranchResponse response;
         try {
             response = branchProcess(repoPath, options, branchName, null, null);
         } catch (IOException e) {
@@ -84,13 +84,13 @@ public class GitBranch {
     /**
      * Process the git-branch command, to show/delete/create/rename branches.
      */
-    public GitBranchResponseImpl branchProcess(File repoPath, GitBranchOptions options, Ref arg1, Ref arg2,
+    public GitBranchResponse branchProcess(File repoPath, GitBranchOptions options, Ref arg1, Ref arg2,
             List<Ref> branchList) throws IOException, JavaGitException {
         CheckUtilities.checkNullArgument(repoPath, "repository path");
         List<String> commandLine = buildCommand(options, arg1, arg2, branchList);
         GitBranchParser parser = new GitBranchParser();
 
-        return (GitBranchResponseImpl) ProcessUtilities.runCommand(repoPath, commandLine, parser);
+        return (GitBranchResponse) ProcessUtilities.runCommand(repoPath, commandLine, parser);
     }
 
     /**

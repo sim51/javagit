@@ -23,8 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
-import com.logisima.javagit.utilities.CheckUtilities;
+import com.logisima.javagit.cli.Response;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 
 /**
  * Response data object obtained from git-add command. It contains a list of file-action pair that contains the list of
@@ -37,123 +37,93 @@ import com.logisima.javagit.utilities.CheckUtilities;
  * empty-list.
  * 
  */
-public abstract class GitAddResponse implements ICommandResponse {
+public class GitAddResponse extends Response {
 
     /**
      * List of files added to the index by &lt;git-add&gt; command.
      */
-    private List<File>           filePathsList;
+    private List<File>              filesAdded;
 
     /**
      * Initially set to true as git-add many times does not generate any output at all. If output is generated then it
      * needs to be set to false. This can be used as a tester whether any output was generated or not.
      */
-    protected boolean              noOutput;
-
-    private List<ResponseString> comments;
-
-    protected boolean              dryRun;
+    protected boolean               noOutput;
 
     /**
-     * Constructor
+     * List of return comment (error or warn) by the git add command.
+     */
+    private List<OutputErrorOrWarn> comments;
+
+    /**
+     * Boolean to know if the command was with dry-run option.
+     */
+    protected boolean               dryRun;
+
+    /**
+     * Constructor.
      */
     public GitAddResponse() {
-        setFilePathsList(new ArrayList<File>());
-        setComments(new ArrayList<ResponseString>());
+        filesAdded = new ArrayList<File>();
+        comments = new ArrayList<OutputErrorOrWarn>();
         noOutput = true;
         dryRun = false;
     }
 
     /**
-     * Gets the number of files added.
-     * 
-     * @return size of list.
+     * @return the filesAdded
      */
-    public int getFileListSize() {
-        return getFilePathsList().size();
+    public List<File> getFilesAdded() {
+        return filesAdded;
     }
 
-    public File get(int index) throws IndexOutOfBoundsException {
-        if (index < getFilePathsList().size() && index >= 0) {
-            return getFilePathsList().get(index);
-        }
-        throw new IndexOutOfBoundsException(index + " is out of range");
+    /**
+     * @param filesAdded the filesAdded to set
+     */
+    public void setFilesAdded(List<File> filesAdded) {
+        this.filesAdded = filesAdded;
     }
 
-    public boolean noOutput() {
+    /**
+     * @return the noOutput
+     */
+    public boolean isNoOutput() {
         return noOutput;
     }
 
-    public boolean dryRun() {
-        return dryRun;
-    }
-
-    public boolean comment() {
-        return (getComments().size() > 0);
-    }
-
-    public int nubmerOfComments() {
-        return getComments().size();
-    }
-
-    public ResponseString getComment(int index) {
-        CheckUtilities.checkIntInRange(index, 0, getComments().size());
-        return (getComments().get(index));
-    }
-
     /**
-     * @param filePathsList the filePathsList to set
+     * @param noOutput the noOutput to set
      */
-    public void setFilePathsList(List<File> filePathsList) {
-        this.filePathsList = filePathsList;
-    }
-
-    /**
-     * @return the filePathsList
-     */
-    public List<File> getFilePathsList() {
-        return filePathsList;
-    }
-
-    /**
-     * @param comments the comments to set
-     */
-    public void setComments(List<ResponseString> comments) {
-        this.comments = comments;
+    public void setNoOutput(boolean noOutput) {
+        this.noOutput = noOutput;
     }
 
     /**
      * @return the comments
      */
-    public List<ResponseString> getComments() {
+    public List<OutputErrorOrWarn> getComments() {
         return comments;
     }
 
     /**
-     * For saving errors, warnings and comments related information in the response object. Currently it has only two
-     * fields -
-     * <ul>
-     * <li>Error, warning or general comment string</li>
-     * <li>Line number where the string appeared in output</li>
-     * <ul>
+     * @param comments the comments to set
      */
-    public static class ResponseString {
-
-        final String comment;
-        final int    lineNumber;
-
-        public ResponseString(int lineNumber, String comment) {
-            this.lineNumber = lineNumber;
-            this.comment = comment;
-        }
-
-        public int getLineNumber() {
-            return lineNumber;
-        }
-
-        public String comment() {
-            return comment;
-        }
-
+    public void setComments(List<OutputErrorOrWarn> comments) {
+        this.comments = comments;
     }
+
+    /**
+     * @return the dryRun
+     */
+    public boolean isDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * @param dryRun the dryRun to set
+     */
+    public void setDryRun(boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
 }

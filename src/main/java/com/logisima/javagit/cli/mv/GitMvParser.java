@@ -22,13 +22,13 @@ package com.logisima.javagit.cli.mv;
 import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 /**
  * Implementation of the <code>IParser</code> interface in GitMvParser class.
  */
-public class GitMvParser implements IParser {
+public class GitMvParser extends Parser {
 
     // The response object for an mv operation.
     private GitMvResponseImpl response       = null;

@@ -21,14 +21,14 @@ package com.logisima.javagit.cli.mv;
 
 import java.io.File;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-mv command. For information about the contents of GitMvResponse instances returned
  * by a given method, please see the JavaDoc for the method in question.
  */
-public class GitMvResponse implements ICommandResponse {
+public class GitMvResponse extends Response {
 
     // Variable to store the source file/folder/symlink of the response.
     protected File         source;

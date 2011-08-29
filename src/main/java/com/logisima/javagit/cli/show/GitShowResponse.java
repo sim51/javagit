@@ -19,9 +19,9 @@
  */
 package com.logisima.javagit.cli.show;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 
-public class GitShowResponse implements ICommandResponse {
+public class GitShowResponse extends Response {
 
     /**
      * List of files that have been modified but not committed.

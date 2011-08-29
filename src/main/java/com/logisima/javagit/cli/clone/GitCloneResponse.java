@@ -19,11 +19,11 @@
  */
 package com.logisima.javagit.cli.clone;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 
 /**
  * 
  */
-public class GitCloneResponse implements ICommandResponse {
+public class GitCloneResponse extends Response {
 
 }

@@ -22,13 +22,13 @@ package com.logisima.javagit.cli.log;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git log command.
  */
-public class GitLogResponse implements ICommandResponse {
+public class GitLogResponse extends Response {
 
     private List<Commit>           commitList   = new ArrayList<Commit>();
     protected List<ResponseString> errors       = new ArrayList<ResponseString>();

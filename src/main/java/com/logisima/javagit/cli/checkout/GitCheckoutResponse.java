@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * Response data object for &lt;git-checkout&gt; command.
  */
-public abstract class GitCheckoutResponse implements ICommandResponse {
+public abstract class GitCheckoutResponse extends Response {
 
     /**
      * List of files that have been modified but not committed.

@@ -20,17 +20,16 @@
 package com.logisima.javagit.cli.branch;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
+import com.logisima.javagit.object.BranchRecord;
 import com.logisima.javagit.object.Ref;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-branch command.
  */
-public class GitBranchResponse implements ICommandResponse {
+public class GitBranchResponse extends Response {
 
     /**
      * An enumeration of the types of response. In normal case a list of branches, otherwise some message such as
@@ -40,19 +39,29 @@ public class GitBranchResponse implements ICommandResponse {
         BRANCH_LIST, MESSAGE, EMPTY
     }
 
-    // The list of branches in the response of git-branch.
+    /**
+     * The list of branches in the response of git-branch.
+     */
     protected List<Ref>          branchList;
 
-    // The list of branch records, in response of git-branch with verbose option.
+    /**
+     * The list of branch records, in response of git-branch with verbose option.
+     */
     protected List<BranchRecord> listOfBranchRecord;
 
-    // String Buffer to store the message after execution of git-branch command.
+    /**
+     * String Buffer to store the message after execution of git-branch command.
+     */
     protected StringBuffer       messages = new StringBuffer();
 
-    // Variable to store the current branch.
+    /**
+     * Variable to store the current branch.
+     */
     protected Ref                currentBranch;
 
-    // The type of this response.
+    /**
+     * The type of this response.
+     */
     protected responseType       responseType;
 
     /**
@@ -63,179 +72,74 @@ public class GitBranchResponse implements ICommandResponse {
         listOfBranchRecord = new ArrayList<BranchRecord>();
     }
 
-    public boolean equals(Object o) {
-        if (!(o instanceof GitBranchResponse)) {
-            return false;
-        }
-
-        GitBranchResponse g = (GitBranchResponse) o;
-
-        if (!CheckUtilities.checkObjectsEqual(getResponseType(), g.getResponseType())) {
-            System.out.println("Not Equal getResponseType");
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(getMessages(), g.getMessages())) {
-            System.out.println("Not Equal getMessages");
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(getCurrentBranch(), g.getCurrentBranch())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(branchList, g.branchList)) {
-            System.out.println("Not Equal branchList");
-            return false;
-        }
-
-        if (!CheckUtilities.checkUnorderedListsEqual(listOfBranchRecord, g.listOfBranchRecord)) {
-            System.out.println("Not Equal listOfBranchRecord");
-            return false;
-        }
-
-        return true;
-    }
-
     /**
-     * Get an <code>Iterator</code> with which to iterate over the branch list.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the branch list.
+     * @return the branchList
      */
-    public Iterator<Ref> getBranchListIterator() {
-        return (new ArrayList<Ref>(branchList).iterator());
+    public List<Ref> getBranchList() {
+        return branchList;
     }
 
     /**
-     * Get an <code>Iterator</code> with which to iterate over the branch record list.
-     * 
-     * @return An <code>Iterator</code> with which to iterate over the branch record list.
+     * @param branchList the branchList to set
      */
-    public Iterator<BranchRecord> getListOfBranchRecordIterator() {
-        return (new ArrayList<BranchRecord>(listOfBranchRecord).iterator());
+    public void setBranchList(List<Ref> branchList) {
+        this.branchList = branchList;
     }
 
     /**
-     * Gets the type of the response. Branch list, message or empty.
-     * 
-     * @return The responseType.
+     * @return the listOfBranchRecord
+     */
+    public List<BranchRecord> getListOfBranchRecord() {
+        return listOfBranchRecord;
+    }
+
+    /**
+     * @param listOfBranchRecord the listOfBranchRecord to set
+     */
+    public void setListOfBranchRecord(List<BranchRecord> listOfBranchRecord) {
+        this.listOfBranchRecord = listOfBranchRecord;
+    }
+
+    /**
+     * @return the messages
+     */
+    public StringBuffer getMessages() {
+        return messages;
+    }
+
+    /**
+     * @param messages the messages to set
+     */
+    public void setMessages(StringBuffer messages) {
+        this.messages = messages;
+    }
+
+    /**
+     * @return the currentBranch
+     */
+    public Ref getCurrentBranch() {
+        return currentBranch;
+    }
+
+    /**
+     * @param currentBranch the currentBranch to set
+     */
+    public void setCurrentBranch(Ref currentBranch) {
+        this.currentBranch = currentBranch;
+    }
+
+    /**
+     * @return the responseType
      */
     public responseType getResponseType() {
         return responseType;
     }
 
     /**
-     * Gets a message about the git-branch operation that was run.
-     * 
-     * @return A message about the git-branch operation that was run.
+     * @param responseType the responseType to set
      */
-    public String getMessages() {
-        return messages.toString();
+    public void setResponseType(responseType responseType) {
+        this.responseType = responseType;
     }
 
-    /**
-     * Gets the current branch from the list of branches displayed by git-branch operation.
-     * 
-     * @return The current branch from the list of branches displayed by git-branch operation.
-     */
-    public Ref getCurrentBranch() {
-        return currentBranch;
-    }
-
-    public int hashCode() {
-        return branchList.hashCode() + listOfBranchRecord.hashCode();
-    }
-
-    /**
-     * A record containing branch, its head SHA1, and the comment of the commit on head. A list of this object is
-     * returned as a part of <code>BranchResponse</code> object when verbose option is set.
-     */
-    public static class BranchRecord {
-
-        private Ref     branch;
-
-        // The SHA Refs of a branch in the response of git-branch with -v option.
-        private Ref     sha1;
-
-        // String Buffer to store the comment after execution of git-branch command with -v option.
-        private String  comment;
-
-        // Variable to store the current branch.
-        private boolean isCurrentBranch;
-
-        public BranchRecord(Ref branch, Ref sha1, String comment, boolean isCurrentBranch) {
-            this.branch = branch;
-            this.sha1 = sha1;
-            this.comment = comment;
-            this.isCurrentBranch = isCurrentBranch;
-        }
-
-        public boolean equals(Object o) {
-            if (!(o instanceof BranchRecord)) {
-                return false;
-            }
-
-            BranchRecord c = (BranchRecord) o;
-
-            if (!CheckUtilities.checkObjectsEqual(getBranch(), c.getBranch())) {
-                return false;
-            }
-
-            if (!CheckUtilities.checkObjectsEqual(getSha1(), c.getSha1())) {
-
-                return false;
-            }
-
-            if (!CheckUtilities.checkObjectsEqual(getComment(), c.getComment())) {
-                return false;
-            }
-
-            if (isCurrentBranch() != c.isCurrentBranch()) {
-                return false;
-            }
-
-            return true;
-        }
-
-        /**
-         * Gets the branch from the record.
-         * 
-         * @return The branch from the record.
-         */
-        public Ref getBranch() {
-            return branch;
-        }
-
-        /**
-         * Gets the SHA1 from the record.
-         * 
-         * @return The SHA1 from the record.
-         */
-        public Ref getSha1() {
-            return sha1;
-        }
-
-        /**
-         * Gets the comment of the last commit on a branch or the last commit on the branch it has originated from.
-         * Displayed when git-branch is run with -v option.
-         * 
-         * @return The comment of the recent commit on a branch.
-         */
-        public String getComment() {
-            return comment;
-        }
-
-        public int hashCode() {
-            return branch.hashCode() + sha1.hashCode() + comment.hashCode();
-        }
-
-        /**
-         * Gets the current branch from the list of branches displayed by git-branch operation.
-         * 
-         * @return The current branch from the list of branches displayed by git-branch operation.
-         */
-        public boolean isCurrentBranch() {
-            return isCurrentBranch;
-        }
-    }
 }

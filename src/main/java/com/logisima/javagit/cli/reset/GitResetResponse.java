@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the <code>git-reset</code> command.
  */
-public abstract class GitResetResponse implements ICommandResponse {
+public abstract class GitResetResponse extends Response {
 
     /*
      * The list of files left in a dirty state (different than what is in the new HEAD commit) in the working tree.

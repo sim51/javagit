@@ -17,7 +17,7 @@
  *  @author Benoît Simard
  *  @See https://github.com/sim51/javagit
  */
-package com.logisima.javagit.cli;
+package com.logisima.javagit.cli.client;
 
 import com.logisima.javagit.cli.add.GitAdd;
 import com.logisima.javagit.cli.branch.GitBranch;

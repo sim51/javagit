@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.utilities.CheckUtilities;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 import com.logisima.javagit.utilities.ProcessUtilities;
@@ -248,10 +248,8 @@ public final class JavaGitConfiguration {
     /*
      * <code>GitVersionParser</code> parses the output of the <code>git --version</code> command. It is also used to
      * determine if the git binaries are accessible via the command line.
-     * 
-     * TODO (rs2705): Write unit tests for this class.
      */
-    private static class GitVersionParser implements IParser {
+    private static class GitVersionParser extends Parser {
 
         // The version of git that we parse out.
         private String  version         = "";
@@ -269,7 +267,7 @@ public final class JavaGitConfiguration {
          * @return The response object containing the version number.
          * @throws JavaGitException
          */
-        public ICommandResponse getResponse() throws JavaGitException {
+        public Response getResponse() throws JavaGitException {
             if (!(parsedCorrectly)) {
                 throw new JavaGitException(100001, ExceptionMessageMap.getMessage("100001"));
             }
@@ -298,10 +296,8 @@ public final class JavaGitConfiguration {
 
     /*
      * The response object to wrap around the output of <code>git --version</code>.
-     * 
-     * TODO (rs2705): Write unit tests for this class.
      */
-    private static class GitVersionResponse implements ICommandResponse {
+    private static class GitVersionResponse extends Response {
 
         // The version of git that gets passed into our constructor.
         private String version;

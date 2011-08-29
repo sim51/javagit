@@ -31,7 +31,6 @@ import org.junit.Test;
 import com.logisima.javagit.JavaGit;
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.GitTestCase;
-import com.logisima.javagit.cli.init.GitInit;
 import com.logisima.javagit.cli.status.GitStatusResponseImpl;
 import com.logisima.javagit.test.utilities.FileUtilities;
 
@@ -42,8 +41,8 @@ public class GitAddTest extends GitTestCase {
     @Before
     public void setUp() throws Exception {
         repositoryPath = FileUtilities.createTempDirectory("GitCommitTestRepo");
-        GitInit gitInit = new GitInit();
-        gitInit.init(repositoryPath, null);
+        JavaGit git = new JavaGit(repositoryPath);
+        git.init(null);
     }
 
     /**
@@ -71,7 +70,7 @@ public class GitAddTest extends GitTestCase {
         GitAddOptions options = new GitAddOptions();
         options.setVerbose(true);
 
-        GitAddResponseImpl response = (GitAddResponseImpl) git.add(files, options);
+        GitAddResponse response = (GitAddResponse) git.add(files, options);
 
         // testing
         gitAddTestEquals(response, 2, 0);

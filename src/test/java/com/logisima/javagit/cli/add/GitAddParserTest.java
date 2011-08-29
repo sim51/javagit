@@ -39,7 +39,7 @@ public class GitAddParserTest extends GitTestCase {
     public void testGitAddOuput1() throws IOException, JavaGitException {
         GitAddParser parser = new GitAddParser();
 
-        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitAddResponse response = (GitAddResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/add/GitAddOutputTest1");
 
         // testing
@@ -56,7 +56,7 @@ public class GitAddParserTest extends GitTestCase {
     public void testGitAddOuput2() throws IOException, JavaGitException {
         GitAddParser parser = new GitAddParser();
 
-        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitAddResponse response = (GitAddResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/add/GitAddOutputTest2");
 
         // testing
@@ -67,7 +67,7 @@ public class GitAddParserTest extends GitTestCase {
     public void testGitAddOuput3() throws IOException, JavaGitException {
         GitAddParser parser = new GitAddParser();
 
-        GitAddResponseImpl response = (GitAddResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitAddResponse response = (GitAddResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/add/GitAddOutputTest3");
 
         // testing

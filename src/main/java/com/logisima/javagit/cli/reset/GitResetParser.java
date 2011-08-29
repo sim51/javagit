@@ -22,14 +22,11 @@ package com.logisima.javagit.cli.reset;
 import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
-public class GitResetParser implements IParser {
-
-    // TODO (jhl388): Create test case for this class.
-    // TODO (jhl388): Finish implementing the GitResetParser.
+public class GitResetParser extends Parser {
 
     // The index of the start of the short SHA1 in the HEAD record. Result of the --hard option
     private final int            HEAD_RECORD_SHA1_START = 15;

@@ -40,9 +40,9 @@ public class GitAdd {
     public GitAddResponse add(File repositoryPath, List<File> paths, GitAddOptions options) throws JavaGitException {
         GitAddParser parser = new GitAddParser();
         List<String> command = buildCommand(repositoryPath, options, paths);
-        GitAddResponseImpl response;
+        GitAddResponse response;
         try {
-            response = (GitAddResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
+            response = (GitAddResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }

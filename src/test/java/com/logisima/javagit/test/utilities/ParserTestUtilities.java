@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.ICommandResponse;
-import com.logisima.javagit.cli.IParser;
+import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 public class ParserTestUtilities {
@@ -39,8 +39,7 @@ public class ParserTestUtilities {
      * @throws IOException
      * @throws JavaGitException
      */
-    public static ICommandResponse getGitResponse(IParser parser, String outputGitCmd) throws IOException,
-            JavaGitException {
+    public static Response getGitResponse(Parser parser, String outputGitCmd) throws IOException, JavaGitException {
         BufferedReader br = new BufferedReader(new InputStreamReader(ParserTestUtilities.class.getClassLoader()
                 .getResourceAsStream(outputGitCmd)));
         while (true) {

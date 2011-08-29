@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * <code>GitRmResponse</code> holds the response information returned by the <code>GitRm</code> class.
  */
-public abstract class GitRmResponse implements ICommandResponse {
+public abstract class GitRmResponse extends Response {
 
     // The list of removed files.
     protected List<File> removedFiles = new ArrayList<File>();

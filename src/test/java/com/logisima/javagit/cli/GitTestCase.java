@@ -21,8 +21,10 @@ package com.logisima.javagit.cli;
 
 import junit.framework.TestCase;
 
-import com.logisima.javagit.cli.add.GitAddResponseImpl;
+import com.logisima.javagit.cli.add.GitAddResponse;
+import com.logisima.javagit.cli.clone.GitCloneResponseImpl;
 import com.logisima.javagit.cli.commit.GitCommitResponseImpl;
+import com.logisima.javagit.cli.init.GitInitResponse;
 import com.logisima.javagit.cli.status.GitStatusResponseImpl;
 
 public class GitTestCase extends TestCase {
@@ -34,9 +36,14 @@ public class GitTestCase extends TestCase {
      * @param nbAddedFile expected number of added files.
      * @param nbComment expected number of comment.
      */
-    protected static void gitAddTestEquals(GitAddResponseImpl response, int nbAddedFile, int nbComment) {
-        assertEquals(nbAddedFile, response.getFilePathsList().size());
+    protected static void gitAddTestEquals(GitAddResponse response, int nbAddedFile, int nbComment) {
+        assertEquals(nbAddedFile, response.getFilesAdded().size());
         assertEquals(nbComment, response.getComments().size());
+    }
+
+    protected static void gitCloneTestEquals(GitCloneResponseImpl response) {
+        assertNotNull(response);
+
     }
 
     /**
@@ -67,6 +74,18 @@ public class GitTestCase extends TestCase {
         assertEquals(nbCopiedFiles, response.getCopiedFiles().size());
         assertEquals(nbDeletedFiles, response.getDeletedFiles().size());
         assertEquals(nbRenamedFiles, response.getRenamedFiles().size());
+    }
+
+    /**
+     * Method that do all "assertEquals" on the <code>GitInitResponse</code>.
+     * 
+     * @param response the <code>GitInitResponse</code> to test.
+     * @param initialize expected initialize boolean.
+     * @param reinitialize expected reinitialize boolean.
+     */
+    protected static void gitInitTestEquals(GitInitResponse response, boolean initialize, boolean reinitialize) {
+        assertEquals(initialize, response.isInitialized());
+        assertEquals(reinitialize, response.isReinitialized());
     }
 
     /**

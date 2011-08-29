@@ -23,14 +23,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.logisima.javagit.cli.ICommandResponse;
+import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-commit command.
  */
-public class GitCommitResponse implements ICommandResponse {
+public class GitCommitResponse extends Response {
 
     // The short hash name for the commit.
     protected Ref                      commitShortHashName;
