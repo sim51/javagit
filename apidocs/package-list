@@ -3,6 +3,7 @@ com.logisima.javagit.cli
 com.logisima.javagit.cli.add
 com.logisima.javagit.cli.branch
 com.logisima.javagit.cli.checkout
+com.logisima.javagit.cli.client
 com.logisima.javagit.cli.clone
 com.logisima.javagit.cli.commit
 com.logisima.javagit.cli.init
