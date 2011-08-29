@@ -34,7 +34,7 @@ public class GitCommitParserTest extends GitTestCase {
         final String workingDirectory = "/tmp/";
         GitCommitParser parser = new GitCommitParser(workingDirectory);
 
-        GitCommitResponseImpl response = (GitCommitResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitCommitResponse response = (GitCommitResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/commit/GitCommitOutputTest1");
 
         // testing
@@ -46,7 +46,7 @@ public class GitCommitParserTest extends GitTestCase {
         final String workingDirectory = "/tmp/";
         GitCommitParser parser = new GitCommitParser(workingDirectory);
 
-        GitCommitResponseImpl response = (GitCommitResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitCommitResponse response = (GitCommitResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/commit/GitCommitOutputTest2");
 
         // testing

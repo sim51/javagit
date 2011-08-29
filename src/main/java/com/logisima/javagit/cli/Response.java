@@ -50,6 +50,13 @@ public abstract class Response {
     }
 
     /**
+     * @param processExitCode the processExitCode to set
+     */
+    public void setProcessExitCode(int processExitCode) {
+        this.processExitCode = processExitCode;
+    }
+
+    /**
      * @return the processOutput
      */
     public String getProcessOutput() {

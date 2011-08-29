@@ -21,48 +21,40 @@ package com.logisima.javagit.cli.rm;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.logisima.javagit.cli.Response;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * <code>GitRmResponse</code> holds the response information returned by the <code>GitRm</code> class.
  */
 public class GitRmResponse extends Response {
 
-    // The list of removed files.
-    protected List<File> removedFiles = new ArrayList<File>();
+    /**
+     * The list of removed files.
+     */
+    private List<File> removedFiles = new ArrayList<File>();
 
     /**
-     * Gets the file at the specified index from the removed file list.
-     * 
-     * @param index The index of the file to get. It must fall in the range:
-     *        <code>0 &lt;= index &lt; getRemovedFilesSize()</code>.
-     * @return The file at the specified index.
+     * Constructor.
      */
-    public File getRemovedFile(int index) {
-        CheckUtilities.checkIntIndexInListRange(removedFiles, index);
-        return removedFiles.get(index);
+    public GitRmResponse() {
+        super();
+        removedFiles = new ArrayList<File>();
     }
 
     /**
-     * Gets an <code>Iterator</code> over the list of removed files.
-     * 
-     * @return An <code>Iterator<code> over the list of removed files.
+     * @return the removedFiles
      */
-    public Iterator<File> getRemovedFilesIterator() {
-        return (new ArrayList<File>(removedFiles)).iterator();
+    public List<File> getRemovedFiles() {
+        return removedFiles;
     }
 
     /**
-     * Gets the number of removed files (provided that the quiet option was not used).
-     * 
-     * @return The number of removed files. If the quiet option was used, zero (0) will be returned.
+     * @param removedFiles the removedFiles to set
      */
-    public int getRemovedFilesSize() {
-        return removedFiles.size();
+    public void setRemovedFiles(List<File> removedFiles) {
+        this.removedFiles = removedFiles;
     }
 
 }

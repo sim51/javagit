@@ -25,6 +25,8 @@ import java.util.StringTokenizer;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.GitFileSystemObject.Status;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
@@ -53,36 +55,41 @@ public class GitStatusParser extends Parser {
     }
 
     private State             outputState;
-    private int               lineNum;
+
+    /**
+     * The response.
+     */
     private GitStatusResponse response;
+
     private File              inputFile = null;
 
-    // The working directory for the command that was run.
+    /**
+     * The working directory for the command that was run.
+     */
     private String            workingDirectory;
 
+    /**
+     * Constructor.
+     * 
+     * @param workingDirectory
+     */
     public GitStatusParser(String workingDirectory) {
+        super();
         this.workingDirectory = workingDirectory;
-        lineNum = 0;
         response = new GitStatusResponse(workingDirectory);
     }
 
-    public GitStatusParser(String workingDirectory, File in) {
-        this.workingDirectory = workingDirectory;
-        inputFile = in;
-        lineNum = 0;
-        response = new GitStatusResponse(workingDirectory);
-    }
-
+    @Override
     public void parseLine(String line) {
         // System.out.println(line);
         if (line == null || line.length() == 0) {
             return;
         }
-        ++lineNum;
+        ++numLinesParsed;
         if (isError(line)) {
             return;
         }
-        if (lineNum == 1) {
+        if (numLinesParsed == 1) {
             parseLineOne(line);
         }
         else {
@@ -90,7 +97,7 @@ public class GitStatusParser extends Parser {
         }
     }
 
-    /*
+    /**
      * Seems like a valid ( non-error ) line 1 always start with a '#' and contains the branch name.
      */
     private void parseLineOne(String line) {
@@ -105,10 +112,6 @@ public class GitStatusParser extends Parser {
     }
 
     private void parseOtherLines(String line) {
-        if (!(line.charAt(0) == '#')) {
-            response.setStatusOutputComment(line);
-            return;
-        }
         if (line.contains("Changes to be committed")) {
             outputState = State.FILES_TO_COMMIT;
             return;
@@ -163,25 +166,29 @@ public class GitStatusParser extends Parser {
 
     private boolean isError(String line) {
         if (line.startsWith("fatal") || line.startsWith("Error") || line.startsWith("error")) {
-            response.setError(lineNum, line);
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
             return true;
         }
         return false;
     }
 
     private void addNewFile(String filename) {
-        response.addToNewFilesToCommit(new File(workingDirectory + filename));
+        File file = new File(workingDirectory + filename);
+        response.getNewFilesToCommit().add(file);
+        response.fileToStatus.put(file, Status.NEW_TO_COMMIT);
     }
 
     private void addDeletedFile(String filename) {
         File file = new File(workingDirectory + filename);
         switch (outputState) {
             case FILES_TO_COMMIT:
-                response.addToDeletedFilesToCommit(file);
+                response.getDeletedFilesToCommit().add(file);
+                response.fileToStatus.put(file, Status.DELETED_TO_COMMIT);
                 break;
 
             case NOT_UPDATED:
-                response.addToDeletedFilesNotUpdated(file);
+                response.getDeletedFilesNotUpdated().add(file);
+                response.fileToStatus.put(file, Status.DELETED);
                 break;
         }
     }
@@ -190,21 +197,27 @@ public class GitStatusParser extends Parser {
         File file = new File(workingDirectory + filename);
         switch (outputState) {
             case FILES_TO_COMMIT:
-                response.addToModifiedFilesToCommit(file);
+                response.getModifiedFilesToCommit().add(file);
+                response.fileToStatus.put(file, Status.MODIFIED_TO_COMMIT);
                 break;
 
             case NOT_UPDATED:
-                response.addToModifiedFilesNotUpdated(file);
+                response.getModifiedFilesNotUpdated().add(file);
+                response.fileToStatus.put(file, Status.MODIFIED);
                 break;
         }
     }
 
     private void addRenamedFileToCommit(String renamedFile) {
-        response.addToRenamedFilesToCommit(new File(workingDirectory + renamedFile));
+        File file = new File(workingDirectory + renamedFile);
+        response.getRenamedFilesToCommit().add(file);
+        response.fileToStatus.put(file, Status.RENAMED_TO_COMMIT);
     }
 
     private void addUntrackedFile(String filename) {
-        response.addToUntrackedFiles(new File(workingDirectory + filename));
+        File file = new File(workingDirectory + filename);
+        response.getUntrackedFiles().add(file);
+        response.fileToStatus.put(file, Status.UNTRACKED);
     }
 
     private String getBranch(String line) {
@@ -243,13 +256,10 @@ public class GitStatusParser extends Parser {
         return false;
     }
 
-    public void processExitCode(int code) {
-    }
-
     public GitStatusResponse getResponse() throws JavaGitException {
-        if (response.errorState()) {
+        if (this.errors.size() != 0) {
             throw new JavaGitException(438000, ExceptionMessageMap.getMessage("438000")
-                    + " - git status error message: { " + response.getErrorMessage() + " }");
+                    + " - git status error message: { " + this.getError() + " }");
         }
         return response;
     }

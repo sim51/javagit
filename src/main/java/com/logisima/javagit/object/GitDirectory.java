@@ -27,6 +27,7 @@ import java.util.List;
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.log.GitLog;
 import com.logisima.javagit.cli.log.GitLogOptions;
+import com.logisima.javagit.cli.log.GitLogResponse;
 
 /**
  * <code>GitDirectory</code> represents a directory object in a git working tree.
@@ -90,7 +91,7 @@ public class GitDirectory extends GitFileSystemObject {
      * @throws IOException
      * @throws JavaGitException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog() throws JavaGitException, IOException {
+    public GitLogResponse getLog() throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         return gitLog.log(this.file, null);
     }
@@ -102,8 +103,7 @@ public class GitDirectory extends GitFileSystemObject {
      * @throws JavaGitException
      * @throws IOException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog(GitLogOptions options)
-            throws JavaGitException, IOException {
+    public GitLogResponse getLog(GitLogOptions options) throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         return gitLog.log(this.file, options);
     }

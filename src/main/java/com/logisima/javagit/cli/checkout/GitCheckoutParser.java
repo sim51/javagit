@@ -134,9 +134,6 @@ public class GitCheckoutParser extends Parser {
         return filename;
     }
 
-    public void processExitCode(int code) {
-    }
-
     public GitCheckoutResponse getResponse() throws JavaGitException {
         if (errors.size() > 0) {
             throw new JavaGitException(406000, ExceptionMessageMap.getMessage("406000")

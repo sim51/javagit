@@ -34,12 +34,11 @@ import com.logisima.javagit.utilities.ProcessUtilities;
  */
 public class GitCommit {
 
-    public GitCommitResponseImpl commit(File repository, String message, GitCommitOptions options)
-            throws JavaGitException {
+    public GitCommitResponse commit(File repository, String message, GitCommitOptions options) throws JavaGitException {
         return commitProcessor(repository, null, message, options);
     }
 
-    public GitCommitResponseImpl commit(File repository, List<File> files, String message, GitCommitOptions options)
+    public GitCommitResponse commit(File repository, List<File> files, String message, GitCommitOptions options)
             throws JavaGitException {
         return commitProcessor(repository, files, message, options);
     }
@@ -47,7 +46,7 @@ public class GitCommit {
     /**
      * Processes the commit.
      */
-    protected GitCommitResponseImpl commitProcessor(File repository, List<File> files, String message,
+    protected GitCommitResponse commitProcessor(File repository, List<File> files, String message,
             GitCommitOptions options) throws JavaGitException {
         CheckUtilities.checkNullArgument(repository, "repository");
         CheckUtilities.checkStringArgument(message, "message");
@@ -56,7 +55,7 @@ public class GitCommit {
         GitCommitParser parser = new GitCommitParser(repository.getAbsolutePath());
 
         try {
-            return (GitCommitResponseImpl) ProcessUtilities.runCommand(repository, commandLine, parser);
+            return (GitCommitResponse) ProcessUtilities.runCommand(repository, commandLine, parser);
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
@@ -104,7 +103,6 @@ public class GitCommit {
                 cmd.add(f.getPath());
             }
         }
-
         return cmd;
     }
 

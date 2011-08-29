@@ -23,28 +23,27 @@ import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 public class GitResetParser extends Parser {
 
-    // The index of the start of the short SHA1 in the HEAD record. Result of the --hard option
-    private final int            HEAD_RECORD_SHA1_START = 15;
+    /**
+     * The index of the start of the short SHA1 in the HEAD record. Result of the --hard option
+     */
+    private final int        HEAD_RECORD_SHA1_START = 15;
 
-    /*
+    /**
      * The working directory path set for the command line. Used to generate the correct paths to the files needing
      * update.
      */
-    private String               workingDirectoryPath;
+    private String           workingDirectoryPath;
 
-    // Holding onto the error message to make part of an exception
-    private StringBuffer         errorMsg               = null;
-
-    // Track the number of lines parsed.
-    private int                  numLinesParsed         = 0;
-
-    // The response object for a reset.
-    private GitResetResponseImpl response;
+    /**
+     * The response object for a reset.
+     */
+    private GitResetResponse response;
 
     /**
      * Constructor for <code>GitResetParser</code>
@@ -52,16 +51,14 @@ public class GitResetParser extends Parser {
      * @param workingDirectoryPath The working directory path set for the command line.
      */
     public GitResetParser(String workingDirectoryPath) {
-        this.workingDirectoryPath = workingDirectoryPath;
+        super();
+        workingDirectoryPath = workingDirectoryPath;
     }
 
     public void parseLine(String line) {
-
-        // TODO (jhl388): handle error messages in a better manner.
-
-        if (null != errorMsg) {
+        if (this.errors.size() != 0) {
             ++numLinesParsed;
-            errorMsg.append(", line" + numLinesParsed + "=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
             return;
         }
 
@@ -69,32 +66,25 @@ public class GitResetParser extends Parser {
             // A record indicating the new HEAD commit resulting from using the --hard option.
             int sha1End = line.indexOf(' ', HEAD_RECORD_SHA1_START);
             Ref sha1 = Ref.createSha1Ref(line.substring(HEAD_RECORD_SHA1_START, sha1End));
-            response = new GitResetResponseImpl(sha1, line.substring(sha1End + 1));
+            response = new GitResetResponse(sha1, line.substring(sha1End + 1));
         }
         else if (numLinesParsed > 0 && response.getNewHeadSha1() != null) {
             // No line is expected after getting a HEAD record. Doing nothing for now. Must revisit.
-
-            // TODO (jhl388): Figure out what to do if a line is received after a HEAD record.
         }
         else if (line.endsWith(": needs update")) {
             // A file needs update record.
             int lastColon = line.lastIndexOf(":");
             File f = new File(workingDirectoryPath + line.substring(0, lastColon));
-            response.addFileToFilesNeedingUpdateList(f);
+            response.getFilesNeedingUpdate().add(f);
         }
         else if (numLinesParsed > 0) {
-            errorMsg = new StringBuffer();
-            errorMsg.append("Unexpected results.  line" + (numLinesParsed + 1) + "=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
         else {
-            errorMsg = new StringBuffer();
-            errorMsg.append("line1=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
 
         ++numLinesParsed;
-    }
-
-    public void processExitCode(int code) {
     }
 
     /**
@@ -103,20 +93,12 @@ public class GitResetParser extends Parser {
      * 
      * @return The <code>GitResetResponseImpl</code> object containing the reset's response information.
      */
-    public GitResetResponseImpl getResponse() throws JavaGitException {
-        if (null != errorMsg) {
+    public GitResetResponse getResponse() throws JavaGitException {
+        if (this.errors.size() != 0) {
             throw new JavaGitException(432000, ExceptionMessageMap.getMessage("432000")
-                    + "  The git-reset error message:  { " + errorMsg.toString() + " }");
+                    + "  The git-reset error message:  { " + this.getError() + " }");
         }
         return response;
     }
 
-    /**
-     * Gets the number of lines of response text parsed by this IParser.
-     * 
-     * @return The number of lines of response text parsed by this IParser.
-     */
-    public int getNumLinesParsed() {
-        return numLinesParsed;
-    }
 }

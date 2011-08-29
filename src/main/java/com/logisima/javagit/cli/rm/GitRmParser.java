@@ -22,46 +22,38 @@ package com.logisima.javagit.cli.rm;
 import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
+import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 public class GitRmParser extends Parser {
 
-    // Holding onto the error message to make part of an exception
-    private StringBuffer      errorMsg       = null;
+    /**
+     * The response.
+     */
+    private GitRmResponse response;
 
-    // Track the number of lines parsed.
-    private int               numLinesParsed = 0;
-
-    // The response.
-    private GitRmResponseImpl response       = new GitRmResponseImpl();
-
+    @Override
     public void parseLine(String line) {
-
-        // TODO (jhl388): handle error messages in a better manner.
-
-        if (null != errorMsg) {
+        if (this.errors.size() != 0) {
             ++numLinesParsed;
-            errorMsg.append(", line" + numLinesParsed + "=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
             return;
         }
-
         if (line.startsWith("rm '")) {
             int locQuote = line.indexOf('\'');
             int locLastQuote = line.lastIndexOf('\'');
-            response.addFileToRemovedFilesList(new File(line.substring(locQuote + 1, locLastQuote)));
+            response.getRemovedFiles().add(new File(line.substring(locQuote + 1, locLastQuote)));
         }
         else {
-            errorMsg = new StringBuffer();
-            errorMsg.append("line1=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
     }
 
-    public void processExitCode(int code) {
-    }
-
+    @Override
     public GitRmResponse getResponse() throws JavaGitException {
-        if (null != errorMsg) {
-            throw new JavaGitException(434000, ExceptionMessageMap.getMessage("434000") + "  { " + errorMsg.toString()
+        if (this.errors.size() != 0) {
+            throw new JavaGitException(434000, ExceptionMessageMap.getMessage("434000") + "  { " + this.getError()
                     + " }");
         }
         return response;

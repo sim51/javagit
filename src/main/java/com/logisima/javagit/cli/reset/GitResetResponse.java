@@ -21,12 +21,10 @@ package com.logisima.javagit.cli.reset;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.Ref;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the <code>git-reset</code> command.
@@ -36,22 +34,24 @@ public class GitResetResponse extends Response {
     /**
      * The list of files left in a dirty state (different than what is in the new HEAD commit) in the working tree.
      */
-    protected List<File> filesNeedingUpdate  = new ArrayList<File>();
+    protected List<File> filesNeedingUpdate;
 
     /**
      * If the --hard option was given, this is the SHA1 of the new head.
      */
-    protected Ref        newHeadSha1         = null;
+    protected Ref        newHeadSha1;
 
     /**
      * If the --hard option was given, this is the short message for the commit at the new head.
      */
-    protected String     newHeadShortMessage = null;
+    protected String     newHeadShortMessage;
 
     /**
-     * Default constructor.
+     * Constructor.
      */
     protected GitResetResponse() {
+        super();
+        filesNeedingUpdate = new ArrayList<File>();
     }
 
     /**
@@ -65,100 +65,46 @@ public class GitResetResponse extends Response {
         this.newHeadShortMessage = newHeadShortMessage;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof GitResetResponse)) {
-            return false;
-        }
-
-        GitResetResponse grr = (GitResetResponse) o;
-
-        if (!CheckUtilities.checkObjectsEqual(newHeadSha1, grr.getNewHeadSha1())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(newHeadShortMessage, grr.getNewHeadShortMessage())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkListsEqual(filesNeedingUpdate, grr.filesNeedingUpdate)) {
-            return false;
-        }
-
-        return true;
-    }
-
     /**
-     * Gets the file at the specified index from the list of files needing update.
-     * 
-     * @param index The index of the file to get. It must fall in the range:
-     *        <code>0 &lt;= index &lt; getRemovedFilesSize()</code>.
-     * @return The file at the specified index.
+     * @return the filesNeedingUpdate
      */
-    public File getFileNeedingUpdate(int index) {
-        CheckUtilities.checkIntIndexInListRange(filesNeedingUpdate, index);
-        return filesNeedingUpdate.get(index);
+    public List<File> getFilesNeedingUpdate() {
+        return filesNeedingUpdate;
     }
 
     /**
-     * Gets an <code>Iterator</code> over the list of files needing update.
-     * 
-     * @return An <code>Iterator<code> over the list of files needing update.
+     * @param filesNeedingUpdate the filesNeedingUpdate to set
      */
-    public Iterator<File> getFilesNeedingUpdateIterator() {
-        return (new ArrayList<File>(filesNeedingUpdate)).iterator();
+    public void setFilesNeedingUpdate(List<File> filesNeedingUpdate) {
+        this.filesNeedingUpdate = filesNeedingUpdate;
     }
 
     /**
-     * Gets the SHA1 of the new head commit. Only returned when the <code>--hard</code> option is used.
-     * 
-     * @return The SHA1 of the new head commit.
+     * @return the newHeadSha1
      */
     public Ref getNewHeadSha1() {
         return newHeadSha1;
     }
 
     /**
-     * Gets the short message of the new head commit. Only returned when the <code>--hard</code> option is used.
-     * 
-     * @return The short message of the new head commit.
+     * @param newHeadSha1 the newHeadSha1 to set
+     */
+    public void setNewHeadSha1(Ref newHeadSha1) {
+        this.newHeadSha1 = newHeadSha1;
+    }
+
+    /**
+     * @return the newHeadShortMessage
      */
     public String getNewHeadShortMessage() {
         return newHeadShortMessage;
     }
 
     /**
-     * Gets the number of files needing update (provided that the quiet option was not used).
-     * 
-     * @return The number of files needing update. If the quiet option was used, zero (0) will be returned.
+     * @param newHeadShortMessage the newHeadShortMessage to set
      */
-    public int getRemovedFilesSize() {
-        return filesNeedingUpdate.size();
-    }
-
-    @Override
-    public int hashCode() {
-        int ret = (null == newHeadSha1) ? 0 : newHeadSha1.hashCode();
-        ret += (null == newHeadShortMessage) ? 0 : newHeadShortMessage.hashCode();
-        for (File f : filesNeedingUpdate) {
-            ret += f.hashCode();
-        }
-        return ret;
-    }
-
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer();
-        if (null != newHeadSha1) {
-            buf.append("HEAD: ");
-            buf.append(newHeadSha1);
-            buf.append(" ");
-            buf.append(newHeadShortMessage);
-        }
-        if (filesNeedingUpdate.size() > 0) {
-            buf.append(filesNeedingUpdate);
-        }
-        return buf.toString();
+    public void setNewHeadShortMessage(String newHeadShortMessage) {
+        this.newHeadShortMessage = newHeadShortMessage;
     }
 
 }

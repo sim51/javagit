@@ -22,7 +22,6 @@ package com.logisima.javagit.cli.mv;
 import java.io.File;
 
 import com.logisima.javagit.cli.Response;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git-mv command. For information about the contents of GitMvResponse instances returned
@@ -30,28 +29,43 @@ import com.logisima.javagit.utilities.CheckUtilities;
  */
 public class GitMvResponse extends Response {
 
-    // Variable to store the source file/folder/symlink of the response.
-    protected File         source;
-
-    // Variable to store the destination file/folder/symlink of the response.
-    protected File         destination;
-
-    // String Buffer to store the comment message after execution of git-mv.
-    protected StringBuffer message = new StringBuffer();
+    /**
+     * Variable to store the source file/folder/symlink of the response.
+     */
+    protected File   source;
 
     /**
-     * Gets the comments, if received, upon successful execution of the git-mv command, from the message buffer.
-     * 
-     * @return message The comments, if received, upon successful execution of the git-mv command, from the message
-     *         buffer.
+     * Variable to store the destination file/folder/symlink of the response.
      */
-    public String getComment() {
-        return message.toString();
+    protected File   destination;
+
+    /**
+     * String Buffer to store the comment message after execution of git-mv.
+     */
+    protected String message;
+
+    /**
+     * Constructor.
+     */
+    public GitMvResponse() {
+        super();
     }
 
     /**
-     * Gets the destination file/folder
-     * 
+     * @return the source
+     */
+    public File getSource() {
+        return source;
+    }
+
+    /**
+     * @param source the source to set
+     */
+    public void setSource(File source) {
+        this.source = source;
+    }
+
+    /**
      * @return the destination
      */
     public File getDestination() {
@@ -59,61 +73,24 @@ public class GitMvResponse extends Response {
     }
 
     /**
-     * Gets the source file/folder/symlink
-     * 
-     * @return the source
+     * @param destination the destination to set
      */
-    public File getSource() {
-        return source;
+    public void setDestination(File destination) {
+        this.destination = destination;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof GitMvResponse)) {
-            return false;
-        }
-
-        GitMvResponse g = (GitMvResponse) o;
-
-        if (!CheckUtilities.checkObjectsEqual(getSource(), g.getSource())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(getDestination(), g.getDestination())) {
-            return false;
-        }
-
-        if (!CheckUtilities.checkObjectsEqual(getComment(), g.getComment())) {
-            return false;
-        }
-
-        return true;
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
     }
 
-    @Override
-    public int hashCode() {
-        return source.hashCode() + destination.hashCode() + message.hashCode();
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    @Override
-    public String toString() {
-        StringBuffer buffer = new StringBuffer();
-        if (null != source) {
-            buffer.append("Source: ");
-            buffer.append(source.getName());
-            buffer.append(" ");
-        }
-
-        if (null != destination) {
-            buffer.append("Destination: ");
-            buffer.append(destination.getName());
-            buffer.append(" ");
-        }
-
-        if ((message.length() != 0)) {
-            buffer.append("Message: ");
-            buffer.append(message.toString());
-        }
-        return buffer.toString();
-    }
 }

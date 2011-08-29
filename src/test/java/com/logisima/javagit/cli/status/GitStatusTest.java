@@ -53,9 +53,8 @@ public class GitStatusTest extends GitTestCase {
     @Test
     public void testOnInitRepo() throws JavaGitException {
         JavaGit git = new JavaGit(repositoryPath);
-        GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
-        gitStatusTestEquals(response, "master", 0, 0, 0, 0, 0, 0,
-                "nothing to commit (create/copy files and use \"git add\" to track)");
+        GitStatusResponse response = (GitStatusResponse) git.status(null);
+        gitStatusTestEquals(response, "master", 0, 0, 0, 0, 0, 0);
     }
 
     /**
@@ -100,9 +99,9 @@ public class GitStatusTest extends GitTestCase {
         // 1 file untracked
         File fileG = FileUtilities.createFile(repositoryPath, "dirA/fileG.txt", "Sample Contents");
 
-        GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
+        GitStatusResponse response = (GitStatusResponse) git.status(null);
 
-        gitStatusTestEquals(response, "master", 1, 1, 0, 0, 0, 1, null);
+        gitStatusTestEquals(response, "master", 1, 1, 0, 0, 0, 1);
     }
 
     @After

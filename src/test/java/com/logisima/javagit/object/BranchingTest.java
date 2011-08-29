@@ -21,7 +21,6 @@ package com.logisima.javagit.object;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -72,10 +71,10 @@ public class BranchingTest extends TestCase {
 
         // iterate through branches
         boolean found = false;
-        Iterator<Ref> branches = dotGit.getBranches();
-        while (branches.hasNext()) {
+        List<Ref> branches = dotGit.getBranches();
+        for (int i = 0; i < branches.size(); i++) {
             // check
-            Ref branch = branches.next();
+            Ref branch = branches.get(i);
             if (branch.equals(createdBranch)) {
                 found = true;
             }
@@ -97,8 +96,8 @@ public class BranchingTest extends TestCase {
 
         found = false;
         branches = dotGit.getBranches();
-        while (branches.hasNext()) {
-            Ref branch = branches.next();
+        for (int i = 0; i < branches.size(); i++) {
+            Ref branch = branches.get(i);
             if (branch.equals(renamedBranch)) {
                 found = true;
             }
@@ -109,8 +108,8 @@ public class BranchingTest extends TestCase {
         dotGit.deleteBranch(renamedBranch, true);
         found = false;
         branches = dotGit.getBranches();
-        while (branches.hasNext()) {
-            Ref branch = branches.next();
+        for (int i = 0; i < branches.size(); i++) {
+            Ref branch = branches.get(i);
             if (branch.equals(renamedBranch)) {
                 found = true;
             }

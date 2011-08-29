@@ -23,27 +23,29 @@ import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.cli.commit.GitCommitResponse.AddedOrDeletedFile;
+import com.logisima.javagit.cli.commit.GitCommitResponse.CopiedOrMovedFile;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 public class GitCommitParser extends Parser {
 
-    // Holding onto the error message to make part of an exception
-    private StringBuffer          errorMsg       = null;
-
-    // Track the number of lines parsed.
-    private int                   numLinesParsed = 0;
-
-    // The response object for a commit.
-    private GitCommitResponseImpl response;
+    /**
+     * The response object for a commit.
+     */
+    private GitCommitResponse response;
 
     // The working directory for the command that was run.
-    private String                workingDirectory;
+    private String            workingDirectory;
 
     public GitCommitParser(String workingDirectory) {
+        super();
+        this.response = new GitCommitResponse();
         this.workingDirectory = workingDirectory;
     }
 
+    @Override
     public void parseLine(String line) {
 
         switch (numLinesParsed) {
@@ -78,11 +80,10 @@ public class GitCommitParser extends Parser {
             }
             int locEndBrace = line.indexOf(']');
             shortComment = line.substring(locEndBrace + 2);
-            response = new GitCommitResponseImpl(Ref.createSha1Ref(shortHash), shortComment);
+            response = new GitCommitResponse(Ref.createSha1Ref(shortHash), shortComment);
         }
         else {
-            errorMsg = new StringBuffer();
-            errorMsg.append("[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
     }
 
@@ -101,12 +102,12 @@ public class GitCommitParser extends Parser {
             nbChanged = Integer.valueOf(split[0].split(" ")[1]);
             nbInsertion = Integer.valueOf(split[1].split(" ")[1]);
             nbDeletion = Integer.valueOf(split[2].split(" ")[1]);
-            response.setFilesChanged(nbChanged);
-            response.setLinesInserted(nbInsertion);
-            response.setLinesDeleted(nbDeletion);
+            response.filesChanged = nbChanged;
+            response.linesInserted = nbInsertion;
+            response.linesDeleted = nbDeletion;
         }
         else {
-            errorMsg.append("[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
     }
 
@@ -129,7 +130,7 @@ public class GitCommitParser extends Parser {
             parseCopyRenameLine(line, false);
         }
         else if (line.startsWith("#")) {
-            errorMsg.append("[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
     }
 
@@ -163,10 +164,10 @@ public class GitCommitParser extends Parser {
         String pathStr = line.substring(startPathOffset);
         File path = new File(workingDirectory + pathStr);
         if (isAdd) {
-            response.addAddedFile(path, mode);
+            response.getAddedFiles().add(new AddedOrDeletedFile(path, mode));
         }
         else {
-            response.addDeletedFile(path, mode);
+            response.getDeletedFiles().add(new AddedOrDeletedFile(path, mode));
         }
     }
 
@@ -223,18 +224,15 @@ public class GitCommitParser extends Parser {
         try {
             percentage = Integer.parseInt(line.substring(openParenOffset + 1, percentOffset));
         } catch (NumberFormatException e) {
-            // TODO (jhl388): log this error somehow! Or, at least, deal with it in a better manner.
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, e.getMessage()));
         }
 
         if (isCopy) {
-            response.addCopiedFile(fromPath, toPath, percentage);
+            response.getCopiedFiles().add(new CopiedOrMovedFile(fromPath, toPath, percentage));
         }
         else {
-            response.addRenamedFile(fromPath, toPath, percentage);
+            response.getRenamedFiles().add(new CopiedOrMovedFile(fromPath, toPath, percentage));
         }
-    }
-
-    public void processExitCode(int code) {
     }
 
     /**
@@ -243,20 +241,12 @@ public class GitCommitParser extends Parser {
      * 
      * @return The <code>GitCommitResponse</code> object containing the commit's response information.
      */
-    public GitCommitResponseImpl getResponse() throws JavaGitException {
-        if (null != errorMsg) {
+    public GitCommitResponse getResponse() throws JavaGitException {
+        if (this.errors.size() != 0 && this.response.getProcessExitCode() != 0) {
             throw new JavaGitException(410000, ExceptionMessageMap.getMessage("410000")
-                    + "  The git-commit error message:  { " + errorMsg.toString() + " }");
+                    + "  The git-commit error message:  { " + this.getError() + " }");
         }
         return response;
     }
 
-    /**
-     * Gets the number of lines of response text parsed by this IParser.
-     * 
-     * @return The number of lines of response text parsed by this IParser.
-     */
-    public int getNumLinesParsed() {
-        return numLinesParsed;
-    }
 }

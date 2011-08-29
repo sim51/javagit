@@ -42,7 +42,4 @@ public class GitInitResponse extends Response {
         this.reinitialized = reinitialized;
     }
 
-    public boolean containsError() {
-        return false;
-    }
 }

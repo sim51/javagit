@@ -31,7 +31,7 @@ import org.junit.Test;
 import com.logisima.javagit.JavaGit;
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.GitTestCase;
-import com.logisima.javagit.cli.status.GitStatusResponseImpl;
+import com.logisima.javagit.cli.status.GitStatusResponse;
 import com.logisima.javagit.test.utilities.FileUtilities;
 
 public class GitAddTest extends GitTestCase {
@@ -101,8 +101,8 @@ public class GitAddTest extends GitTestCase {
         git.add(file2, null);
 
         // check with "git status"
-        GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
-        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0, null);
+        GitStatusResponse response = (GitStatusResponse) git.status(null);
+        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0);
     }
 
     /**
@@ -131,8 +131,8 @@ public class GitAddTest extends GitTestCase {
         git.add(files, null);
 
         // check with "git status"
-        GitStatusResponseImpl response = (GitStatusResponseImpl) git.status(null);
-        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0, null);
+        GitStatusResponse response = (GitStatusResponse) git.status(null);
+        gitStatusTestEquals(response, "master", 2, 0, 0, 0, 0, 0);
     }
 
     @After

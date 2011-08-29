@@ -56,7 +56,7 @@ public class GitCommitTest extends GitTestCase {
         git.add(filesToAdd, null);
 
         // Call commit
-        GitCommitResponseImpl response = (GitCommitResponseImpl) git.commit("Making a first test commit", null);
+        GitCommitResponse response = (GitCommitResponse) git.commit("Making a first test commit", null);
 
         gitCommitTestEquals(response, "Making a first test commit", null, 1, 0, 1, 1, 0, 0, 0);
     }

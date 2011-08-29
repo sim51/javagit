@@ -23,9 +23,7 @@ import com.logisima.javagit.cli.Response;
 
 public class GitShowResponse extends Response {
 
-    /**
-     * List of files that have been modified but not committed.
-     */
-    // protected final Ref ref;
-
+    public GitShowResponse() {
+        super();
+    }
 }

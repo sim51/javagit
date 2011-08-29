@@ -41,9 +41,6 @@ public class GitInit {
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        if (response.containsError()) {
-            throw new JavaGitException(418001, "Git Init error");
-        }
         return response;
     }
 

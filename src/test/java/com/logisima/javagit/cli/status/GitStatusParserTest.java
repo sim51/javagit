@@ -34,11 +34,11 @@ public class GitStatusParserTest extends GitTestCase {
         final String workingDirectory = "/tmp/";
         GitStatusParser parser = new GitStatusParser(workingDirectory);
 
-        GitStatusResponseImpl response = (GitStatusResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitStatusResponse response = (GitStatusResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/status/GitStatusOutputTest1");
 
         // testing
-        gitStatusTestEquals(response, "mine", 1, 3, 2, 0, 0, 3, null);
+        gitStatusTestEquals(response, "mine", 1, 3, 2, 0, 0, 3);
     }
 
     @Test
@@ -46,11 +46,10 @@ public class GitStatusParserTest extends GitTestCase {
         final String workingDirectory = "/tmp/";
         GitStatusParser parser = new GitStatusParser(workingDirectory);
 
-        GitStatusResponseImpl response = (GitStatusResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitStatusResponse response = (GitStatusResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/status/GitStatusOutputTest2");
 
         // testing
-        gitStatusTestEquals(response, "master", 0, 0, 0, 0, 0, 0,
-                "nothing to commit (create/copy files and use \"git add\" to track)");
+        gitStatusTestEquals(response, "master", 0, 0, 0, 0, 0, 0);
     }
 }

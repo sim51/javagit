@@ -45,7 +45,7 @@ import com.logisima.javagit.cli.init.GitInitOptions;
 import com.logisima.javagit.cli.init.GitInitResponse;
 import com.logisima.javagit.cli.log.GitLog;
 import com.logisima.javagit.cli.log.GitLogOptions;
-import com.logisima.javagit.cli.log.GitLogResponse.Commit;
+import com.logisima.javagit.cli.log.GitLogResponse;
 import com.logisima.javagit.cli.mv.GitMv;
 import com.logisima.javagit.cli.mv.GitMvOptions;
 import com.logisima.javagit.cli.mv.GitMvResponse;
@@ -218,7 +218,7 @@ public class JavaGit {
     /**
      * Git log
      */
-    public List<Commit> log(GitLogOptions options) throws JavaGitException {
+    public GitLogResponse log(GitLogOptions options) throws JavaGitException {
         IClient client = ClientManager.getInstance().getPreferredClient();
         GitLog gitLog = client.getGitLogInstance();
         return gitLog.log(repositoryPath, options);
@@ -227,7 +227,7 @@ public class JavaGit {
     /**
      * Git log files.
      */
-    public List<Commit> log(List<File> files, GitLogOptions options) throws JavaGitException {
+    public GitLogResponse log(List<File> files, GitLogOptions options) throws JavaGitException {
         CheckUtilities.checkNullListArgument(files, "files");
         IClient client = ClientManager.getInstance().getPreferredClient();
         GitLog gitLog = client.getGitLogInstance();

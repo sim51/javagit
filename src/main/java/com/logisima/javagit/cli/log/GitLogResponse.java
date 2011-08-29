@@ -23,139 +23,126 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.logisima.javagit.cli.Response;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * A response data object for the git log command.
  */
 public class GitLogResponse extends Response {
 
-    private List<Commit>           commitList   = new ArrayList<Commit>();
-    protected List<ResponseString> errors       = new ArrayList<ResponseString>();
+    private List<Commit>     commitList;
 
     // local variables used to store parsed data until it is pushed into the object
-    private String                 sha          = null;
-    private List<String>           mergeDetails = null;
-    private String                 dateString   = null;
-    private String                 message      = null;
-    private List<CommitFile>       files        = null;
-    private String                 author       = null;
+    private String           sha;
+    private List<String>     mergeDetails;
+    private String           dateString;
+    private String           message;
+    private List<CommitFile> files;
+    private String           author;
 
     /**
-     * 
-     * @return true is the response object contain an error
+     * Constructor.
      */
-    public boolean containsError() {
-        return (errors.size() > 0);
+    public GitLogResponse() {
+        super();
+        commitList = new ArrayList<Commit>();
     }
 
     /**
-     * 
-     * @param sha This sets the sha extracted from each commit entry.
+     * @return the commitList
+     */
+    public List<Commit> getCommitList() {
+        return commitList;
+    }
+
+    /**
+     * @param commitList the commitList to set
+     */
+    public void setCommitList(List<Commit> commitList) {
+        this.commitList = commitList;
+    }
+
+    /**
+     * @return the sha
+     */
+    public String getSha() {
+        return sha;
+    }
+
+    /**
+     * @param sha the sha to set
      */
     public void setSha(String sha) {
         this.sha = sha;
     }
 
     /**
-     * 
-     * @param mergeDetails This stored the merge details of a commit. eg. Merge: f859e80... 55a5e32...
+     * @return the mergeDetails
+     */
+    public List<String> getMergeDetails() {
+        return mergeDetails;
+    }
+
+    /**
+     * @param mergeDetails the mergeDetails to set
      */
     public void setMergeDetails(List<String> mergeDetails) {
         this.mergeDetails = mergeDetails;
     }
 
     /**
-     * 
-     * @param string This returns the Date object for a particular commit.
+     * @return the dateString
      */
-    public void setDate(String string) {
-        this.dateString = string;
+    public String getDateString() {
+        return dateString;
     }
 
     /**
-     * 
-     * @param author This sets the author for a commit.
+     * @param dateString the dateString to set
+     */
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the files
+     */
+    public List<CommitFile> getFiles() {
+        return files;
+    }
+
+    /**
+     * @param files the files to set
+     */
+    public void setFiles(List<CommitFile> files) {
+        this.files = files;
+    }
+
+    /**
+     * @return the author
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+    /**
+     * @param author the author to set
      */
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    /**
-     * 
-     * @param message This set the message for a commmit.
-     */
-    public void setMessage(String message) {
-        if (this.message == null) {
-            this.message = message;
-        }
-        else {
-            this.message += message;
-        }
-
-    }
-
-    /**
-     * 
-     * @param file This adds a file entry to the list of files modified for a single commit.
-     */
-    public void addFile(CommitFile file) {
-        if (files == null) {
-            files = new ArrayList<CommitFile>();
-        }
-        this.files.add(file);
-    }
-
-    /**
-     * This add a newly created commit object to the list of commits for a log.
-     */
-    public void addCommit() {
-        if (this.sha != null) {
-            Commit commit = new Commit(this.sha, this.mergeDetails, this.author, this.dateString, this.message,
-                    this.files);
-            if (commitList == null) {
-                commitList = new ArrayList<Commit>();
-            }
-
-            this.commitList.add(commit);
-            // reset variables for future commits.
-            this.files = null;
-            this.mergeDetails = null;
-            this.message = null;
-        }
-    }
-
-    /**
-     * This adds a file to the list of files affected by a particular commit.
-     * 
-     * @param filename The filename affected by the commit.
-     * @param linesAdded Number of lines added in the above file in that particular commit.
-     * @param linesDeleted Number of lines deleted in the above file in that particular commit.
-     */
-    public void addFile(String filename, int linesAdded, int linesDeleted) {
-        CommitFile commitFile = new CommitFile(filename, linesAdded, linesDeleted);
-        if (files == null) {
-            files = new ArrayList<CommitFile>();
-        }
-        this.files.add(commitFile);
-    }
-
-    /**
-     * @param index Returns the index of error.
-     * @return The index of error.
-     */
-    public ResponseString getError(int index) {
-        CheckUtilities.checkIntInRange(index, 0, errors.size());
-        return (errors.get(index));
-    }
-
-    /**
-     * 
-     * @return This returns the commit list of the particular log instance.
-     */
-    public List<Commit> getLog() {
-
-        return this.commitList;
     }
 
     /**
@@ -383,22 +370,4 @@ public class GitLogResponse extends Response {
         }
     }
 
-    public static class ResponseString {
-
-        final String error;
-        final int    lineNumber;
-
-        public ResponseString(int lineNumber, String error) {
-            this.lineNumber = lineNumber;
-            this.error = error;
-        }
-
-        public int getLineNumber() {
-            return lineNumber;
-        }
-
-        public String error() {
-            return error;
-        }
-    }
 }

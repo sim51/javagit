@@ -58,12 +58,12 @@ public class GitReset {
         }
     }
 
-    protected GitResetResponseImpl resetProcessor(File repository, GitResetOptions options, List<File> paths)
+    protected GitResetResponse resetProcessor(File repository, GitResetOptions options, List<File> paths)
             throws IOException, JavaGitException {
         List<String> commandLine = buildCommand(options, paths);
         GitResetParser parser = new GitResetParser(repository.getPath());
 
-        return (GitResetResponseImpl) ProcessUtilities.runCommand(repository, commandLine, parser);
+        return (GitResetResponse) ProcessUtilities.runCommand(repository, commandLine, parser);
     }
 
     protected List<String> buildCommand(GitResetOptions options, List<File> paths) {

@@ -92,7 +92,7 @@ public abstract class Parser {
      * @throws JavaGitException
      */
     public void processExitCode(int code) throws JavaGitException {
-        this.getResponse().processExitCode = code;
+        this.getResponse().setProcessExitCode(code);
     }
 
 }

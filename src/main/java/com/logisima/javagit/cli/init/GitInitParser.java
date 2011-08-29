@@ -27,13 +27,14 @@ import com.logisima.javagit.cli.Parser;
  */
 public class GitInitParser extends Parser {
 
-    private GitInitResponse response = new GitInitResponse();
+    private GitInitResponse response;
 
     /**
-     * Add the final parsed commit. and returns the response of git init execution.
+     * Constructor.
      */
-    public ICommandResponse getResponse() throws JavaGitException {
-        return this.response;
+    public GitInitParser() {
+        super();
+        response = new GitInitResponse();
     }
 
     /**
@@ -53,7 +54,8 @@ public class GitInitParser extends Parser {
         }
     }
 
-    public void processExitCode(int code) {
-
+    @Override
+    public GitInitResponse getResponse() throws JavaGitException {
+        return response;
     }
 }

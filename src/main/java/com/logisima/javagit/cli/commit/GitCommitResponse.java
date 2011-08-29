@@ -73,6 +73,16 @@ public class GitCommitResponse extends Response {
 
     /**
      * Constructor.
+     */
+    public GitCommitResponse() {
+        addedFiles = new ArrayList<AddedOrDeletedFile>();
+        copiedFiles = new ArrayList<CopiedOrMovedFile>();
+        deletedFiles = new ArrayList<AddedOrDeletedFile>();
+        renamedFiles = new ArrayList<CopiedOrMovedFile>();
+    }
+
+    /**
+     * Constructor.
      * 
      * @param shortHashName The short hash name
      * @param shortComment

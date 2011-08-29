@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.logisima.javagit.JavaGitConfiguration;
 import com.logisima.javagit.JavaGitException;
-import com.logisima.javagit.cli.log.GitLogResponse.Commit;
 import com.logisima.javagit.utilities.ProcessUtilities;
 
 /**
@@ -37,7 +36,7 @@ public class GitLog {
     /**
      * Implementations of git log.
      */
-    public List<Commit> log(File repositoryPath, GitLogOptions options) throws JavaGitException {
+    public GitLogResponse log(File repositoryPath, GitLogOptions options) throws JavaGitException {
         GitLogParser parser = new GitLogParser();
         List<String> command = buildCommand(repositoryPath, options, null);
         GitLogResponse response;
@@ -46,18 +45,13 @@ public class GitLog {
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        if (response.containsError()) {
-            int line = response.getError(0).getLineNumber();
-            String error = response.getError(0).error();
-            throw new JavaGitException(420001, "Line " + line + ", " + error);
-        }
-        return response.getLog();
+        return response;
     }
 
     /**
      * Implementations of git log onf files.
      */
-    public List<Commit> log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException {
+    public GitLogResponse log(File repositoryPath, GitLogOptions options, List<File> paths) throws JavaGitException {
         GitLogParser parser = new GitLogParser();
         List<String> command = buildCommand(repositoryPath, options, paths);
         GitLogResponse response;
@@ -66,12 +60,7 @@ public class GitLog {
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }
-        if (response.containsError()) {
-            int line = response.getError(0).getLineNumber();
-            String error = response.getError(0).error();
-            throw new JavaGitException(420001, "Line " + line + ", " + error);
-        }
-        return response.getLog();
+        return response;
     }
 
     /**
@@ -251,9 +240,7 @@ public class GitLog {
                 command.add("--skip=" + options.getOptLimitSkip());
             }
         }
-
         return command;
-
     }
 
 }

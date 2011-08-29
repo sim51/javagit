@@ -33,14 +33,13 @@ import com.logisima.javagit.utilities.ProcessUtilities;
  */
 public class GitMv {
 
-    public GitMvResponseImpl mv(File repoPath, GitMvOptions options, File source, File destination)
-            throws JavaGitException {
+    public GitMvResponse mv(File repoPath, GitMvOptions options, File source, File destination) throws JavaGitException {
         List<File> sources = new ArrayList<File>();
         sources.add(source);
         return mvProcess(repoPath, options, sources, destination);
     }
 
-    public GitMvResponseImpl mv(File repoPath, GitMvOptions options, List<File> sources, File destination)
+    public GitMvResponse mv(File repoPath, GitMvOptions options, List<File> sources, File destination)
             throws JavaGitException {
         return mvProcess(repoPath, options, sources, destination);
     }
@@ -48,14 +47,14 @@ public class GitMv {
     /**
      * Exec of git-mv command
      */
-    public GitMvResponseImpl mvProcess(File repoPath, GitMvOptions options, List<File> source, File destination)
+    public GitMvResponse mvProcess(File repoPath, GitMvOptions options, List<File> source, File destination)
             throws JavaGitException {
 
         List<String> commandLine = buildCommand(options, source, destination);
         GitMvParser parser = new GitMvParser();
 
         try {
-            return (GitMvResponseImpl) ProcessUtilities.runCommand(repoPath, commandLine, parser);
+            return (GitMvResponse) ProcessUtilities.runCommand(repoPath, commandLine, parser);
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }

@@ -22,7 +22,6 @@ package com.logisima.javagit.object;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +31,7 @@ import com.logisima.javagit.cli.branch.GitBranchOptions;
 import com.logisima.javagit.cli.branch.GitBranchResponse;
 import com.logisima.javagit.cli.log.GitLog;
 import com.logisima.javagit.cli.log.GitLogOptions;
+import com.logisima.javagit.cli.log.GitLogResponse;
 import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
@@ -39,13 +39,17 @@ import com.logisima.javagit.utilities.CheckUtilities;
  */
 public final class DotGit {
 
-    // This guy's a per-repository singleton, so we need a static place to store our instances.
+    /**
+     * This guy's a per-repository singleton, so we need a static place to store our instances.
+     */
     private static final Map<String, DotGit> INSTANCES = new HashMap<String, DotGit>();
 
-    // The directory that contains the .git in question.
+    /**
+     * The directory that contains the .git in question.
+     */
     private final File                       path;
 
-    /*
+    /**
      * The canonical pathname from this file. Store this here so that we don't need to continually hit the filesystem to
      * resolve it.
      */
@@ -202,11 +206,11 @@ public final class DotGit {
      * 
      * @return The branches in the repository.
      */
-    public Iterator<Ref> getBranches() throws IOException, JavaGitException {
+    public List<Ref> getBranches() throws IOException, JavaGitException {
         GitBranch gitBranch = new GitBranch();
         GitBranchOptions options = new GitBranchOptions();
         GitBranchResponse response = gitBranch.branch(path, options);
-        return response.getBranchListIterator();
+        return response.getBranchList();
     }
 
     @Override
@@ -291,7 +295,7 @@ public final class DotGit {
      * @throws IOException
      * @throws JavaGitException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog() throws JavaGitException, IOException {
+    public GitLogResponse getLog() throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         return gitLog.log(this.getPath(), new GitLogOptions());
     }
@@ -303,8 +307,7 @@ public final class DotGit {
      * @throws JavaGitException
      * @throws IOException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog(GitLogOptions options)
-            throws JavaGitException, IOException {
+    public GitLogResponse getLog(GitLogOptions options) throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         return gitLog.log(this.getPath(), options);
     }

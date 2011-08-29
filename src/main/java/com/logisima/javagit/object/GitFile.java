@@ -21,11 +21,11 @@ package com.logisima.javagit.object;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.log.GitLog;
 import com.logisima.javagit.cli.log.GitLogOptions;
+import com.logisima.javagit.cli.log.GitLogResponse;
 import com.logisima.javagit.cli.status.GitStatus;
 import com.logisima.javagit.cli.status.GitStatusResponse;
 
@@ -74,7 +74,7 @@ public class GitFile extends GitFileSystemObject {
      * @throws IOException
      * @throws JavaGitException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog() throws JavaGitException, IOException {
+    public GitLogResponse getLog() throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         GitLogOptions options = new GitLogOptions();
         options.setOptRelative(true, this.relativePath.toString());
@@ -88,8 +88,7 @@ public class GitFile extends GitFileSystemObject {
      * @throws JavaGitException
      * @throws IOException
      */
-    public List<com.logisima.javagit.cli.log.GitLogResponse.Commit> getLog(GitLogOptions options)
-            throws JavaGitException, IOException {
+    public GitLogResponse getLog(GitLogOptions options) throws JavaGitException, IOException {
         GitLog gitLog = new GitLog();
         options.setOptRelative(true, this.relativePath.toString());
         return gitLog.log(this.file, options);

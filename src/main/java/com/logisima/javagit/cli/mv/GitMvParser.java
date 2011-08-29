@@ -23,6 +23,7 @@ import java.io.File;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
 /**
@@ -30,14 +31,15 @@ import com.logisima.javagit.utilities.ExceptionMessageMap;
  */
 public class GitMvParser extends Parser {
 
-    // The response object for an mv operation.
-    private GitMvResponseImpl response       = null;
+    /**
+     * The response object for an mv operation.
+     */
+    private GitMvResponse response;
 
-    // While handling the error cases this buffer will have the error messages.
-    private StringBuffer      errorMessage   = null;
-
-    // Track the number of lines parsed.
-    private int               numLinesParsed = 0;
+    public GitMvParser() {
+        super();
+        response = new GitMvResponse();
+    }
 
     /**
      * Parses the line from the git-mv response text.
@@ -47,21 +49,14 @@ public class GitMvParser extends Parser {
      */
     public void parseLine(String line) {
         ++numLinesParsed;
-        if (null != errorMessage) {
-            errorMessage.append(", line" + numLinesParsed + "=[" + line + "]");
+        if (this.errors.size() != 0) {
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
             return;
         }
         if (line.startsWith("error") || line.startsWith("fatal")) {
-            if (null == errorMessage) {
-                errorMessage = new StringBuffer();
-            }
-            errorMessage.append("line1=[" + line + "]");
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
         else {
-            if (null == response) {
-                response = new GitMvResponseImpl();
-            }
-            // This is to parse the output when -n or -f options were given
             parseLineForSuccess(line);
         }
     }
@@ -73,7 +68,7 @@ public class GitMvParser extends Parser {
      */
     public void parseLineForSuccess(String line) {
         if (line.contains("Warning:")) {
-            response.addComment(line);
+            response.getMessage().concat(line);
         }
         if (line.contains("Adding") || line.contains("Changed")) {
             response.setDestination(new File(line.substring(11)));
@@ -81,9 +76,6 @@ public class GitMvParser extends Parser {
         if (line.contains("Deleting")) {
             response.setSource(new File(line.substring(11)));
         }
-    }
-
-    public void processExitCode(int code) {
     }
 
     /**
@@ -98,9 +90,9 @@ public class GitMvParser extends Parser {
      * @throws <code>JavaGitException</code> if there is an error executing git-mv.
      */
     public GitMvResponse getResponse() throws JavaGitException {
-        if (null != errorMessage) {
+        if (this.errors.size() != 0) {
             throw new JavaGitException(424000, ExceptionMessageMap.getMessage("424000")
-                    + "  The git-mv error message:  { " + errorMessage.toString() + " }");
+                    + "  The git-mv error message:  { " + this.getError() + " }");
         }
         return response;
     }

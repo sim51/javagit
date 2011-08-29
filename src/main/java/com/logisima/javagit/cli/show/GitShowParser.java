@@ -28,15 +28,19 @@ import com.logisima.javagit.cli.Response;
  */
 public class GitShowParser extends Parser {
 
+    /**
+     * Constructor.
+     */
+    public GitShowParser() {
+        super();
+    }
+
     @Override
     public void parseLine(String line) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public Response getResponse() throws JavaGitException {
-        // TODO Auto-generated method stub
         return null;
     }
 
