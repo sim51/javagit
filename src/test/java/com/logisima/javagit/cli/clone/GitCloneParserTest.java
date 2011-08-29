@@ -39,7 +39,7 @@ public class GitCloneParserTest extends GitTestCase {
     public static void testGitCloneOutput1() throws IOException, JavaGitException {
         GitCloneParser parser = new GitCloneParser();
 
-        GitCloneResponseImpl response = (GitCloneResponseImpl) ParserTestUtilities.getGitResponse(parser,
+        GitCloneResponse response = (GitCloneResponse) ParserTestUtilities.getGitResponse(parser,
                 "com/logisima/javagit/cli/clone/GitCloneOutputTest1");
 
         // testing

@@ -34,9 +34,8 @@ import com.logisima.javagit.utilities.ProcessUtilities;
  */
 public class GitClone {
 
-    public GitCloneResponseImpl clone(File repositoryPath, GitCloneOptions options, URL repository)
-            throws JavaGitException {
-        GitCloneResponseImpl response;
+    public GitCloneResponse clone(File repositoryPath, GitCloneOptions options, URL repository) throws JavaGitException {
+        GitCloneResponse response;
         try {
             response = cloneProcess(repositoryPath, options, repository);
         } catch (IOException e) {
@@ -48,12 +47,12 @@ public class GitClone {
     /**
      * Process the git-clone command, to make a clone of the git repository.
      */
-    public GitCloneResponseImpl cloneProcess(File repositoryPath, GitCloneOptions options, URL repository)
+    public GitCloneResponse cloneProcess(File repositoryPath, GitCloneOptions options, URL repository)
             throws IOException, JavaGitException {
         List<String> commandLine = buildCommand(options, repository, repositoryPath);
         GitCloneParser parser = new GitCloneParser();
 
-        return (GitCloneResponseImpl) ProcessUtilities.runCommand(repositoryPath, commandLine, parser);
+        return (GitCloneResponse) ProcessUtilities.runCommand(repositoryPath, commandLine, parser);
     }
 
     /**

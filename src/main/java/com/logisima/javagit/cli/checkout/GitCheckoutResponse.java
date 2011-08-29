@@ -21,17 +21,15 @@ package com.logisima.javagit.cli.checkout;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.logisima.javagit.cli.Response;
 import com.logisima.javagit.object.Ref;
-import com.logisima.javagit.utilities.CheckUtilities;
 
 /**
  * Response data object for &lt;git-checkout&gt; command.
  */
-public abstract class GitCheckoutResponse extends Response {
+public class GitCheckoutResponse extends Response {
 
     /**
      * List of files that have been modified but not committed.
@@ -65,108 +63,52 @@ public abstract class GitCheckoutResponse extends Response {
     }
 
     /**
-     * Returns the newly created branch by -b option by &lt;git-checkout&gt;.
-     * 
-     * @return Name of the new branch
+     * @return the newBranch
      */
     public Ref getNewBranch() {
         return newBranch;
     }
 
     /**
-     * Returns the branch to which &lt;git-checkout&gt; switches to.
-     * 
-     * @return Name of the branch
+     * @param newBranch the newBranch to set
+     */
+    public void setNewBranch(Ref newBranch) {
+        this.newBranch = newBranch;
+    }
+
+    /**
+     * @return the branch
      */
     public Ref getBranch() {
         return branch;
     }
 
     /**
-     * Returns iterator to the modified files list
-     * 
-     * @return iterator to the list.
+     * @param branch the branch to set
      */
-    public Iterator<File> getModifiedFilesIterator() {
-        return (new ArrayList<File>(modifiedFiles).iterator());
+    public void setBranch(Ref branch) {
+        this.branch = branch;
     }
 
     /**
-     * Gets iterator to the copy of addedFiles list.
-     * 
-     * @return iterator to the list.
-     * 
+     * @return the modifiedFiles
      */
-    public Iterator<File> getAddedFilesIterator() {
-        return (new ArrayList<File>(addedFiles).iterator());
+    public List<File> getModifiedFiles() {
+        return modifiedFiles;
     }
 
     /**
-     * Gets iterator to the copy of deletedFiles list.
-     * 
-     * @return iterator to the list.
+     * @return the addedFiles
      */
-    public Iterator<File> getDeletedFilesIterator() {
-        return (new ArrayList<File>(deletedFiles).iterator());
+    public List<File> getAddedFiles() {
+        return addedFiles;
     }
 
     /**
-     * Returns the file at a given location in the addedFiles list
-     * 
-     * @param index in the list and should be positive and less than no. of files added.
-     * @return added file at the index in addedFiles list.
+     * @return the deletedFiles
      */
-    public File getAddedFile(int index) {
-        CheckUtilities.checkIntIndexInListRange(addedFiles, index);
-        return addedFiles.get(index);
+    public List<File> getDeletedFiles() {
+        return deletedFiles;
     }
 
-    /**
-     * Returns the file at a given location in the deletedFiles list
-     * 
-     * @param index in the list and should be positive and less than no. of files deleted.
-     * @return deleted file at the index in deleteFiles list.
-     */
-    public File getDeletedFile(int index) {
-        CheckUtilities.checkIntIndexInListRange(deletedFiles, index);
-        return deletedFiles.get(index);
-    }
-
-    /**
-     * Returns the file at a given location in the modifiedFiles list.
-     * 
-     * @param index in the list and it should be positive and less than total no. of files modified.
-     * @return modified file at the index in modifiedFiles list.
-     */
-    public File getModifiedFile(int index) {
-        CheckUtilities.checkIntIndexInListRange(modifiedFiles, index);
-        return modifiedFiles.get(index);
-    }
-
-    /**
-     * Gets the total no. of files in addedFiles list.
-     * 
-     * @return no. of files
-     */
-    public int getNumberOfAddedFiles() {
-        return addedFiles.size();
-    }
-
-    /**
-     * Gets total no. of files in modifiedFiles list.
-     * 
-     * @return no. of files.
-     */
-    public int getNumberOfModifiedFiles() {
-        return modifiedFiles.size();
-    }
-
-    /**
-     * Gets total no. o files in addedFiles List.
-     * 
-     * @return no. of files.
-     */
-    public int getNumberOfDeletedFiles() {
-        return deletedFiles.size();
-    }
 }

@@ -12,29 +12,15 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with LogiSima-Common.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with JavGit. If not, see <http://www.gnu.org/licenses/>.
  *  
  *  @author Benoît Simard
  *  @See https://github.com/sim51/javagit
  */
 package com.logisima.javagit.cli.rm;
 
-import java.io.File;
+import com.logisima.javagit.cli.GitTestCase;
 
-/**
- * Implementation of <code>GitRmResponse</code> that includes setter methods for all fields.
- */
-public final class GitRmResponseImpl extends GitRmResponse {
-
-    // TODO (jhl388): Add test cases for this class.
-
-    /**
-     * Adds the file to the removed files list.
-     * 
-     * @param file The file to add to the removed files list.
-     */
-    public void addFileToRemovedFilesList(File file) {
-        removedFiles.add(file);
-    }
+public class GitRmParserTest extends GitTestCase {
 
 }

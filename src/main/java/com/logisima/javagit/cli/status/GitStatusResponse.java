@@ -34,7 +34,7 @@ import com.logisima.javagit.object.Ref;
 /**
  * A response data object for &lt;git-status&gt; command
  */
-public abstract class GitStatusResponse extends Response {
+public class GitStatusResponse extends Response {
 
     /**
      * List of new files that will be added next time &lt;git-commit&gt; is executed.

@@ -30,7 +30,7 @@ import com.logisima.javagit.utilities.CheckUtilities;
 /**
  * <code>GitRmResponse</code> holds the response information returned by the <code>GitRm</code> class.
  */
-public abstract class GitRmResponse extends Response {
+public class GitRmResponse extends Response {
 
     // The list of removed files.
     protected List<File> removedFiles = new ArrayList<File>();

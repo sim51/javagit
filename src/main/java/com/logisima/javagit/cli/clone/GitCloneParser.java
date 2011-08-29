@@ -19,39 +19,37 @@
  */
 package com.logisima.javagit.cli.clone;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 
 /**
  * Implementation of the <code>IParser</code> interface in GitCloneParser class.
  */
 public class GitCloneParser extends Parser {
 
-    private int                  lineNum;
-    private GitCloneResponseImpl response;
-    private boolean              error = false;
-    private List<Error>          errorList;
+    private GitCloneResponse response;
 
-    public ICommandResponse getResponse() throws JavaGitException {
+    /**
+     * Constructor.
+     */
+    public GitCloneParser() {
+        super();
+        response = new GitCloneResponse();
+    }
+
+    @Override
+    public GitCloneResponse getResponse() {
         return response;
     }
 
-    public GitCloneParser() {
-        lineNum = 0;
-        response = new GitCloneResponseImpl();
-    }
-
+    @Override
     public void parseLine(String line) {
         if (line == null || line.length() == 0) {
             return;
         }
-        lineNum++;
+        numLinesParsed++;
         if (isError(line)) {
-            error = true;
-            errorList.add(new Error(lineNum, line));
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
         }
         else {
             // processLine(line);
@@ -60,33 +58,9 @@ public class GitCloneParser extends Parser {
 
     private boolean isError(String line) {
         if (line.trim().startsWith("warning") || line.trim().startsWith("error")) {
-            if (errorList == null) {
-                errorList = new ArrayList<Error>();
-            }
             return true;
         }
         return false;
     }
 
-    public void processExitCode(int code) {
-    }
-
-    /**
-     * Class for storing error details from the &lt;git-add&gt; output.
-     * 
-     */
-    private static class Error {
-
-        final int    lineNum;
-        final String errorStr;
-
-        Error(int lineNum, String errorStr) {
-            this.lineNum = lineNum;
-            this.errorStr = errorStr;
-        }
-
-        public String getErrorString() {
-            return errorStr;
-        }
-    }
 }

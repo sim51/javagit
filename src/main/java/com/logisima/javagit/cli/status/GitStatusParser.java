@@ -52,25 +52,25 @@ public class GitStatusParser extends Parser {
         }
     }
 
-    private State                 outputState;
-    private int                   lineNum;
-    private GitStatusResponseImpl response;
-    private File                  inputFile = null;
+    private State             outputState;
+    private int               lineNum;
+    private GitStatusResponse response;
+    private File              inputFile = null;
 
     // The working directory for the command that was run.
-    private String                workingDirectory;
+    private String            workingDirectory;
 
     public GitStatusParser(String workingDirectory) {
         this.workingDirectory = workingDirectory;
         lineNum = 0;
-        response = new GitStatusResponseImpl(workingDirectory);
+        response = new GitStatusResponse(workingDirectory);
     }
 
     public GitStatusParser(String workingDirectory, File in) {
         this.workingDirectory = workingDirectory;
         inputFile = in;
         lineNum = 0;
-        response = new GitStatusResponseImpl(workingDirectory);
+        response = new GitStatusResponse(workingDirectory);
     }
 
     public void parseLine(String line) {

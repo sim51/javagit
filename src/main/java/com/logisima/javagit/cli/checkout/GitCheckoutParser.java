@@ -20,12 +20,11 @@
 package com.logisima.javagit.cli.checkout;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.logisima.javagit.JavaGitException;
 import com.logisima.javagit.cli.Parser;
+import com.logisima.javagit.object.OutputErrorOrWarn;
 import com.logisima.javagit.object.Ref;
 import com.logisima.javagit.utilities.ExceptionMessageMap;
 
@@ -35,9 +34,7 @@ import com.logisima.javagit.utilities.ExceptionMessageMap;
  */
 public class GitCheckoutParser extends Parser {
 
-    private int                     lineNum;
-    private GitCheckoutResponseImpl response;
-    private List<ErrorDetails>      errors;
+    private GitCheckoutResponse response;
 
     /**
      * String pattern for matching files with modified, deleted, added words in the output.
@@ -56,17 +53,20 @@ public class GitCheckoutParser extends Parser {
         }
     }
 
+    /**
+     * Constructor.
+     */
     public GitCheckoutParser() {
-        lineNum = 0;
-        response = new GitCheckoutResponseImpl();
-        errors = new ArrayList<ErrorDetails>();
+        super();
+        response = new GitCheckoutResponse();
     }
 
+    @Override
     public void parseLine(String line) {
         if (line == null || line.length() == 0) {
             return;
         }
-        ++lineNum;
+        ++numLinesParsed;
         if (!isErrorLine(line)) {
             parseSwitchedToBranchLine(line);
             parseFilesInfo(line);
@@ -75,7 +75,7 @@ public class GitCheckoutParser extends Parser {
 
     private boolean isErrorLine(String line) {
         if (line.startsWith("error") || line.startsWith("fatal")) {
-            setError(lineNum, line);
+            this.errors.add(new OutputErrorOrWarn(numLinesParsed, line));
             return true;
         }
         return false;
@@ -111,17 +111,17 @@ public class GitCheckoutParser extends Parser {
     private void parseFilesInfo(String line) {
         if (Pattern.MODIFIED.matches(line)) {
             File file = new File(extractFileName(line));
-            response.addModifiedFile(file);
+            response.getModifiedFiles().add(file);
             return;
         }
         if (Pattern.DELETED.matches(line)) {
             File file = new File(extractFileName(line));
-            response.addDeletedFile(file);
+            response.getAddedFiles().add(file);
             return;
         }
         if (Pattern.ADDED.matches(line)) {
             File file = new File(extractFileName(line));
-            response.addAddedFile(file);
+            response.getAddedFiles().add(file);
         }
     }
 
@@ -145,27 +145,4 @@ public class GitCheckoutParser extends Parser {
         return response;
     }
 
-    private String getError() {
-        StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < errors.size(); i++) {
-            buffer.append(errors.get(i) + " ");
-        }
-        return buffer.toString();
-    }
-
-    private void setError(int lineNumber, String error) {
-        ErrorDetails errorDetails = new ErrorDetails(lineNumber, error);
-        errors.add(errorDetails);
-    }
-
-    private static class ErrorDetails {
-
-        final int    lineNumber;
-        final String error;
-
-        public ErrorDetails(int lineNumber, String error) {
-            this.lineNumber = lineNumber;
-            this.error = error;
-        }
-    }
 }

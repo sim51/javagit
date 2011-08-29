@@ -22,17 +22,17 @@ package com.logisima.javagit.cli;
 import junit.framework.TestCase;
 
 import com.logisima.javagit.cli.add.GitAddResponse;
-import com.logisima.javagit.cli.clone.GitCloneResponseImpl;
-import com.logisima.javagit.cli.commit.GitCommitResponseImpl;
+import com.logisima.javagit.cli.clone.GitCloneResponse;
+import com.logisima.javagit.cli.commit.GitCommitResponse;
 import com.logisima.javagit.cli.init.GitInitResponse;
-import com.logisima.javagit.cli.status.GitStatusResponseImpl;
+import com.logisima.javagit.cli.status.GitStatusResponse;
 
 public class GitTestCase extends TestCase {
 
     /**
-     * Method that do all "assertEquals" on the <code>GitAddResponseImpl</code>.
+     * Method that do all "assertEquals" on the <code>GitAddResponse</code>.
      * 
-     * @param response the <code>GitAddResponseImpl</code> to test.
+     * @param response the <code>GitAddResponse</code> to test.
      * @param nbAddedFile expected number of added files.
      * @param nbComment expected number of comment.
      */
@@ -41,15 +41,20 @@ public class GitTestCase extends TestCase {
         assertEquals(nbComment, response.getComments().size());
     }
 
-    protected static void gitCloneTestEquals(GitCloneResponseImpl response) {
+    /**
+     * Method that do all "assertEquals" on the <code>GitCloneResponse</code>.
+     * 
+     * @param response the <code>GitCloneResponse</code> to test.
+     */
+    protected static void gitCloneTestEquals(GitCloneResponse response) {
         assertNotNull(response);
 
     }
 
     /**
-     * Method that do all "assertEquals" on the <code>GitCommitResponseImpl</code>.
+     * Method that do all "assertEquals" on the <code>GitCommitResponse</code>.
      * 
-     * @param response the <code>GitCommitResponseImpl</code> to test.
+     * @param response the <code>GitCommitResponse</code> to test.
      * @param shortComment expected short comment.
      * @param shortHashName expected short hashName.
      * @param nbFilesChanged expected number of changed files.
@@ -60,9 +65,9 @@ public class GitTestCase extends TestCase {
      * @param nbDeletedFiles expected number of deleted files.
      * @param nbRenamedFiles expected number of renamed files.
      */
-    protected static void gitCommitTestEquals(GitCommitResponseImpl response, String shortComment,
-            String shortHashName, int nbFilesChanged, int nbLinesDeleted, int nbLinesInserted, int nbAddedFiles,
-            int nbCopiedFiles, int nbDeletedFiles, int nbRenamedFiles) {
+    protected static void gitCommitTestEquals(GitCommitResponse response, String shortComment, String shortHashName,
+            int nbFilesChanged, int nbLinesDeleted, int nbLinesInserted, int nbAddedFiles, int nbCopiedFiles,
+            int nbDeletedFiles, int nbRenamedFiles) {
         assertEquals(shortComment, response.getCommitShortComment());
         if (shortHashName != null) {
             assertEquals(shortHashName, response.getCommitShortHashName().getName());
@@ -89,9 +94,9 @@ public class GitTestCase extends TestCase {
     }
 
     /**
-     * Method that do all "assertEquals" on the <code>GitStatusResponseImpl</code>.
+     * Method that do all "assertEquals" on the <code>GitStatusResponse</code>.
      * 
-     * @param response the <code>GitStatusResponseImpl</code> to test.
+     * @param response the <code>GitStatusResponse</code> to test.
      * @param branch expected branch name
      * @param nbNewFilesToCommit expected number of new file to commit.
      * @param nbModifiedFilesNotUpdated expected number of modified files and not updated.
@@ -100,7 +105,7 @@ public class GitTestCase extends TestCase {
      * @param nbDeletedFilesToCommit expected number of deleted files to commit.
      * @param nbUntrackedFiles expected number of untracked files.
      */
-    protected static void gitStatusTestEquals(GitStatusResponseImpl response, String branch, int nbNewFilesToCommit,
+    protected static void gitStatusTestEquals(GitStatusResponse response, String branch, int nbNewFilesToCommit,
             int nbModifiedFilesNotUpdated, int nbDeletedFilesNotUpdated, int nbModifiedFilesToCommit,
             int nbDeletedFilesToCommit, int nbUntrackedFiles, String message) {
         assertEquals(branch, response.getBranch().getName());

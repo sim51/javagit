@@ -44,7 +44,7 @@ public class GitStatus {
         GitStatusParser parser = new GitStatusParser(repositoryPath.getPath() + File.separator);
         GitStatusResponse response;
         try {
-            response = (GitStatusResponseImpl) ProcessUtilities.runCommand(repositoryPath, command, parser);
+            response = (GitStatusResponse) ProcessUtilities.runCommand(repositoryPath, command, parser);
         } catch (IOException e) {
             throw new JavaGitException(JavaGitException.PROCESS_ERROR, e.getMessage());
         }

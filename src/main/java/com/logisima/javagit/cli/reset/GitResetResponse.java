@@ -31,17 +31,21 @@ import com.logisima.javagit.utilities.CheckUtilities;
 /**
  * A response data object for the <code>git-reset</code> command.
  */
-public abstract class GitResetResponse extends Response {
+public class GitResetResponse extends Response {
 
-    /*
+    /**
      * The list of files left in a dirty state (different than what is in the new HEAD commit) in the working tree.
      */
     protected List<File> filesNeedingUpdate  = new ArrayList<File>();
 
-    // If the --hard option was given, this is the SHA1 of the new head.
+    /**
+     * If the --hard option was given, this is the SHA1 of the new head.
+     */
     protected Ref        newHeadSha1         = null;
 
-    // If the --hard option was given, this is the short message for the commit at the new head.
+    /**
+     * If the --hard option was given, this is the short message for the commit at the new head.
+     */
     protected String     newHeadShortMessage = null;
 
     /**
