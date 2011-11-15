@@ -1,24 +1,24 @@
 -classpath
-'/home/bsimard/workspace_logisima/javagit/target/classes'
+'/home/bsimard/tmp/liferay-meetups-portlet/target/classes:/home/bsimard/.m2/repository/javax/portlet/portlet-api/2.0/portlet-api-2.0.jar:/home/bsimard/.m2/repository/com/liferay/portal/portal-service/6.0.12/portal-service-6.0.12.jar:/home/bsimard/.m2/repository/com/liferay/portal/util-bridges/6.0.12/util-bridges-6.0.12.jar:/home/bsimard/.m2/repository/com/liferay/portal/portal-impl/6.0.12/portal-impl-6.0.12.jar:/home/bsimard/.m2/repository/com/liferay/portal/util-java/6.0.12/util-java-6.0.12.jar:/home/bsimard/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar'
 -encoding
 'UTF-8'
 -protected
 -sourcepath
-'/home/bsimard/workspace_logisima/javagit/src/main/java'
+'/home/bsimard/tmp/liferay-meetups-portlet/src/main/java'
 -author
 -bottom
-'Copyright &#169; 2011 <a href="http://www.logisima.com">LogiSima</a>. All Rights Reserved.'
+'Copyright &#169; 2011 <a href="http://www.smile.fr">Smile</a>. All Rights Reserved.'
 -charset
 'UTF-8'
 -d
-'/home/bsimard/workspace_logisima/javagit/target/site/apidocs'
+'/home/bsimard/tmp/liferay-meetups-portlet/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
-'javagit 1.0-SNAPSHOT API'
+'liferay-meetups-portlet 1.1-SNAPSHOT API'
 -link
 'http://java.sun.com/javase/6/docs/api'
 -use
 -version
 -windowtitle
-'javagit 1.0-SNAPSHOT API'
+'liferay-meetups-portlet 1.1-SNAPSHOT API'
